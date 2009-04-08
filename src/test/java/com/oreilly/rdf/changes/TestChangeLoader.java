@@ -2,10 +2,14 @@ package com.oreilly.rdf.changes;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import lib.ArrayUtils;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.*;
+import org.springframework.core.io.ClassPathResource;
 
-import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -18,25 +22,37 @@ import com.hp.hpl.jena.vocabulary.DC;
 
 
 public class TestChangeLoader {
-	public static final String TESTING_RESOURCE_URI = "urn:x-testing";
+	public static final String TESTING_RESOURCE_URI = "http://example.com/res#thing";
+	public static final String BEFORE_TITLE = "Original Title";
+	public static final String AFTER_TITLE = "New Title";
 
 	private class MockChangeSet implements Changeset {
 
 
 		@Override
-		public StmtIterator toAdd() {
+		public Statement[] toAdd() {
 			Model model = ModelFactory.createDefaultModel();
 			Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
-			testingResource.addProperty(DC.title, "after the change");
-			return testingResource.listProperties();
+			testingResource.addProperty(DC.title, AFTER_TITLE);
+			return allProperties(testingResource);
 		}
 
 		@Override
-		public StmtIterator toRemove() {
+		public Statement[] toRemove() {
+
 			Model model = ModelFactory.createDefaultModel();
 			Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
-			testingResource.addProperty(DC.title, "test");
-			return testingResource.listProperties();
+			testingResource.addProperty(DC.title, BEFORE_TITLE);
+			return allProperties(testingResource);
+		}
+
+		private Statement[] allProperties(Resource testingResource) {
+			ArrayList<Statement> statements = new ArrayList<Statement>();
+			StmtIterator iter = testingResource.listProperties();
+			while (iter.hasNext()) {
+				statements.add(iter.nextStatement());
+			}
+			return  statements.toArray(new Statement[1]);
 		}
 
 	}
@@ -64,7 +80,7 @@ public class TestChangeLoader {
 		model = TDBFactory.createModel(this.testDirectory
 				.getAbsolutePath());
 		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
-		testingResource.addProperty(DC.title, "test");
+		testingResource.addProperty(DC.title, BEFORE_TITLE);
 		model.commit();
 
 	}
@@ -72,7 +88,7 @@ public class TestChangeLoader {
 	@After
 	public void tearDown() throws Exception {
 		this.model.close();
-		this.testDirectory.delete();
+		FileUtils.deleteDirectory(testDirectory);
 	}
 
 	@Test
@@ -83,6 +99,21 @@ public class TestChangeLoader {
 		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
 		Statement result = testingResource.getProperty(DC.title);
 		Literal title = result.getLiteral();
-		Assert.assertEquals("after the change", title.getLexicalForm());
+		Assert.assertEquals(AFTER_TITLE, title.getLexicalForm());
+	}
+	
+	@Test
+	public void testApplyChangesetFile() throws Exception {
+		ClassPathResource changesetResource = new ClassPathResource("changeset.xml");
+		Changeset changeset = new InputStreamChangeset(changesetResource
+				.getInputStream());
+		
+		ChangesetHandler handler = new ChangesetHandler(model);
+		handler.applyChangeset(changeset);
+		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
+		Statement result = testingResource.getProperty(DC.title);
+		Literal title = result.getLiteral();
+		Assert.assertEquals(AFTER_TITLE, title.getLexicalForm());
+
 	}
 }
