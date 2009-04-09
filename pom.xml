@@ -12,13 +12,6 @@
   		<id>jena</id>
   		<name>Jena Maven Repository</name>
   		<url>http://jena.hpl.hp.com/repo</url>
-  		<releases>
-  			<updatePolicy>daily</updatePolicy>
-  			<checksumPolicy>warn</checksumPolicy>
-  		</releases>
-  		<snapshots>
-  			<enabled>false</enabled>
-  		</snapshots>
   	</repository>
   	<repository>
   		<id>jena-dev</id>
