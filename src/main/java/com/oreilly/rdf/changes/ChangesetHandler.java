@@ -14,8 +14,14 @@ public class ChangesetHandler {
 	}
 	
 	public void applyChangeset(Changeset changeset) {
-		model.remove(changeset.toRemove());
-		model.add(changeset.toAdd());
+		try {
+			model.begin();
+			model.remove(changeset.toRemove());
+			model.add(changeset.toAdd());
+		} catch (RuntimeException e) {
+			model.abort();
+			throw e;
+		}
 		model.commit();
 	}
 }
