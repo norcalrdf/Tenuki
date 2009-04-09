@@ -1,5 +1,15 @@
 package com.oreilly.rdf.changes;
 
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,12 +25,12 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DC;
 
-public class TestRDBModelWithChangeLoad {
-
+public class TestJMSChanges {
 	public static final String TESTING_RESOURCE_URI = "http://example.com/res#thing";
 	public static final String BEFORE_TITLE = "Original Title";
 	public static final String AFTER_TITLE = "New Title";
 
+	public static final String TESTING_QUEUE = "test.rdf.changes";
 	// database URL
 	public static final String M_DB_URL = "jdbc:postgresql://192.168.100.129/jenardb";
 	// User name
@@ -52,18 +62,42 @@ public class TestRDBModelWithChangeLoad {
 		connection.cleanDB();
 	}
 
-	@Test
-	public void testApplyChangeset() throws Exception {
-		ClassPathResource changesetResource = new ClassPathResource(
+	private static class MockChangeMessageProducer implements Runnable {
+		public void run() {
+			try {
+			    ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
+				Connection connection = connectionFactory.createConnection();
+				connection.start();
+				Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+				Destination destination = session.createQueue(TESTING_QUEUE);
+				MessageProducer producer = session.createProducer(destination);
+				ClassPathResource changesetResource = new ClassPathResource(
 				"changeset.xml");
-		Changeset changeset = new InputStreamChangeset(changesetResource
-				.getInputStream());
-		ChangesetHandler handler = new ChangesetHandler(model);
-		handler.applyChangeset(changeset);
+				String changesetXml = IOUtils.toString(changesetResource.getInputStream());
+				TextMessage changeMessage = session.createTextMessage(changesetXml);
+				producer.send(changeMessage);
+			} catch (Exception e) {
+				Assert.fail();
+			}
+
+		}
+	}
+
+	@Test
+	public void testChangeMessageApplied() throws Exception {
+	    ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
+		Thread consumer = new Thread(new ChangeMessageProcessor(model, TESTING_QUEUE, connectionFactory));
+		Thread producer = new Thread(new MockChangeMessageProducer());
+		consumer.start();
+		producer.start();
+		producer.join();
+		consumer.interrupt();
+		consumer.join();
 		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
 		Statement result = testingResource.getProperty(DC.title);
 		Literal title = result.getLiteral();
 		Assert.assertEquals(AFTER_TITLE, title.getLexicalForm());
+
 	}
 
 }

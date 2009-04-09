@@ -22,6 +22,11 @@ public class InputStreamChangeset implements Changeset {
 		model.read(inputStream, "");
 	}
 
+	public InputStreamChangeset(String xml) {
+		model = ModelFactory.createDefaultModel();
+		model.read(xml);
+	}
+
 	@Override
 	public Statement[] toAdd() {
 		Property addition = model.createProperty(CHANGESET_NS,"addition");
