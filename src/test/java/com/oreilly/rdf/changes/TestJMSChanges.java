@@ -30,7 +30,7 @@ public class TestJMSChanges {
 	public static final String BEFORE_TITLE = "Original Title";
 	public static final String AFTER_TITLE = "New Title";
 
-	public static final String TESTING_QUEUE = "test.rdf.changes";
+	public static final String TESTING_TOPIC = "test.rdf.changes";
 	// database URL
 	public static final String M_DB_URL = "jdbc:postgresql://192.168.100.129/jenardb";
 	// User name
@@ -69,13 +69,15 @@ public class TestJMSChanges {
 				Connection connection = connectionFactory.createConnection();
 				connection.start();
 				Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-				Destination destination = session.createQueue(TESTING_QUEUE);
+				Destination destination = session.createTopic(TESTING_TOPIC);
 				MessageProducer producer = session.createProducer(destination);
 				ClassPathResource changesetResource = new ClassPathResource(
 				"changeset.xml");
 				String changesetXml = IOUtils.toString(changesetResource.getInputStream());
 				TextMessage changeMessage = session.createTextMessage(changesetXml);
 				producer.send(changeMessage);
+				session.close();
+				connection.close();
 			} catch (Exception e) {
 				Assert.fail();
 			}
@@ -86,18 +88,15 @@ public class TestJMSChanges {
 	@Test
 	public void testChangeMessageApplied() throws Exception {
 	    ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
-		Thread consumer = new Thread(new ChangeMessageProcessor(model, TESTING_QUEUE, connectionFactory));
+		Thread consumer = new Thread(new ChangeMessageProcessor(model, TESTING_TOPIC, connectionFactory));
 		Thread producer = new Thread(new MockChangeMessageProducer());
 		consumer.start();
 		producer.start();
-		producer.join();
-		consumer.interrupt();
-		consumer.join();
+		Thread.sleep(1000);
 		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
 		Statement result = testingResource.getProperty(DC.title);
 		Literal title = result.getLiteral();
 		Assert.assertEquals(AFTER_TITLE, title.getLexicalForm());
-
 	}
 
 }

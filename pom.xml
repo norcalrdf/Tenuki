@@ -49,7 +49,6 @@
     	<artifactId>commons-io</artifactId>
     	<version>1.4</version>
     	<type>jar</type>
-    	<scope>test</scope>
     </dependency>
     <dependency>
     	<groupId>org.springframework</groupId>

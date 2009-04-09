@@ -8,6 +8,8 @@ import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.commons.io.IOUtils;
+
 import com.hp.hpl.jena.rdf.model.Model;
 
 public class ChangeMessageProcessor implements Runnable {
@@ -33,13 +35,17 @@ public class ChangeMessageProcessor implements Runnable {
 					Session.AUTO_ACKNOWLEDGE);
 			Destination destination = session.createTopic(topicName);
 			MessageConsumer consumer = session.createConsumer(destination);
-			while (!Thread.interrupted()) {
-				Message message = consumer.receive(1000);
+			boolean keepGoing = true;
+			while (keepGoing){
+				Message message = consumer.receive();
 				if (message instanceof TextMessage) {
 					TextMessage textMessage = (TextMessage) message;
 					String xml = textMessage.getText();
-					Changeset changeset = new InputStreamChangeset(xml);
+					Changeset changeset = new InputStreamChangeset(IOUtils.toInputStream(xml));
 					handler.applyChangeset(changeset);
+				}
+				if(Thread.interrupted()){
+					keepGoing = false;
 				}
 			}
 			consumer.close();
