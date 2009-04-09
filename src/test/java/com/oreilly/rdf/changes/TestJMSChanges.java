@@ -92,6 +92,7 @@ public class TestJMSChanges {
 		Thread producer = new Thread(new MockChangeMessageProducer());
 		consumer.start();
 		producer.start();
+		producer.join();
 		Thread.sleep(1000);
 		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
 		Statement result = testingResource.getProperty(DC.title);
