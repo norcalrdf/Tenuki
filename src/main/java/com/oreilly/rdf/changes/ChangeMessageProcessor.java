@@ -3,6 +3,7 @@ package com.oreilly.rdf.changes;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
@@ -29,30 +30,38 @@ public class ChangeMessageProcessor implements Runnable {
 	public void run() {
 		try {
 			ChangesetHandler handler = new ChangesetHandler(model);
-			Connection connection = connectionFactory.createConnection();
-			connection.start();
-			Session session = connection.createSession(false,
-					Session.AUTO_ACKNOWLEDGE);
-			Destination destination = session.createTopic(topicName);
-			MessageConsumer consumer = session.createConsumer(destination);
-			boolean keepGoing = true;
-			while (keepGoing){
-				Message message = consumer.receive();
-				if (message instanceof TextMessage) {
-					TextMessage textMessage = (TextMessage) message;
-					String xml = textMessage.getText();
-					Changeset changeset = new InputStreamChangeset(IOUtils.toInputStream(xml));
-					handler.applyChangeset(changeset);
-				}
-				if(Thread.interrupted()){
-					keepGoing = false;
-				}
-			}
-			consumer.close();
-			session.close();
-			connection.close();
-		} catch (Exception e) {
+			MessageConsumer consumer = createConsumer();
+			receiveLoop(handler, consumer);
+		} catch (JMSException e) {
+			//TODO: Do something!
 		}
+	}
+
+	private void receiveLoop(ChangesetHandler handler, MessageConsumer consumer)
+			throws JMSException {
+		while (true){
+			Message message = consumer.receive();
+			if (message instanceof TextMessage) {
+				handleMessage(handler, (TextMessage) message);
+			}
+		}
+	}
+
+	private void handleMessage(ChangesetHandler handler, TextMessage message)
+			throws JMSException {
+		String xml = message.getText();
+		Changeset changeset = new InputStreamChangeset(IOUtils.toInputStream(xml));
+		handler.applyChangeset(changeset);
+	}
+
+	private MessageConsumer createConsumer() throws JMSException {
+		Connection connection = connectionFactory.createConnection();
+		connection.start();
+		Session session = connection.createSession(false,
+				Session.AUTO_ACKNOWLEDGE);
+		Destination destination = session.createTopic(topicName);
+		MessageConsumer consumer = session.createConsumer(destination);
+		return consumer;
 	}
 
 }
