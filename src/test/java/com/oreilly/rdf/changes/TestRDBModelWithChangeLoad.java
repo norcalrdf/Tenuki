@@ -1,7 +1,5 @@
 package com.oreilly.rdf.changes;
 
-import java.io.IOException;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,8 +7,6 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import com.hp.hpl.jena.db.DBConnection;
-import com.hp.hpl.jena.db.IDBConnection;
-import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
