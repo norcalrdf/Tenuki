@@ -1,5 +1,7 @@
 package com.oreilly.rdf.changes;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -18,12 +20,14 @@ public class ChangeMessageProcessor implements Runnable {
 	private Model model;
 	private ConnectionFactory connectionFactory;
 	private String topicName;
+	private AtomicInteger numberProcessed;
 
 	public ChangeMessageProcessor(Model model, String topic,
 			ConnectionFactory connectionFactory) {
 		this.model = model;
 		this.connectionFactory = connectionFactory;
 		this.topicName = topic;
+		this.setNumberProcessed(new AtomicInteger(0));
 	}
 
 	@Override
@@ -52,6 +56,7 @@ public class ChangeMessageProcessor implements Runnable {
 		String xml = message.getText();
 		Changeset changeset = new InputStreamChangeset(IOUtils.toInputStream(xml));
 		handler.applyChangeset(changeset);
+		getNumberProcessed().getAndIncrement();
 	}
 
 	private MessageConsumer createConsumer() throws JMSException {
@@ -62,6 +67,14 @@ public class ChangeMessageProcessor implements Runnable {
 		Destination destination = session.createTopic(topicName);
 		MessageConsumer consumer = session.createConsumer(destination);
 		return consumer;
+	}
+
+	private void setNumberProcessed(AtomicInteger numberProcessed) {
+		this.numberProcessed = numberProcessed;
+	}
+
+	public AtomicInteger getNumberProcessed() {
+		return numberProcessed;
 	}
 
 }
