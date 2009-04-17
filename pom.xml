@@ -18,6 +18,13 @@
   		<name>Jena Development Repository</name>
   		<url>http://jena.hpl.hp.com/repo-dev/</url>
   	</repository>
+  	<repository>
+  		<id>restlet</id>
+  		<name>Restlet Repository</name>
+  		<url>http://maven.restlet.org/</url>
+  		<snapshots>
+  		</snapshots>
+  	</repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -78,7 +85,33 @@
     	<type>jar</type>
     	<scope>compile</scope>
     </dependency>
+    <dependency>
+    	<groupId>org.restlet</groupId>
+    	<artifactId>org.restlet</artifactId>
+    	<version>1.1.4</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.noelios.restlet</groupId>
+    	<artifactId>com.noelios.restlet</artifactId>
+    	<version>1.1.4</version>
+    	<scope>runtime</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.restlet</groupId>
+    	<artifactId>org.restlet.ext.spring</artifactId>
+    	<version>1.1.4</version>
+    </dependency>
   </dependencies>
+  <developers>
+  	<developer>
+  		<id>gavin</id>
+  		<name>Gavin Carothers</name>
+  		<email>gavin@oreilly.com</email>
+  		<organization>O'Reilly Media, Inc.</organization>
+  		<roles>
+  		</roles>
+  	</developer>
+  </developers>
   <build>
     <finalName>changeset-loader</finalName>
     <plugins>
