@@ -1,4 +1,4 @@
-package com.oreilly.rdf.changes;
+package com.oreilly.rdf.changes.jms;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,6 +14,9 @@ import javax.jms.TextMessage;
 import org.apache.commons.io.IOUtils;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.oreilly.rdf.changes.Changeset;
+import com.oreilly.rdf.changes.ChangesetHandler;
+import com.oreilly.rdf.changes.InputStreamChangeset;
 
 public class ChangeMessageProcessor implements Runnable {
 

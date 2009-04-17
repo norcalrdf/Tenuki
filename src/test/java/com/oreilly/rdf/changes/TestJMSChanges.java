@@ -23,6 +23,7 @@ import com.hp.hpl.jena.rdf.model.ModelMaker;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.DC;
+import com.oreilly.rdf.changes.jms.ChangeMessageProcessor;
 
 public class TestJMSChanges {
 	public static final String TESTING_RESOURCE_URI = "http://example.com/res#thing";
