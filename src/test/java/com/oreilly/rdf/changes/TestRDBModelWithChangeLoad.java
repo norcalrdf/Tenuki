@@ -22,7 +22,7 @@ public class TestRDBModelWithChangeLoad {
 	public static final String AFTER_TITLE = "New Title";
 
 	// database URL
-	public static final String M_DB_URL = "jdbc:postgresql://192.168.100.129/jenardb";
+	public static final String M_DB_URL = "jdbc:postgresql://thunderbrick.west.ora.com/jenardb";
 	// User name
 	public static final String M_DB_USER = "jena";
 	// Password

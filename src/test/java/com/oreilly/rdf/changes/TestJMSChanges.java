@@ -3,7 +3,6 @@ package com.oreilly.rdf.changes;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -32,7 +31,7 @@ public class TestJMSChanges {
 
 	public static final String TESTING_TOPIC = "test.rdf.changes";
 	// database URL
-	public static final String M_DB_URL = "jdbc:postgresql://192.168.100.129/jenardb";
+	public static final String M_DB_URL = "jdbc:postgresql://thunderbrick.west.ora.com/jenardb";
 	// User name
 	public static final String M_DB_USER = "jena";
 	// Password
