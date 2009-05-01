@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Required;
 import com.hp.hpl.jena.db.DBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 
-public class ModelPoolableFactory extends BasePoolableObjectFactory {
+public class ModelRDBPoolableFactory extends BasePoolableObjectFactory {
 	private String dataSourceType;
 	private DataSource dataSource;
 

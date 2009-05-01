@@ -11,7 +11,7 @@
     <bean id="modelPool" class="org.apache.commons.pool.impl.GenericObjectPool">
         <property name="factory" ref="modelPoolFactory"/>
     </bean>
-    <bean id="modelPoolFactory" class="com.oreilly.rdf.jena.ModelPoolableFactory">
+    <bean id="modelPoolFactory" class="com.oreilly.rdf.jena.ModelRDBPoolableFactory">
         <property name="dataSource" ref="pgDataSource"/>
         <property name="dataSourceType" value="PostgreSQL"/>        
     </bean>
