@@ -5,7 +5,7 @@
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
-    <bean id="root" class="com.oreilly.rdf.changes.restlet.ChangesApplication">
+    <bean id="root" class="com.oreilly.rdf.changes.restlet.RDFModelApplication">
         <property name="dataSource" ref="pgDataSource"/>
         <property name="dataSourceType" value="PostgreSQL"/>
     </bean>
