@@ -2,6 +2,8 @@ package com.oreilly.rdf.changes.restlet;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.restlet.Context;
 import org.restlet.data.MediaType;
 import org.restlet.data.Request;
@@ -16,6 +18,8 @@ import com.oreilly.rdf.changes.ChangesetHandler;
 import com.oreilly.rdf.changes.InputStreamChangeset;
 
 public class ChangesetResource extends Resource {
+	
+	private Log log = LogFactory.getLog(ChangesetResource.class);
 
 	private ChangesetHandler handler;
 
@@ -31,6 +35,7 @@ public class ChangesetResource extends Resource {
 			throws ResourceException {
 		try {
 			Changeset changeset = new InputStreamChangeset(entity.getStream());
+			log.debug("Applying changeset");
 			handler.applyChangeset(changeset);
 		} catch (IOException e) {
 			throw new ResourceException(e);
