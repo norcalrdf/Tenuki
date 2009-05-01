@@ -14,7 +14,7 @@ import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.rdf.model.Model;
 
-public class ChangesApplication extends Application {
+public class RDFModelApplication extends Application {
 
 	private DataSource datasource;
 	private String datasourceType;

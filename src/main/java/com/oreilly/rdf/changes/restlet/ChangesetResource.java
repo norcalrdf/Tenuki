@@ -22,7 +22,7 @@ public class ChangesetResource extends Resource {
 	public ChangesetResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
 		getVariants().add(new Variant(MediaType.valueOf("CHANGESET")));
-		handler = new ChangesetHandler(((ChangesApplication) getApplication())
+		handler = new ChangesetHandler(((RDFModelApplication) getApplication())
 				.getModel());
 	}
 
