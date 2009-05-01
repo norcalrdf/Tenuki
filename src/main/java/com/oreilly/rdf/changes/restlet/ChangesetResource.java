@@ -1,6 +1,7 @@
 package com.oreilly.rdf.changes.restlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -9,16 +10,17 @@ import org.restlet.data.MediaType;
 import org.restlet.data.Request;
 import org.restlet.data.Response;
 import org.restlet.resource.Representation;
-import org.restlet.resource.Resource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
 
+import com.hp.hpl.jena.db.ModelRDB;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.oreilly.rdf.changes.Changeset;
 import com.oreilly.rdf.changes.ChangesetHandler;
 import com.oreilly.rdf.changes.InputStreamChangeset;
 
-public class ChangesetResource extends Resource {
-	
+public class ChangesetResource extends JenaModelResource {
+
 	private Log log = LogFactory.getLog(ChangesetResource.class);
 
 	private ChangesetHandler handler;
@@ -26,19 +28,22 @@ public class ChangesetResource extends Resource {
 	public ChangesetResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
 		getVariants().add(new Variant(MediaType.valueOf("CHANGESET")));
-		handler = new ChangesetHandler(((RDFModelApplication) getApplication())
-				.getModel());
 	}
 
 	@Override
 	public void acceptRepresentation(Representation entity)
 			throws ResourceException {
+		Model model = null;
 		try {
+			model = this.getModel();
+			handler = new ChangesetHandler(model);
 			Changeset changeset = new InputStreamChangeset(entity.getStream());
 			log.debug("Applying changeset");
 			handler.applyChangeset(changeset);
 		} catch (IOException e) {
 			throw new ResourceException(e);
+		} finally {
+			this.returnModel(model);
 		}
 	}
 

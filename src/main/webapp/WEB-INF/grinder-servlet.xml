@@ -6,8 +6,14 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
     <bean id="root" class="com.oreilly.rdf.changes.restlet.RDFModelApplication">
+        <property name="modelPool" ref="modelPool"/>
+    </bean>
+    <bean id="modelPool" class="org.apache.commons.pool.impl.GenericObjectPool">
+        <property name="factory" ref="modelPoolFactory"/>
+    </bean>
+    <bean id="modelPoolFactory" class="com.oreilly.rdf.jena.ModelPoolableFactory">
         <property name="dataSource" ref="pgDataSource"/>
-        <property name="dataSourceType" value="PostgreSQL"/>
+        <property name="dataSourceType" value="PostgreSQL"/>        
     </bean>
     <bean id="pgDataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="org.postgresql.Driver"/>

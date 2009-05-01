@@ -4,20 +4,15 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.pool.ObjectPool;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.Router;
 import org.restlet.data.MediaType;
 
-import com.hp.hpl.jena.db.DBConnection;
-import com.hp.hpl.jena.db.IDBConnection;
-import com.hp.hpl.jena.db.ModelRDB;
-import com.hp.hpl.jena.rdf.model.Model;
-
 public class RDFModelApplication extends Application {
 
-	private DataSource datasource;
-	private String datasourceType;
+	private ObjectPool modelPool;
 
 	@Override
 	public Restlet createRoot() {
@@ -26,32 +21,12 @@ public class RDFModelApplication extends Application {
 		router.attach("/changes", ChangesetResource.class);
 		return router;
 	}
-
-	public Model getModel() {
-		IDBConnection dbcon;
-		try {
-			dbcon = new DBConnection(getDataSource().getConnection(),
-					getDataSourceType());
-			Model model = ModelRDB.open(dbcon);
-			return model;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+	
+	public ObjectPool getModelPool(){
+		return this.modelPool;
 	}
-
-	public void setDataSourceType(String type) {
-		this.datasourceType = type;
-	}
-
-	public String getDataSourceType() {
-		return this.datasourceType;
-	}
-
-	public void setDataSource(DataSource datasource) {
-		this.datasource = datasource;
-	}
-
-	public DataSource getDataSource() {
-		return this.datasource;
+	
+	public void setModelPool(ObjectPool pool) {
+		this.modelPool = pool;
 	}
 }
