@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Required;
 
 import com.hp.hpl.jena.db.DBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
+import com.hp.hpl.jena.shared.DoesNotExistException;
 
 public class ModelRDBPoolableFactory extends BasePoolableObjectFactory {
 	private String dataSourceType;
@@ -27,9 +28,15 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory {
 
 	@Override
 	public Object makeObject() throws Exception {
+		ModelRDB model = null;
 		DBConnection dbcon = new DBConnection(getDataSource().getConnection(),
 				getDataSourceType());
-		return ModelRDB.open(dbcon);
+		try {
+			model = ModelRDB.open(dbcon);
+		} catch (DoesNotExistException e) {
+			model = ModelRDB.createModel(dbcon);
+		}
+		return model;
 	}
 
 	public String getDataSourceType() {
