@@ -10,9 +10,12 @@ import org.restlet.Restlet;
 import org.restlet.Router;
 import org.restlet.data.MediaType;
 
+import com.oreilly.rdf.jena.ModelPoolableFactory;
+
 public class RDFModelApplication extends Application {
 
 	private ObjectPool modelPool;
+	private ModelPoolableFactory factory;
 
 	@Override
 	public Restlet createRoot() {
@@ -28,5 +31,13 @@ public class RDFModelApplication extends Application {
 	
 	public void setModelPool(ObjectPool pool) {
 		this.modelPool = pool;
+	}
+
+	public void setFactory(ModelPoolableFactory factory) {
+		this.factory = factory;
+	}
+
+	public ModelPoolableFactory getFactory() {
+		return factory;
 	}
 }

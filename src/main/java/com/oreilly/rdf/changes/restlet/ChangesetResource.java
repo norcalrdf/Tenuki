@@ -1,7 +1,8 @@
 package com.oreilly.rdf.changes.restlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,17 +14,14 @@ import org.restlet.resource.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
 
-import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.oreilly.rdf.changes.Changeset;
-import com.oreilly.rdf.changes.ChangesetHandler;
 import com.oreilly.rdf.changes.InputStreamChangeset;
+import com.oreilly.rdf.changes.MultiModelChangesetHandler;
 
 public class ChangesetResource extends JenaModelResource {
 
 	private Log log = LogFactory.getLog(ChangesetResource.class);
-
-	private ChangesetHandler handler;
 
 	public ChangesetResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
@@ -34,16 +32,20 @@ public class ChangesetResource extends JenaModelResource {
 	public void acceptRepresentation(Representation entity)
 			throws ResourceException {
 		Model model = null;
+		Model perGraphModel = null;
 		try {
-			model = this.getModel();
-			handler = new ChangesetHandler(model);
 			Changeset changeset = new InputStreamChangeset(entity.getStream());
+			model = this.getDefaultModel();
+			perGraphModel = this.getModel(changeset.getSubjectOfChange().getURI());
+			List<Model> models = new ArrayList<Model>(2);
+			MultiModelChangesetHandler handler = new MultiModelChangesetHandler(models);
 			log.debug("Applying changeset");
 			handler.applyChangeset(changeset);
 		} catch (IOException e) {
 			throw new ResourceException(e);
 		} finally {
-			this.returnModel(model);
+			this.returnDefaultModel(model);
+			this.returnModel(perGraphModel);
 		}
 	}
 

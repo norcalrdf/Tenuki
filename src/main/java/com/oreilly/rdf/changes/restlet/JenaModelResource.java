@@ -1,34 +1,45 @@
 package com.oreilly.rdf.changes.restlet;
 
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.pool.ObjectPool;
 import org.restlet.Context;
 import org.restlet.data.Request;
 import org.restlet.data.Response;
 import org.restlet.resource.Resource;
 
-import com.hp.hpl.jena.db.DBConnection;
-import com.hp.hpl.jena.db.IDBConnection;
-import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.shared.DoesNotExistException;
+import com.oreilly.rdf.jena.ModelPoolableFactory;
 
 public abstract class JenaModelResource extends Resource {
 
 	private ObjectPool pool;
+	private ModelPoolableFactory factory;
 
 	public JenaModelResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
 		RDFModelApplication app = (RDFModelApplication) getApplication();
 		pool = app.getModelPool();
+		factory = app.getFactory();
 	}
 
-	public Model getModel() {
+	public Model getDefaultModel() {
 		try {
 			return (Model) pool.borrowObject();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void returnDefaultModel(Model model) {
+		try {
+			pool.returnObject(model);
+		} catch (Exception e) {
+			// ignore
+		}
+	}
+	
+	public Model getModel(String modelName) {
+		try {
+			return factory.getModel(modelName);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -36,9 +47,9 @@ public abstract class JenaModelResource extends Resource {
 	
 	public void returnModel(Model model) {
 		try {
-			pool.returnObject(model);
+			factory.destroyObject(model);
 		} catch (Exception e) {
-			//ignore
+			throw new RuntimeException(e);
 		}
 	}
 }
