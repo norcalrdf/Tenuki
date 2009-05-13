@@ -9,8 +9,10 @@ import com.hp.hpl.jena.db.DBConnection;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.DoesNotExistException;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
-public class ModelRDBPoolableFactory extends BasePoolableObjectFactory implements ModelPoolableFactory {
+public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
+		implements ModelPoolableFactory {
 	private String dataSourceType;
 	private DataSource dataSource;
 
@@ -39,8 +41,10 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory implement
 		}
 		return model;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.oreilly.rdf.jena.ModelPoolableFactory#getModel(java.lang.String)
 	 */
 	public Model getModel(String modelName) throws Exception {
@@ -53,6 +57,12 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory implement
 			model = ModelRDB.createModel(dbcon, modelName);
 		}
 		return model;
+	}
+
+	public ExtendedIterator listModels() throws Exception {
+		DBConnection dbcon = new DBConnection(getDataSource().getConnection(),
+				getDataSourceType());
+		return ModelRDB.listModels(dbcon);
 	}
 
 	public String getDataSourceType() {

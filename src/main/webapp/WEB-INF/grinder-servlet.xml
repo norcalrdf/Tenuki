@@ -7,6 +7,7 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
     <bean id="root" class="com.oreilly.rdf.changes.restlet.RDFModelApplication">
         <property name="modelPool" ref="modelPool"/>
+        <property name="factory" ref="modelPoolFactory"/>
     </bean>
     <bean id="modelPool" class="org.apache.commons.pool.impl.GenericObjectPool">
         <property name="factory" ref="modelPoolFactory"/>

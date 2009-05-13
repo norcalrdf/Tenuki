@@ -1,5 +1,8 @@
 package com.oreilly.rdf.changes.restlet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.pool.ObjectPool;
 import org.restlet.Context;
 import org.restlet.data.Request;
@@ -7,6 +10,7 @@ import org.restlet.data.Response;
 import org.restlet.resource.Resource;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.oreilly.rdf.jena.ModelPoolableFactory;
 
 public abstract class JenaModelResource extends Resource {
@@ -52,4 +56,19 @@ public abstract class JenaModelResource extends Resource {
 			throw new RuntimeException(e);
 		}
 	}
-}
+	
+	public List<String> modelNames() {
+		List<String> names = new ArrayList<String>();
+		ExtendedIterator iter;
+		try {
+			iter = factory.listModels();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		while (iter.hasNext()) {
+			String name = (String) iter.next();
+			names.add(name);
+		}
+		return names;
+	}
+  }
