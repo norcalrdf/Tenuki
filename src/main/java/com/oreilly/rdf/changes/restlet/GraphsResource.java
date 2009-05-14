@@ -22,7 +22,7 @@ public class GraphsResource extends JenaModelResource {
 			StringBuilder urilist = new StringBuilder();
 			for (String name : modelNames()) {
 				urilist.append(name);
-				urilist.append("\0x0D\0x0A");
+				urilist.append("\r\n");
 			}
 			return new StringRepresentation(urilist.toString(), MediaType.TEXT_URI_LIST);
 		}

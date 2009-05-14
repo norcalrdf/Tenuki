@@ -38,8 +38,9 @@ public class ChangesetResource extends JenaModelResource {
 			model = this.getDefaultModel();
 			perGraphModel = this.getModel(changeset.getSubjectOfChange().getURI());
 			List<Model> models = new ArrayList<Model>(2);
+			models.add(model);
+			models.add(perGraphModel);
 			MultiModelChangesetHandler handler = new MultiModelChangesetHandler(models);
-			log.debug("Applying changeset");
 			handler.applyChangeset(changeset);
 		} catch (IOException e) {
 			throw new ResourceException(e);

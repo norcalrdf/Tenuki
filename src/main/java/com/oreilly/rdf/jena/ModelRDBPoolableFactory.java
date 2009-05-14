@@ -1,7 +1,12 @@
 package com.oreilly.rdf.jena;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -10,14 +15,19 @@ import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.DoesNotExistException;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+import com.oreilly.rdf.changes.InputStreamChangeset;
 
 public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
 		implements ModelPoolableFactory {
+	
+	private Log log = LogFactory.getLog(InputStreamChangeset.class);
+
 	private String dataSourceType;
 	private DataSource dataSource;
 
 	@Override
 	public void destroyObject(Object obj) throws Exception {
+		log.trace("Destroying model");
 		ModelRDB model = (ModelRDB) obj;
 		model.getConnection().close();
 		model.close();
@@ -31,6 +41,7 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
 
 	@Override
 	public Object makeObject() throws Exception {
+		log.trace("Creating model");
 		ModelRDB model = null;
 		DBConnection dbcon = new DBConnection(getDataSource().getConnection(),
 				getDataSourceType());
@@ -48,6 +59,7 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
 	 * @see com.oreilly.rdf.jena.ModelPoolableFactory#getModel(java.lang.String)
 	 */
 	public Model getModel(String modelName) throws Exception {
+		log.trace("Creating model");
 		ModelRDB model = null;
 		DBConnection dbcon = new DBConnection(getDataSource().getConnection(),
 				getDataSourceType());
@@ -59,10 +71,18 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
 		return model;
 	}
 
-	public ExtendedIterator listModels() throws Exception {
+	public List<String> listModels() throws Exception {
 		DBConnection dbcon = new DBConnection(getDataSource().getConnection(),
 				getDataSourceType());
-		return ModelRDB.listModels(dbcon);
+		ExtendedIterator iter = ModelRDB.listModels(dbcon);
+		List<String> names = new ArrayList<String>();
+		while (iter.hasNext()) {
+			String name = (String) iter.next();
+			names.add(name);
+		}
+		dbcon.close();
+		return names;
+
 	}
 
 	public String getDataSourceType() {

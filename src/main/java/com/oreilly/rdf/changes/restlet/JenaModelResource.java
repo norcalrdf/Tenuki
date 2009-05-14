@@ -58,17 +58,10 @@ public abstract class JenaModelResource extends Resource {
 	}
 	
 	public List<String> modelNames() {
-		List<String> names = new ArrayList<String>();
-		ExtendedIterator iter;
 		try {
-			iter = factory.listModels();
+			return factory.listModels();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		while (iter.hasNext()) {
-			String name = (String) iter.next();
-			names.add(name);
-		}
-		return names;
 	}
   }
