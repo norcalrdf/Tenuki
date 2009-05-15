@@ -26,23 +26,14 @@ public class MultiModelChangesetHandler {
 				model.begin();
 				model.remove(changeset.toRemove());
 				model.add(changeset.toAdd());
-				log.trace("Done applying");
-			} catch (RuntimeException e) {
-				hadErrors = true;
-				log.error("While processing changeset: ", e);
-				exceptions.add(e);
-			}
-		}
-		if (hadErrors) {
-			for (Model model : models) {
-				log.info("Rolling back changset");
-				model.abort();
-			}
-			throw exceptions.get(0);
-		} else {
-			for (Model model : models) {
 				log.info("Commiting changeset");
 				model.commit();
+			} catch (RuntimeException e) {
+				log.error("While processing changeset: ", e);
+				log.info("Rolling back changset");
+				model.abort();
+				hadErrors = true;
+				exceptions.add(e);
 			}
 		}
 	}

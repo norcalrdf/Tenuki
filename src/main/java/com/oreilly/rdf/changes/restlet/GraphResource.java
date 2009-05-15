@@ -22,6 +22,11 @@ public class GraphResource extends JenaModelResource {
 	}
 
 	@Override
+	public void removeRepresentations() throws ResourceException {
+		
+	}
+
+	@Override
 	public Representation represent(Variant variant) throws ResourceException {
 		if (MediaType.APPLICATION_RDF_XML.equals(variant.getMediaType())) {
 			Model model = getModel(graphName);

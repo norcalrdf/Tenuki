@@ -1,6 +1,5 @@
 package com.oreilly.rdf.changes.restlet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.pool.ObjectPool;
@@ -10,7 +9,6 @@ import org.restlet.data.Response;
 import org.restlet.resource.Resource;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.oreilly.rdf.jena.ModelPoolableFactory;
 
 public abstract class JenaModelResource extends Resource {
