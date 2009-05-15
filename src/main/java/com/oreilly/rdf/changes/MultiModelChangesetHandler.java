@@ -36,6 +36,9 @@ public class MultiModelChangesetHandler {
 				exceptions.add(e);
 			}
 		}
+		if (hadErrors) {
+			throw exceptions.get(0);
+		}
 	}
 
 }

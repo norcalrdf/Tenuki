@@ -21,16 +21,21 @@ public class WholeModelRepresentation extends OutputRepresentation {
 
 	@Override
 	public void write(OutputStream output) throws IOException {
-		model.write(output);
-		model.close();
-		try{
-			ModelRDB model = (ModelRDB) this.model;
-			model.getConnection().close();
-		} catch (ClassCastException ce) {
-			//Ignore
-		} catch (SQLException e) {
-			//Mostly Ignore
-			e.printStackTrace();
+		try {
+			model.write(output);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			try{
+				model.close();
+				ModelRDB model = (ModelRDB) this.model;
+				model.getConnection().close();
+			} catch (ClassCastException ce) {
+				throw new RuntimeException("OMG NO", ce);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+
 		}
 
 	}

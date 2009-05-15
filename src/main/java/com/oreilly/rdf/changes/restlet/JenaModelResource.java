@@ -35,7 +35,7 @@ public abstract class JenaModelResource extends Resource {
 		try {
 			pool.returnObject(model);
 		} catch (Exception e) {
-			// ignore
+			throw new RuntimeException(e);
 		}
 	}
 	
