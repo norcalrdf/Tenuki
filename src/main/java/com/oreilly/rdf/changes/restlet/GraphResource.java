@@ -23,7 +23,9 @@ public class GraphResource extends JenaModelResource {
 
 	@Override
 	public void removeRepresentations() throws ResourceException {
-		
+		Model model = getModel(graphName);
+		model.removeAll();
+		returnModel(model);
 	}
 
 	@Override

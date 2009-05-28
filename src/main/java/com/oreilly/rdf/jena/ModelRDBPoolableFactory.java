@@ -20,14 +20,14 @@ import com.oreilly.rdf.changes.InputStreamChangeset;
 public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
 		implements ModelPoolableFactory {
 	
-	private Log log = LogFactory.getLog(InputStreamChangeset.class);
+	private Log log = LogFactory.getLog(ModelRDBPoolableFactory.class);
 
 	private String dataSourceType;
 	private DataSource dataSource;
 
 	@Override
 	public void destroyObject(Object obj) throws Exception {
-		log.trace("Destroying model");
+		log.debug("Destroying model");
 		ModelRDB model = (ModelRDB) obj;
 		model.getConnection().close();
 		model.close();
@@ -41,7 +41,7 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
 
 	@Override
 	public Object makeObject() throws Exception {
-		log.trace("Creating model");
+		log.debug("Creating DEFAULT model");
 		ModelRDB model = null;
 		DBConnection dbcon = new DBConnection(getDataSource().getConnection(),
 				getDataSourceType());
@@ -59,7 +59,7 @@ public class ModelRDBPoolableFactory extends BasePoolableObjectFactory
 	 * @see com.oreilly.rdf.jena.ModelPoolableFactory#getModel(java.lang.String)
 	 */
 	public Model getModel(String modelName) throws Exception {
-		log.trace("Creating model");
+		log.debug("Creating named model");
 		ModelRDB model = null;
 		DBConnection dbcon = new DBConnection(getDataSource().getConnection(),
 				getDataSourceType());

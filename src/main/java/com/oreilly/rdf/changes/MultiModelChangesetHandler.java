@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 
 public class MultiModelChangesetHandler {
-	private Log log = LogFactory.getLog(InputStreamChangeset.class);
+	private Log log = LogFactory.getLog(MultiModelChangesetHandler.class);
 
 	private List<Model> models;
 
