@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.pool.ObjectPool;
 import org.restlet.Context;
 import org.restlet.data.Request;
 import org.restlet.data.Response;
@@ -14,7 +13,6 @@ import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.tdb.TDB;
 import com.hp.hpl.jena.tdb.TDBFactory;
-import com.oreilly.rdf.jena.ModelPoolableFactory;
 
 public abstract class JenaModelResource extends Resource {
 
@@ -44,17 +42,6 @@ public abstract class JenaModelResource extends Resource {
 			return getDataset().getNamedModel(modelName);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		}
-	}
-	
-	public void deleteModel(String modelName) {
-		Model model = getModel(modelName);		
-	}
-	
-	public void deleteAll() {
-		for (String modelName : modelNames()) {
-			getModel(modelName).removeAll();
-			TDB.sync(getDataset());
 		}
 	}
 	

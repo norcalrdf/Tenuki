@@ -12,7 +12,6 @@ import org.restlet.resource.OutputRepresentation;
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.Lock;
-import com.oreilly.rdf.changes.MultiModelChangesetHandler;
 
 public class WholeModelRepresentation extends OutputRepresentation {
 	private Log log = LogFactory.getLog(WholeModelRepresentation.class);

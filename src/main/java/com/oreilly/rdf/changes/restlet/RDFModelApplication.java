@@ -1,13 +1,11 @@
 package com.oreilly.rdf.changes.restlet;
 
-import org.apache.commons.pool.ObjectPool;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.Router;
 import org.restlet.data.MediaType;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.oreilly.rdf.jena.ModelPoolableFactory;
 
 public class RDFModelApplication extends Application {
 

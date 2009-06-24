@@ -1,8 +1,6 @@
 package com.oreilly.rdf.changes.restlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,7 +16,6 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.oreilly.rdf.changes.Changeset;
 import com.oreilly.rdf.changes.ChangesetHandler;
 import com.oreilly.rdf.changes.InputStreamChangeset;
-import com.oreilly.rdf.changes.MultiModelChangesetHandler;
 
 public class ChangesetResource extends JenaModelResource {
 
@@ -32,7 +29,6 @@ public class ChangesetResource extends JenaModelResource {
 	@Override
 	public void acceptRepresentation(Representation entity)
 			throws ResourceException {
-		Model model = null;
 		Model perGraphModel = null;
 		try {
 			Changeset changeset = new InputStreamChangeset(entity.getStream());
