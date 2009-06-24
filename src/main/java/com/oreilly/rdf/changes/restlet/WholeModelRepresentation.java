@@ -11,6 +11,7 @@ import org.restlet.resource.OutputRepresentation;
 
 import com.hp.hpl.jena.db.ModelRDB;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.shared.Lock;
 import com.oreilly.rdf.changes.MultiModelChangesetHandler;
 
 public class WholeModelRepresentation extends OutputRepresentation {
@@ -24,12 +25,14 @@ public class WholeModelRepresentation extends OutputRepresentation {
 
 	@Override
 	public void write(OutputStream output) throws IOException {
+		model.enterCriticalSection(Lock.READ);
 		try {
 			model.write(output);
 		} catch (Exception e) {
 			log.error(e);
 			throw new RuntimeException(e);
 		} finally {
+			model.leaveCriticalSection();
 			model.close();
 			try{
 				ModelRDB model = (ModelRDB) this.model;

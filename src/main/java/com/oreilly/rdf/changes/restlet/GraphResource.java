@@ -15,6 +15,7 @@ import org.restlet.resource.Variant;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.tdb.TDB;
 
 public class GraphResource extends JenaModelResource {
@@ -48,9 +49,14 @@ public class GraphResource extends JenaModelResource {
 				throw new ResourceException(e);
 			}
 			Model model = getModel(graphName);
-			model.removeAll();
-			model.add(newModel);
-			TDB.sync(model);
+			model.enterCriticalSection(Lock.WRITE);
+			try {
+				model.removeAll();
+				model.add(newModel);
+				TDB.sync(model);
+			} finally {
+				model.leaveCriticalSection();
+			}
 		}
 		getResponse().setStatus(Status.SUCCESS_CREATED);
 	}
@@ -63,8 +69,13 @@ public class GraphResource extends JenaModelResource {
 	@Override
 	public void removeRepresentations() throws ResourceException {
 		Model model = getModel(graphName);
-		model.removeAll();
-		model.commit();
+		model.enterCriticalSection(Lock.WRITE);
+		try {
+			model.removeAll();
+			model.commit();
+		} finally {
+			model.leaveCriticalSection();
+		}
 	}
 
 	@Override
