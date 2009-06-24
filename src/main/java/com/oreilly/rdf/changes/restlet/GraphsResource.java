@@ -32,14 +32,7 @@ public class GraphsResource extends JenaModelResource {
 
 	@Override
 	public void removeRepresentations() throws ResourceException {
-		ModelRDB model = (ModelRDB) getDefaultModel();
-		IDBConnection dbcon = model.getConnection();
-		try {
-			dbcon.cleanDB();
-			log.info("Deleted all Jena models");
-		} catch (SQLException e) {
-			throw new ResourceException(e);
-		}
+		deleteAll();
 	}
 	
 	@Override

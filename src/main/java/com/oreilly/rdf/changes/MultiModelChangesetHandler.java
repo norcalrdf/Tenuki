@@ -25,6 +25,7 @@ public class MultiModelChangesetHandler {
 				log.trace("Applying changeset");
 				model.begin();
 				model.remove(changeset.toRemove());
+				model.commit();
 				model.add(changeset.toAdd());
 				log.info("Commiting changeset");
 				model.commit();

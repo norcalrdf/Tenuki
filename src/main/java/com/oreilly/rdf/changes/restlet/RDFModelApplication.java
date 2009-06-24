@@ -11,9 +11,8 @@ import com.oreilly.rdf.jena.ModelPoolableFactory;
 
 public class RDFModelApplication extends Application {
 
-	private ObjectPool modelPool;
-	private ModelPoolableFactory factory;
-
+	private String tdbLocation;
+	
 	@Override
 	public Restlet createRoot() {
 		MediaType.register("CHANGESET", "application/vnd.talis.changeset+xml");
@@ -23,21 +22,13 @@ public class RDFModelApplication extends Application {
 		router.attach("/graphs/{graphName}", GraphResource.class);
 		return router;
 	}
-	
-	public ObjectPool getModelPool(){
-		return this.modelPool;
-	}
-	
-	public void setModelPool(ObjectPool pool) {
-		this.modelPool = pool;
-	}
 
 	@Required
-	public void setFactory(ModelPoolableFactory factory) {
-		this.factory = factory;
+	public void setTDBLocation(String tdbLocation) {
+		this.tdbLocation = tdbLocation;
 	}
 
-	public ModelPoolableFactory getFactory() {
-		return factory;
+	public String getTDBLocation() {
+		return tdbLocation;
 	}
 }

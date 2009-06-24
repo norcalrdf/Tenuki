@@ -6,10 +6,9 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
     <bean id="root" class="com.oreilly.rdf.changes.restlet.RDFModelApplication">
-        <property name="modelPool" ref="modelPool"/>
-        <property name="factory" ref="modelPoolFactory"/>
+        <property name="TDBLocation" value="/home/gavin/sandbox/testing-tdb/"/>
     </bean>
-    <bean id="modelPool" class="org.apache.commons.pool.impl.GenericObjectPool">
+<!--    <bean id="modelPool" class="org.apache.commons.pool.impl.GenericObjectPool">
         <property name="factory" ref="modelPoolFactory"/>
     </bean>
     <bean id="modelPoolFactory" class="com.oreilly.rdf.jena.ModelRDBPoolableFactory">
@@ -21,5 +20,5 @@
         <property name="url" value="jdbc:postgresql://thunderbrick.west.ora.com/jenardb"/>
         <property name="username" value="jena"/>
         <property name="password" value="jena"/>
-    </bean>
+    </bean>-->
 </beans>

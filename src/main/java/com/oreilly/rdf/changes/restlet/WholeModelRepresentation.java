@@ -30,13 +30,13 @@ public class WholeModelRepresentation extends OutputRepresentation {
 			log.error(e);
 			throw new RuntimeException(e);
 		} finally {
+			model.close();
 			try{
-				model.close();
 				ModelRDB model = (ModelRDB) this.model;
 				model.getConnection().close();
 				log.info("Closed database connection");
 			} catch (ClassCastException ce) {
-				throw new RuntimeException("OMG NO", ce);
+				// Not a ModelRDB
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}

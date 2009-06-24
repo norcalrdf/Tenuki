@@ -19,7 +19,11 @@ public class ChangesetHandler {
 			model.remove(changeset.toRemove());
 			model.add(changeset.toAdd());
 		} catch (RuntimeException e) {
+			try {
 			model.abort();
+			} catch (UnsupportedOperationException e1) {
+				//
+			}
 			throw e;
 		}
 		model.commit();
