@@ -6,6 +6,24 @@
         <servlet-class>com.noelios.restlet.ext.spring.RestletFrameworkServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>SPARQL service processor</servlet-name>
+        <servlet-class>org.joseki.http.Servlet</servlet-class>
+        <!-- Configuration file -->
+        <init-param>               
+            <param-name>org.joseki.rdfserver.config</param-name>
+            <param-value>joseki-config.ttl</param-value>        
+        </init-param>
+        <load-on-startup>1</load-on-startup>        
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SPARQL service processor</servlet-name>
+        <url-pattern>/sparql</url-pattern>                   
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SPARQL service processor</servlet-name>
+        <url-pattern>/sparql/*</url-pattern>                 
+    </servlet-mapping>                                         
     <servlet-mapping>
         <servlet-name>grinder</servlet-name> 
         <url-pattern>/*</url-pattern> 

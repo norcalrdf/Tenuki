@@ -1,0 +1,110 @@
+# This file is written in N3 / Turtle                 
+
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .          
+
+@prefix module: <http://joseki.org/2003/06/module#> .
+@prefix joseki: <http://joseki.org/2005/06/configuration#> .
+@prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
+
+@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .        
+
+
+## --------------------------------------------------------------
+## About this configuration                                      
+
+<> rdfs:label "Joseki Configuration File" .
+
+## --------------------------------------------------------------
+## About this server                                             
+
+<#server>  rdf:type joseki:Server .
+
+## --------------------------------------------------------------
+## Services                                                      
+
+## Services are the points that request are sent to.
+## serviceRef that will be used to match requests to services,
+## not some resource URI for the description.                 
+
+## Note that the service reference and the routing of incoming
+## requests by URI as defined by web.xml have to align.       
+
+# Service 1
+# General purpose SPARQL processor, no dataset, expects the
+# request to specify the dataset (either by parameters in the
+# protocol request or in the query itself).                  
+
+<#service1>
+    rdf:type            joseki:Service ;
+    rdfs:label          "service point" ;
+    joseki:serviceRef   "sparql" ;  # web.xml must route this name to Joseki
+    joseki:processor    joseki:ProcessorSPARQL_FixedDS ;                            
+    joseki:dataset      <#products>;                                        
+    .                                                                       
+
+## --------------------------------------------------------------
+## Datasets                                                      
+
+## ----------------
+## Complete Product Database model
+
+## Initialize TDB.
+
+[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
+tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+
+## ---- A whole dadaset managed by TDB
+<#products> rdf:type      tdb:DatasetTDB ;
+    tdb:location "/home/gavin/sandbox/testing-tdb/" ;                  
+    .                                    
+
+
+## --------------------------------------------------------------
+## Processors                                                    
+
+joseki:ProcessorSPARQL
+    rdfs:label "General SPARQL processor" ;
+    rdf:type joseki:Processor ;            
+    module:implementation joseki:ImplSPARQL ;
+
+    # Parameters - this processor processes FROM/FROM NAMED
+    joseki:allowExplicitDataset       "true"^^xsd:boolean ;
+    joseki:allowWebLoading            "true"^^xsd:boolean ;
+    ## And has no locking policy (it loads data each time).
+    ## The default is mutex (one request at a time)        
+    joseki:lockingPolicy                joseki:lockingPolicyNone ;
+    .                                                             
+
+joseki:ProcessorSPARQL_FixedDS
+    rdfs:label "SPARQL processor for fixed datasets" ;
+    rdf:type joseki:Processor ;
+    module:implementation joseki:ImplSPARQL ;
+
+    # This processor does not accept queries with FROM/FROM NAMED
+    joseki:allowExplicitDataset       "false"^^xsd:boolean ;
+    joseki:allowWebLoading            "false"^^xsd:boolean ;
+    joseki:lockingPolicy              joseki:lockingPolicyMRSW ;
+    .
+
+joseki:ProcessorSPARQLUpdate
+    rdfs:label "SPARQL Udpate processor" ;
+    rdf:type joseki:Processor ;
+    module:implementation joseki:ImplSPARQLUpdate ;
+    joseki:lockingPolicy              joseki:lockingPolicyMRSW ;
+    .
+
+joseki:ImplSPARQL
+    rdf:type   joseki:ServiceImpl ;
+    module:className
+        <java:org.joseki.processors.SPARQL> .
+
+joseki:ImplSPARQLUpdate
+    rdf:type   joseki:ServiceImpl ;
+    module:className
+        <java:org.joseki.processors.SPARQLUpdate> .
+
+
+
+    
