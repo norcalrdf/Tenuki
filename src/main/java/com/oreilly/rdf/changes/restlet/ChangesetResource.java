@@ -34,7 +34,12 @@ public class ChangesetResource extends JenaModelResource {
 			Changeset changeset = new InputStreamChangeset(entity.getStream());
 			perGraphModel = this.getModel(changeset.getSubjectOfChange().getURI());
 			ChangesetHandler handler = new ChangesetHandler(perGraphModel);
-			handler.applyChangeset(changeset);
+			try {
+				writeLock();
+				handler.applyChangeset(changeset);
+			} finally {
+				releaseLocks();
+			}
 		} catch (IOException e) {
 			throw new ResourceException(e);
 		} 
