@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.oreilly.rdf</groupId>
-  <artifactId>grinder</artifactId>
+  <artifactId>tenuki</artifactId>
   <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>Grinder Webapp</name>
+  <version>0.1-SNAPSHOT</version>
+  <name>Tenuki Webapp</name>
   <repositories>
   	<repository>
   		<id>jena</id>
@@ -45,12 +45,6 @@
     	<type>jar</type>
     </dependency>
     <dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-core</artifactId>
-    	<version>2.5.6</version>
-    	<type>jar</type>
-    </dependency>
-    <dependency>
     	<groupId>commons-collections</groupId>
     	<artifactId>commons-collections</artifactId>
     	<version>3.2.1</version>
@@ -75,34 +69,15 @@
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>org.restlet</groupId>
-    	<artifactId>org.restlet.ext.spring</artifactId>
-    	<version>1.1.4</version>
-    </dependency>
-    <dependency>
     	<groupId>com.noelios.restlet</groupId>
     	<artifactId>com.noelios.restlet.ext.spring</artifactId>
     	<version>1.1.4</version>
     	<scope>runtime</scope>
     </dependency>
     <dependency>
-    	<groupId>commons-dbcp</groupId>
-    	<artifactId>commons-dbcp</artifactId>
-    	<version>1.2.2</version>
-    	<type>jar</type>
-    	<scope>runtime</scope>
-    </dependency>
-    <dependency>
     	<groupId>commons-logging</groupId>
     	<artifactId>commons-logging</artifactId>
     	<version>1.1.1</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
-    </dependency>
-    <dependency>
-    	<groupId>commons-pool</groupId>
-    	<artifactId>commons-pool</artifactId>
-    	<version>1.4</version>
     	<type>jar</type>
     	<scope>compile</scope>
     </dependency>
@@ -138,6 +113,9 @@
     	<version>0.8.1</version>
     </dependency>
   </dependencies>
+  <issueManagement>
+  	<url>https://intranet.oreilly.com/jira/browse/TENUKI</url>
+  </issueManagement>
   <developers>
   	<developer>
   		<id>gavin</id>
@@ -148,6 +126,14 @@
   		</roles>
   	</developer>
   </developers>
+  <scm>
+  	<connection>scm:hg:http://hg.west.ora.com/var/repositories/tenuki/</connection>
+  	<url>http://hg.west.ora.com/var/repositories/tenuki/</url>
+  </scm>
+  <organization>
+  	<name>O'Reilly Media, Inc</name>
+  	<url>http://labs.oreilly.com/</url>
+  </organization>
   <build>
     <finalName>grinder</finalName>
     <plugins>

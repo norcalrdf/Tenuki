@@ -15,6 +15,8 @@ import com.hp.hpl.jena.tdb.TDBFactory;
 public abstract class JenaModelResource extends Resource {
 
 
+	private static final String TDB_LOCATION_PARAM = "tdb.location";
+
 	public JenaModelResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
 	}
@@ -36,8 +38,7 @@ public abstract class JenaModelResource extends Resource {
 	}
 
 	private Dataset getDataset() {
-		RDFModelApplication app = (RDFModelApplication) getApplication();
-		String location = app.getTDBLocation();
+		String location = getContext().getParameters().getFirstValue(TDB_LOCATION_PARAM);
 		Dataset set = TDBFactory.createDataset(location);
 		return set;
 	}
