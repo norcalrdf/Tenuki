@@ -132,10 +132,10 @@
   </scm>
   <organization>
   	<name>O'Reilly Media, Inc</name>
-  	<url>http://labs.oreilly.com/</url>
+  	<url>http://labs.oreilly.com/tenuki</url>
   </organization>
   <build>
-    <finalName>grinder</finalName>
+    <finalName>tenuki</finalName>
     <plugins>
     	<plugin>
     		<groupId>org.apache.maven.plugins</groupId>
