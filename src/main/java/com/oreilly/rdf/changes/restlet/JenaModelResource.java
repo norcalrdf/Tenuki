@@ -29,31 +29,19 @@ public abstract class JenaModelResource extends Resource {
 	}
 	
 	public Model getDefaultModel() {
-		try {
-			Dataset set = getDataset();
-			return set.getDefaultModel();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		Dataset set = getDataset();
+		return set.getDefaultModel();
 	}
 	
 	public Model getModel(String modelName) {
-		try {
-			return getDataset().getNamedModel(modelName);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return getDataset().getNamedModel(modelName);
 	}
 	
 	public List<String> modelNames() {
-		try {
-			List<String> list = new ArrayList<String>();
- 			for (Iterator<String> iterator = getDataset().listNames(); iterator.hasNext();) {
-				list.add(iterator.next());
-			}
- 			return list;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		List<String> list = new ArrayList<String>();
+		for (Iterator<String> iterator = getDataset().listNames(); iterator.hasNext();) {
+			list.add(iterator.next());
 		}
+		return list;
 	}
   }
