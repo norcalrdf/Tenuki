@@ -49,13 +49,13 @@ public class GraphResource extends JenaModelResource {
 				throw new ResourceException(e);
 			}
 			Model model = getModel(graphName);
-			model.enterCriticalSection(Lock.WRITE);
+			writeLock();
 			try {
 				model.removeAll();
 				model.add(newModel);
 				TDB.sync(model);
 			} finally {
-				model.leaveCriticalSection();
+				releaseLocks();
 			}
 		}
 		getResponse().setStatus(Status.SUCCESS_CREATED);
@@ -69,12 +69,12 @@ public class GraphResource extends JenaModelResource {
 	@Override
 	public void removeRepresentations() throws ResourceException {
 		Model model = getModel(graphName);
-		model.enterCriticalSection(Lock.WRITE);
+		writeLock();
 		try {
 			model.removeAll();
 			model.commit();
 		} finally {
-			model.leaveCriticalSection();
+			releaseLocks();
 		}
 	}
 
@@ -82,7 +82,7 @@ public class GraphResource extends JenaModelResource {
 	public Representation represent(Variant variant) throws ResourceException {
 		if (MediaType.APPLICATION_RDF_XML.equals(variant.getMediaType())) {
 			Model model = getModel(graphName);
-			return new WholeModelRepresentation(model);
+			return new WholeModelRepresentation(model,getDatasetLock());
 		}
 		return null;
 	}

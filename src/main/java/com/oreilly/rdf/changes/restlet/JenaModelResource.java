@@ -1,8 +1,6 @@
 package com.oreilly.rdf.changes.restlet;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.restlet.Context;
 import org.restlet.data.Request;
@@ -11,7 +9,7 @@ import org.restlet.resource.Resource;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.tdb.TDB;
+import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.tdb.TDBFactory;
 
 public abstract class JenaModelResource extends Resource {
@@ -19,6 +17,22 @@ public abstract class JenaModelResource extends Resource {
 
 	public JenaModelResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
+	}
+	
+	protected void readLock() {
+		getDataset().getLock().enterCriticalSection(Lock.READ);
+	}
+	
+	protected void writeLock() {
+		getDataset().getLock().enterCriticalSection(Lock.WRITE);
+	}
+	
+	protected void releaseLocks() {
+		getDataset().getLock().leaveCriticalSection();
+	}
+	
+	protected Lock getDatasetLock() {
+		return getDataset().getLock();
 	}
 
 	private Dataset getDataset() {

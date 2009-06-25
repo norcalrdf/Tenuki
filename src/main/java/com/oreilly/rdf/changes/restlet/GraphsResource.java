@@ -14,28 +14,33 @@ import org.restlet.resource.StringRepresentation;
 import org.restlet.resource.Variant;
 
 public class GraphsResource extends JenaModelResource {
-	
+
 	private Log log = LogFactory.getLog(GraphsResource.class);
 
 	public GraphsResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
 		getVariants().add(new Variant(MediaType.TEXT_URI_LIST));
 	}
-	
+
 	@Override
 	public Representation represent(Variant variant) throws ResourceException {
 		if (MediaType.TEXT_URI_LIST.equals(variant.getMediaType())) {
 			StringBuilder urilist = new StringBuilder();
-			for (Iterator<String> iterator = modelNames(); iterator.hasNext();) {
-				String name = iterator.next();
-				urilist.append(name);
-				urilist.append("\r\n");
+			readLock();
+			try {
+				for (Iterator<String> iterator = modelNames(); iterator
+						.hasNext();) {
+					String name = iterator.next();
+					urilist.append(name);
+					urilist.append("\r\n");
+				}
+			} finally {
+				releaseLocks();
 			}
-			return new StringRepresentation(urilist.toString(), MediaType.TEXT_URI_LIST);
+			return new StringRepresentation(urilist.toString(),
+					MediaType.TEXT_URI_LIST);
 		}
-		return null;	
+		return null;
 	}
-	
-	
 
 }
