@@ -1,5 +1,7 @@
 package com.oreilly.rdf.changes.restlet;
 
+import java.util.Iterator;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.restlet.Context;
@@ -24,7 +26,8 @@ public class GraphsResource extends JenaModelResource {
 	public Representation represent(Variant variant) throws ResourceException {
 		if (MediaType.TEXT_URI_LIST.equals(variant.getMediaType())) {
 			StringBuilder urilist = new StringBuilder();
-			for (String name : modelNames()) {
+			for (Iterator<String> iterator = modelNames(); iterator.hasNext();) {
+				String name = iterator.next();
 				urilist.append(name);
 				urilist.append("\r\n");
 			}

@@ -37,11 +37,7 @@ public abstract class JenaModelResource extends Resource {
 		return getDataset().getNamedModel(modelName);
 	}
 	
-	public List<String> modelNames() {
-		List<String> list = new ArrayList<String>();
-		for (Iterator<String> iterator = getDataset().listNames(); iterator.hasNext();) {
-			list.add(iterator.next());
-		}
-		return list;
+	public Iterator<String> modelNames() {
+		return getDataset().listNames();
 	}
   }
