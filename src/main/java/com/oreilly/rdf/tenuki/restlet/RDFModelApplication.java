@@ -13,19 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.oreilly.rdf.changes;
+package com.oreilly.rdf.tenuki.restlet;
 
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
+import org.restlet.Application;
+import org.restlet.Restlet;
+import org.restlet.Router;
+import org.restlet.data.MediaType;
 
-public interface Changeset {
+public class RDFModelApplication extends Application {
 	
-	public static final String CHANGESET_NS = "http://purl.org/vocab/changeset/schema#";
-	
-	Resource getSubjectOfChange();
-
-	Statement[]  toRemove();
-
-	Statement[] toAdd();
-
+	@Override
+	public Restlet createRoot() {
+		MediaType.register("CHANGESET", "application/vnd.talis.changeset+xml");
+		Router router = new Router(getContext());
+		router.attach("/changes", ChangesetResource.class);
+		router.attach("/graphs/", GraphsResource.class);
+		router.attach("/graphs/{graphName}", GraphResource.class);
+		return router;
+	}
 }

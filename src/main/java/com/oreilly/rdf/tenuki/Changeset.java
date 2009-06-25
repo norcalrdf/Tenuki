@@ -13,34 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.oreilly.rdf.changes;
+package com.oreilly.rdf.tenuki;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
 
-public class ChangesetHandler {
+public interface Changeset {
 	
-	private Model model;
-
-	/**
-	 * @param model to apply changesets too
-	 */
-	public ChangesetHandler(Model model) {
-		this.model = model;
-	}
+	public static final String CHANGESET_NS = "http://purl.org/vocab/changeset/schema#";
 	
-	public void applyChangeset(Changeset changeset) {
-		try {
-			model.begin();
-			model.remove(changeset.toRemove());
-			model.add(changeset.toAdd());
-		} catch (RuntimeException e) {
-			try {
-			model.abort();
-			} catch (UnsupportedOperationException e1) {
-				//
-			}
-			throw e;
-		}
-		model.commit();
-	}
+	Resource getSubjectOfChange();
+
+	Statement[]  toRemove();
+
+	Statement[] toAdd();
+
 }

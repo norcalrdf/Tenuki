@@ -13,22 +13,34 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.oreilly.rdf.changes.restlet;
+package com.oreilly.rdf.tenuki;
 
-import org.restlet.Application;
-import org.restlet.Restlet;
-import org.restlet.Router;
-import org.restlet.data.MediaType;
+import com.hp.hpl.jena.rdf.model.Model;
 
-public class RDFModelApplication extends Application {
+public class ChangesetHandler {
 	
-	@Override
-	public Restlet createRoot() {
-		MediaType.register("CHANGESET", "application/vnd.talis.changeset+xml");
-		Router router = new Router(getContext());
-		router.attach("/changes", ChangesetResource.class);
-		router.attach("/graphs/", GraphsResource.class);
-		router.attach("/graphs/{graphName}", GraphResource.class);
-		return router;
+	private Model model;
+
+	/**
+	 * @param model to apply changesets too
+	 */
+	public ChangesetHandler(Model model) {
+		this.model = model;
+	}
+	
+	public void applyChangeset(Changeset changeset) {
+		try {
+			model.begin();
+			model.remove(changeset.toRemove());
+			model.add(changeset.toAdd());
+		} catch (RuntimeException e) {
+			try {
+			model.abort();
+			} catch (UnsupportedOperationException e1) {
+				//
+			}
+			throw e;
+		}
+		model.commit();
 	}
 }

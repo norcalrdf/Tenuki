@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.oreilly.rdf.changes.restlet;
+package com.oreilly.rdf.tenuki.restlet;
 
 import java.io.IOException;
 
@@ -28,9 +28,9 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.oreilly.rdf.changes.Changeset;
-import com.oreilly.rdf.changes.ChangesetHandler;
-import com.oreilly.rdf.changes.InputStreamChangeset;
+import com.oreilly.rdf.tenuki.Changeset;
+import com.oreilly.rdf.tenuki.ChangesetHandler;
+import com.oreilly.rdf.tenuki.InputStreamChangeset;
 
 public class ChangesetResource extends JenaModelResource {
 

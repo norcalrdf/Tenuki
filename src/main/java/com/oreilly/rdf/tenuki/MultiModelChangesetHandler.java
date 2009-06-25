@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.oreilly.rdf.changes;
+package com.oreilly.rdf.tenuki;
 
 import java.util.ArrayList;
 import java.util.List;

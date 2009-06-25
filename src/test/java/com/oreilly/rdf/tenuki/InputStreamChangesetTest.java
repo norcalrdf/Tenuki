@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.oreilly.rdf.changes;
+package com.oreilly.rdf.tenuki;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,6 +22,8 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.oreilly.rdf.tenuki.Changeset;
+import com.oreilly.rdf.tenuki.InputStreamChangeset;
 
 public class InputStreamChangesetTest {
 

@@ -13,19 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.oreilly.rdf.changes;
-
-import static org.junit.Assert.*;
+package com.oreilly.rdf.tenuki;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import com.hp.hpl.jena.db.DBConnection;
-import com.hp.hpl.jena.db.IDBConnection;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -34,14 +32,19 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.DC;
+import com.oreilly.rdf.tenuki.Changeset;
+import com.oreilly.rdf.tenuki.ChangesetHandler;
+import com.oreilly.rdf.tenuki.InputStreamChangeset;
 
-public class MultiModelChangesetHandlerTest {
+
+
+public class TestChangeLoader {
 	public static final String TESTING_RESOURCE_URI = "http://example.com/res#thing";
 	public static final String BEFORE_TITLE = "Original Title";
 	public static final String AFTER_TITLE = "New Title";
 
-
 	private class MockChangeSet implements Changeset {
+
 
 		@Override
 		public Statement[] toAdd() {
@@ -71,14 +74,13 @@ public class MultiModelChangesetHandlerTest {
 
 		@Override
 		public Resource getSubjectOfChange() {
-			Model model = ModelFactory.createDefaultModel();
-			return model.createResource("http://example.com/res#thing");
+			return null;
 		}
 
 	}
 
-	private List<Model> models;
-	private IDBConnection conn;
+	private Model model;
+	private DBConnection conn;
 
 	@Before
 	public void setUp() throws Exception {
@@ -91,37 +93,42 @@ public class MultiModelChangesetHandlerTest {
 		// Create database connection
 		conn = new DBConnection ( DB_URL, DB_USER, DB_PASSWD, DB );
 		ModelMaker maker = ModelFactory.createModelRDBMaker(conn) ;
-		models = new ArrayList<Model>(2);
-		models.add(maker.createFreshModel());
-		models.add(maker.createFreshModel());
+		model = maker.createDefaultModel();
+		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
+		testingResource.addProperty(DC.title, BEFORE_TITLE);
+		model.commit();
 
 	}
-	
-	public void teardown() throws Exception {
-		for (Model model : models) {
-			model.close();
-		}
-		conn.cleanDB();
-		conn.close();
+
+	@After
+	public void tearDown() throws Exception {
+		this.model.close();
+		this.conn.cleanDB();
 	}
 
 	@Test
 	public void testApplyChangeset() {
-		assertEquals(2, models.size());
-		for (Model model : models) {
-			Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
-			testingResource.addProperty(DC.title, BEFORE_TITLE);
-			model.commit();
-		}
-		MultiModelChangesetHandler handler = new MultiModelChangesetHandler(models);
+		ChangesetHandler handler = new ChangesetHandler(model);
 		Changeset changeset = new MockChangeSet();
 		handler.applyChangeset(changeset);
-		for (Model model : models) {
-			Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
-			Statement result = testingResource.getProperty(DC.title);
-			Literal title = result.getLiteral();
-			Assert.assertEquals(AFTER_TITLE, title.getLexicalForm());
-		}
+		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
+		Statement result = testingResource.getProperty(DC.title);
+		Literal title = result.getLiteral();
+		Assert.assertEquals(AFTER_TITLE, title.getLexicalForm());
 	}
+	
+	@Test
+	public void testApplyChangesetFile() throws Exception {
+		ClassPathResource changesetResource = new ClassPathResource("changeset.xml");
+		Changeset changeset = new InputStreamChangeset(changesetResource
+				.getInputStream());
+		
+		ChangesetHandler handler = new ChangesetHandler(model);
+		handler.applyChangeset(changeset);
+		Resource testingResource = model.createResource(TESTING_RESOURCE_URI);
+		Statement result = testingResource.getProperty(DC.title);
+		Literal title = result.getLiteral();
+		Assert.assertEquals(AFTER_TITLE, title.getLexicalForm());
 
+	}
 }

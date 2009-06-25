@@ -3,7 +3,7 @@
 <web-app>
     <context-param>
         <param-name>org.restlet.application</param-name>
-        <param-value>com.oreilly.rdf.changes.restlet.RDFModelApplication</param-value>
+        <param-value>com.oreilly.rdf.tenuki.restlet.RDFModelApplication</param-value>
     </context-param>
     
     <servlet>

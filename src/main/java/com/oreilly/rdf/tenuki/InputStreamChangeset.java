@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.oreilly.rdf.changes;
+package com.oreilly.rdf.tenuki;
 
 import java.io.InputStream;
 import java.util.ArrayList;
