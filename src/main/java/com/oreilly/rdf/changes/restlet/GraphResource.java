@@ -30,7 +30,6 @@ import org.restlet.resource.Variant;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.shared.Lock;
 import com.hp.hpl.jena.tdb.TDB;
 
 public class GraphResource extends JenaModelResource {
