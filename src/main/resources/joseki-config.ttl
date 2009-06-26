@@ -14,12 +14,19 @@
 ## --------------------------------------------------------------
 ## About this configuration                                      
 
-<> rdfs:label "Joseki Configuration File" .
+<> rdfs:label "Joseki Configuration File".
 
 ## --------------------------------------------------------------
 ## About this server                                             
 
-<#server>  rdf:type joseki:Server .
+<#server>  rdf:type joseki:Server ;
+    joseki:initialization
+        [ module:implementation 
+            [ module:className <java:com.oreilly.rdf.tenuki.joseki.TDBInit> ;
+              rdfs:label "TDB Init" ; ]
+        ] ;
+    .
+
 
 ## --------------------------------------------------------------
 ## Services                                                      
@@ -57,7 +64,7 @@ tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
 
 ## ---- A whole dadaset managed by TDB
 <#products> rdf:type      tdb:DatasetTDB ;
-    tdb:location "/home/gavin/sandbox/testing-tdb/" ;                  
+    tdb:location "/home/gavin/sandbox/testing-tdb/" ;
     .                                    
 
 

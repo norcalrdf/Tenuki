@@ -112,6 +112,13 @@
     	<artifactId>tdb</artifactId>
     	<version>0.8.1</version>
     </dependency>
+    <dependency>
+    	<groupId>org.json</groupId>
+    	<artifactId>json</artifactId>
+    	<version>20090211</version>
+    	<type>jar</type>
+    	<scope>runtime</scope>
+    </dependency>
   </dependencies>
   <issueManagement>
   	<url>https://intranet.oreilly.com/jira/browse/TENUKI</url>
