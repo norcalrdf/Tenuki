@@ -122,7 +122,7 @@
     </dependency>
   </dependencies>
   <issueManagement>
-  	<url>https://intranet.oreilly.com/jira/browse/TENUKI</url>
+  	<url>http://bitbucket.org/gavin/tenuki/issues/</url>
   </issueManagement>
   <developers>
   	<developer>
@@ -135,8 +135,8 @@
   	</developer>
   </developers>
   <scm>
-  	<connection>scm:hg:http://hg.west.ora.com/var/repositories/tenuki/</connection>
-  	<url>http://hg.west.ora.com/var/repositories/tenuki/</url>
+  	<connection>scm:hg:http://bitbucket.org/gavin/tenuki/</connection>
+  	<url>http://bitbucket.org/gavin/tenuki/</url>
   </scm>
   <organization>
   	<name>O'Reilly Media, Inc</name>
