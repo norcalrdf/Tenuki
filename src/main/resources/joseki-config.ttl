@@ -64,7 +64,7 @@ tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
 
 ## ---- A whole dadaset managed by TDB
 <#products> rdf:type      tdb:DatasetTDB ;
-    tdb:location "/home/gavin/sandbox/testing-tdb/" ;
+    tdb:location "${tdb.location}" ;
     .                                    
 
 

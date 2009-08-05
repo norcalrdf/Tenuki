@@ -11,7 +11,7 @@
         <servlet-class>com.noelios.restlet.ext.servlet.ServerServlet</servlet-class>
         <init-param>
             <param-name>tdb.location</param-name>
-            <param-value>/home/gavin/sandbox/testing-tdb/</param-value>
+            <param-value>${tdb.location}</param-value>
         </init-param>
     </servlet>
     
