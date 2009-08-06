@@ -23,6 +23,16 @@
 			<snapshots />
 		</repository>
 	</repositories>
+    <distributionManagement>
+        <repository>
+          <id>oreilly.internal</id>
+          <url>http://keaton.oreilly.com:8080/archiva/repository/oreilly.internal</url>
+        </repository>
+            <snapshotRepository>
+          <id>oreilly.snapshots</id>
+          <url>http://keaton.oreilly.com:8080/archiva/repository/oreilly.snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
