@@ -152,7 +152,7 @@
 		<url>http://labs.oreilly.com/tenuki</url>
 	</organization>
 	<build>
-		<finalName>tenuki</finalName>
+		<finalName>tenuki-${env}-${version}</finalName>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
