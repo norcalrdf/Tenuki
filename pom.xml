@@ -3,7 +3,7 @@
 	<groupId>com.oreilly.rdf</groupId>
 	<artifactId>tenuki</artifactId>
 	<packaging>war</packaging>
-	<version>0.1-RC2-SNAPSHOT</version>
+	<version>0.1-RC2</version>
 	<name>Tenuki Webapp</name>
 	<repositories>
 		<repository>
