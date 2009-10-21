@@ -98,14 +98,7 @@ public class GraphResource extends JenaModelResource {
 			releaseLocks();
 		}
 		Tag currentTag = Utils.calculateTag(bo.toByteArray());
-		boolean doIt = false;
-		for (Tag tag : getRequest().getConditions().getMatch()) {
-			if (currentTag.equals(tag)) {
-				doIt = true;
-				break;
-			}
-		}
-		if (doIt) {
+		if (getRequest().getConditions().getMatch().contains(currentTag)) {
 			updateModel(entity);
 		}
 		getResponse().setStatus(Status.SUCCESS_OK);
