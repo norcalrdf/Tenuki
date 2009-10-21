@@ -6,7 +6,6 @@ import org.joseki.ServerInitialization;
 
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.tdb.TDB;
-import com.oreilly.rdf.tenuki.restlet.ChangesetResource;
 
 public class TDBInit implements ServerInitialization {
 	private Log log = LogFactory.getLog(TDBInit.class);
