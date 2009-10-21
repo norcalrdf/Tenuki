@@ -1,0 +1,37 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://xmlns.com/foaf/0.1/"
+    xmlns:j.1="http://purl.oreilly.com/ns/meta/"
+    xmlns:j.2="http://purl.org/dc/terms/"
+    xmlns:j.3="http://oreilly.com/legacy/pdb/"
+    xmlns:j.4="http://www.w3.org/2006/vcard/ns#" > 
+  <rdf:Description rdf:about="urn:x-domain:oreilly.com:agent:pdb:2951#ADR-1357">
+    <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Address"/>
+    <j.4:locality xml:lang="en">London</j.4:locality>
+    <j.4:street-address xml:lang="en">Bash Studios</j.4:street-address>
+    <j.4:county-name xml:lang="en">United Kingdom of Great Britain and Northern Ireland</j.4:county-name>
+    <j.4:postal-code xml:lang="en">EC2A 4PJ</j.4:postal-code>
+    <j.4:region xml:lang="en"></j.4:region>
+    <j.4:extend-address xml:lang="en">65-71 Scrutton Street</j.4:extend-address>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.oreillynet.com/pub/au/3010">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+    <j.2:publisher rdf:resource="http://purl.oreilly.com/publishers/ORM"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="urn:x-domain:oreilly.com:agent:pdb:2951">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <j.0:givenname xml:lang="en">James</j.0:givenname>
+    <j.3:agent_id xml:lang="en">2951</j.3:agent_id>
+    <j.1:legalName xml:lang="en">James Governor</j.1:legalName>
+    <j.2:modified xml:lang="en">2009-08-28T18:34:06.434264+00:00</j.2:modified>
+    <j.0:surname xml:lang="en">Governor</j.0:surname>
+    <j.3:agent_type xml:lang="en">individual</j.3:agent_type>
+    <j.0:name xml:lang="en">James Governor</j.0:name>
+    <j.0:mbox_sha1sum xml:lang="en">784354e7ac04aa35639be4ce88c6b547f3fdbb4c</j.0:mbox_sha1sum>
+    <j.0:mbox rdf:resource="mailto:jgovernor@redmonk.com"/>
+    <j.4:workEmail rdf:resource="mailto:jgovernor@redmonk.com"/>
+    <j.0:homepage rdf:resource="http://www.oreillynet.com/pub/au/3010"/>
+    <j.0:homepage rdf:resource="http://www.redmonk.com/jgovernor"/>
+    <j.4:homeAdr rdf:resource="urn:x-domain:oreilly.com:agent:pdb:2951#ADR-1357"/>
+  </rdf:Description>
+</rdf:RDF>
