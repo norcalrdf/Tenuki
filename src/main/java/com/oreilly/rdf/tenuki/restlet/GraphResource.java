@@ -15,6 +15,7 @@
  */
 package com.oreilly.rdf.tenuki.restlet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -24,6 +25,7 @@ import org.restlet.data.MediaType;
 import org.restlet.data.Request;
 import org.restlet.data.Response;
 import org.restlet.data.Status;
+import org.restlet.data.Tag;
 import org.restlet.resource.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
@@ -31,6 +33,7 @@ import org.restlet.resource.Variant;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.tdb.TDB;
+import com.oreilly.rdf.tenuki.Utils;
 
 public class GraphResource extends JenaModelResource {
 
@@ -56,23 +59,56 @@ public class GraphResource extends JenaModelResource {
 	public void acceptRepresentation(Representation entity)
 			throws ResourceException {
 		if (MediaType.APPLICATION_RDF_XML.equals(entity.getMediaType())) {
-			Model newModel = ModelFactory.createDefaultModel();
-			try {
-				newModel.read(entity.getStream(), "");
-			} catch (IOException e) {
-				throw new ResourceException(e);
-			}
-			Model model = getModel(graphName);
-			writeLock();
-			try {
-				model.removeAll();
-				model.add(newModel);
-				TDB.sync(model);
-			} finally {
-				releaseLocks();
-			}
+			updateModel(entity);
 		}
 		getResponse().setStatus(Status.SUCCESS_CREATED);
+	}
+
+	/**
+	 * @param entity
+	 * @throws ResourceException
+	 */
+	private void updateModel(Representation entity) throws ResourceException {
+		Model newModel = ModelFactory.createDefaultModel();
+		try {
+			newModel.read(entity.getStream(), "");
+		} catch (IOException e) {
+			throw new ResourceException(e);
+		}
+		Model model = getModel(graphName);
+		writeLock();
+		try {
+			model.removeAll();
+			model.add(newModel);
+			TDB.sync(model);
+		} finally {
+			releaseLocks();
+		}
+	}
+
+	@Override
+	public void storeRepresentation(Representation entity)
+			throws ResourceException {
+		Model model = getModel(graphName);
+		ByteArrayOutputStream bo = new ByteArrayOutputStream();
+		readLock();
+		try {
+			model.write(bo);
+		} finally {
+			releaseLocks();
+		}
+		Tag currentTag = Utils.calculateTag(bo.toByteArray());
+		boolean doIt = false;
+		for (Tag tag : getRequest().getConditions().getMatch()) {
+			if (currentTag.equals(tag)) {
+				doIt = true;
+				break;
+			}
+		}
+		if (doIt) {
+			updateModel(entity);
+		}
+		getResponse().setStatus(Status.SUCCESS_OK);
 	}
 
 	@Override
@@ -96,7 +132,7 @@ public class GraphResource extends JenaModelResource {
 	public Representation represent(Variant variant) throws ResourceException {
 		if (MediaType.APPLICATION_RDF_XML.equals(variant.getMediaType())) {
 			Model model = getModel(graphName);
-			return new WholeModelRepresentation(model,getDatasetLock());
+			return new WholeModelRepresentation(model, getDatasetLock());
 		}
 		return null;
 	}

@@ -30,6 +30,7 @@ import org.restlet.resource.OutputRepresentation;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.Lock;
+import com.oreilly.rdf.tenuki.Utils;
 
 public class WholeModelRepresentation extends OutputRepresentation {
 	private Log log = LogFactory.getLog(WholeModelRepresentation.class);
@@ -48,18 +49,9 @@ public class WholeModelRepresentation extends OutputRepresentation {
 			lock.leaveCriticalSection();
 		}
 		content = bo.toByteArray();
-		setTag(calculateTag());
+		setTag(Utils.calculateTag(content));
 	}
 	
-	private Tag calculateTag() {
-		try {
-			MessageDigest sha1 = MessageDigest.getInstance("SHA1");
-			byte[] digest = sha1.digest(content);
-			return new Tag( new BigInteger(1, digest).toString(16), false);
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
 	@Override
 	public void write(OutputStream output) throws IOException {
