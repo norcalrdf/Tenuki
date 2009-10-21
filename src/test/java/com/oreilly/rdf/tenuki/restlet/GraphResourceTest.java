@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.restlet.Client;
 import org.restlet.Context;
@@ -26,13 +28,11 @@ public class GraphResourceTest {
 
 	private static final String HOST = "http://localhost:8182";
 	private Client client;
-	private Server server;
+	private static Server server;
 	private ClassPathResource sampleGraphCPResource;
 
-	@Before
-	public void setUp() throws Exception {
-		sampleGraphCPResource = new ClassPathResource("graph.xml");
-		client = new Client(Protocol.HTTP);
+	@BeforeClass
+	public static void before() throws Exception {
 		Restlet restlet = new RDFModelApplication();
 		Context context = new Context();
 		context.getParameters().add("tdb.location", "testing_tdb");
@@ -41,8 +41,14 @@ public class GraphResourceTest {
 		server.start();
 	}
 	
-	@After
-	public void tearDown() throws Exception {
+	@Before
+	public void setUp() throws Exception {
+		sampleGraphCPResource = new ClassPathResource("graph.xml");
+		client = new Client(Protocol.HTTP);
+	}
+	
+	@AfterClass
+	public static void after() throws Exception {
 		server.stop();
 	}
 
