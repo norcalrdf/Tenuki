@@ -15,12 +15,17 @@
  */
 package com.oreilly.rdf.tenuki.restlet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.restlet.data.MediaType;
+import org.restlet.data.Tag;
 import org.restlet.resource.OutputRepresentation;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -28,27 +33,37 @@ import com.hp.hpl.jena.shared.Lock;
 
 public class WholeModelRepresentation extends OutputRepresentation {
 	private Log log = LogFactory.getLog(WholeModelRepresentation.class);
-	private Model model;
-	private Lock lock;
+	private byte[] content;
 
 	public WholeModelRepresentation(Model model, Lock lock) {
 		super(MediaType.APPLICATION_RDF_XML);
-		this.model = model;
-		this.lock = lock;
-	}
-
-	@Override
-	public void write(OutputStream output) throws IOException {
+		ByteArrayOutputStream bo = new ByteArrayOutputStream();
 		lock.enterCriticalSection(Lock.READ);
 		try {
-			model.write(output);
+			model.write(bo);
 		} catch (Exception e) {
 			log.error(e);
 			throw new RuntimeException(e);
 		} finally {
 			lock.leaveCriticalSection();
 		}
+		content = bo.toByteArray();
+		setTag(calculateTag());
+	}
+	
+	private Tag calculateTag() {
+		try {
+			MessageDigest sha1 = MessageDigest.getInstance("SHA1");
+			byte[] digest = sha1.digest(content);
+			return new Tag( new BigInteger(1, digest).toString(16), false);
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
+	@Override
+	public void write(OutputStream output) throws IOException {
+		output.write(content);
 	}
 
 }
