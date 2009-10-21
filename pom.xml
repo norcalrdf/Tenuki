@@ -9,12 +9,12 @@
 		<repository>
 			<id>jena</id>
 			<name>Jena Maven Repository</name>
-			<url>http://jena.hpl.hp.com/repo</url>
+			<url>http://openjena.org/repo</url>
 		</repository>
 		<repository>
 			<id>jena-dev</id>
 			<name>Jena Development Repository</name>
-			<url>http://jena.hpl.hp.com/repo-dev/</url>
+			<url>http://openjena.org/repo-dev/</url>
 		</repository>
 		<repository>
 			<id>restlet</id>
@@ -43,7 +43,7 @@
 		<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
 			<artifactId>jena</artifactId>
-			<version>2.6.0</version>
+			<version>2.6.2</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
@@ -62,18 +62,18 @@
 		<dependency>
 			<groupId>org.restlet</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>1.1.4</version>
+			<version>1.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.noelios.restlet</groupId>
 			<artifactId>com.noelios.restlet</artifactId>
-			<version>1.1.4</version>
+			<version>1.1.6</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.noelios.restlet</groupId>
 			<artifactId>com.noelios.restlet.ext.servlet</artifactId>
-			<version>1.1.4</version>
+			<version>1.1.6</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -107,12 +107,12 @@
 		<dependency>
 			<groupId>org.joseki</groupId>
 			<artifactId>joseki</artifactId>
-			<version>3.4.0</version>
+			<version>3.4.1-RC-1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
 			<artifactId>tdb</artifactId>
-			<version>0.8.1</version>
+			<version>0.8.3-RC-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
