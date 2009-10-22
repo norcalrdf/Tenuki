@@ -1,8 +1,7 @@
 package com.oreilly.rdf.tenuki.restlet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,14 +16,11 @@ import org.restlet.Context;
 import org.restlet.Restlet;
 import org.restlet.Server;
 import org.restlet.data.MediaType;
-import org.restlet.data.Parameter;
 import org.restlet.data.Protocol;
 import org.restlet.data.Response;
 import org.restlet.data.Status;
 import org.restlet.resource.InputRepresentation;
 import org.restlet.resource.Representation;
-import org.restlet.resource.Resource;
-import org.restlet.util.Series;
 import org.springframework.core.io.ClassPathResource;
 
 import com.hp.hpl.jena.query.Dataset;
@@ -52,10 +48,9 @@ public class GraphResourceTest {
 		sampleGraphCPResource = new ClassPathResource("graph.xml");
 		client = new Client(Protocol.HTTP);
 	}
-
-	@AfterClass
-	public static void after() throws Exception {
-		server.stop();
+	
+	@After
+	public void tearDown() {
 		Dataset tdb = TDBFactory.createDataset("testing_tdb");
 		List<String> list = new ArrayList<String>();
 		for (Iterator<String> iterator = tdb.listNames(); iterator.hasNext();) {
@@ -64,6 +59,11 @@ public class GraphResourceTest {
 		for (String modelName : list) {
 			tdb.getNamedModel(modelName).removeAll();
 		}
+	}
+
+	@AfterClass
+	public static void after() throws Exception {
+		server.stop();
 	}
 
 	@Test
