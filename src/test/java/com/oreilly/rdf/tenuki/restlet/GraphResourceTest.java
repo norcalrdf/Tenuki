@@ -3,6 +3,9 @@ package com.oreilly.rdf.tenuki.restlet;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,6 +27,9 @@ import org.restlet.resource.Resource;
 import org.restlet.util.Series;
 import org.springframework.core.io.ClassPathResource;
 
+import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.tdb.TDBFactory;
+
 public class GraphResourceTest {
 
 	private static final String HOST = "http://localhost:8182";
@@ -40,16 +46,24 @@ public class GraphResourceTest {
 		server.setContext(context);
 		server.start();
 	}
-	
+
 	@Before
 	public void setUp() throws Exception {
 		sampleGraphCPResource = new ClassPathResource("graph.xml");
 		client = new Client(Protocol.HTTP);
 	}
-	
+
 	@AfterClass
 	public static void after() throws Exception {
 		server.stop();
+		Dataset tdb = TDBFactory.createDataset("testing_tdb");
+		List<String> list = new ArrayList<String>();
+		for (Iterator<String> iterator = tdb.listNames(); iterator.hasNext();) {
+			list.add(iterator.next());
+		}
+		for (String modelName : list) {
+			tdb.getNamedModel(modelName).removeAll();
+		}
 	}
 
 	@Test
@@ -59,7 +73,7 @@ public class GraphResourceTest {
 		Response resp = client.post(HOST + "/graphs/test", entity);
 		assertEquals(Status.SUCCESS_CREATED, resp.getStatus());
 	}
-	
+
 	@Test
 	public void testGetRepresentation() throws Exception {
 		Representation entity = new InputRepresentation(sampleGraphCPResource
@@ -68,6 +82,5 @@ public class GraphResourceTest {
 		Response resp = client.get(HOST + "/graphs/test");
 		assertEquals(Status.SUCCESS_OK, resp.getStatus());
 	}
-
 
 }
