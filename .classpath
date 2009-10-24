@@ -3,37 +3,68 @@
   <classpathentry kind="src" path="src/test/resources" output="target/test-classes" excluding="**/*.java"/>
   <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
   <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="src" path="src/main/webapp/WEB-INF" including="web.xml" excluding="**/*.java"/>
   <classpathentry kind="output" path="target/classes"/>
-  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/arq/2.7.0/arq-2.7.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/arq/2.8.0/arq-2.8.0-tests.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/arq-extra/2.7.0/arq-extra-2.7.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/noelios/restlet/com.noelios.restlet/1.1.4/com.noelios.restlet-1.1.4.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/noelios/restlet/com.noelios.restlet.ext.servlet/1.1.4/com.noelios.restlet.ext.servlet-1.1.4.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar"/>
-  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" sourcepath="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/arq/2.8.1/arq-2.8.1.jar" sourcepath="M2_REPO/com/hp/hpl/jena/arq/2.8.1/arq-2.8.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/com/hp/hpl/jena/arq/2.8.1/arq-2.8.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/noelios/restlet/com.noelios.restlet/1.1.6/com.noelios.restlet-1.1.6.jar" sourcepath="M2_REPO/com/noelios/restlet/com.noelios.restlet/1.1.6/com.noelios.restlet-1.1.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/noelios/restlet/com.noelios.restlet.ext.servlet/1.1.6/com.noelios.restlet.ext.servlet-1.1.6.jar" sourcepath="M2_REPO/com/noelios/restlet/com.noelios.restlet.ext.servlet/1.1.6/com.noelios.restlet.ext.servlet-1.1.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar" sourcepath="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar" sourcepath="M2_REPO/commons-io/commons-io/1.4/commons-io-1.4-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/iri/0.6/iri-0.6.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/jena/2.6.0/jena-2.6.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4.jar" sourcepath="M2_REPO/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/iri/0.7/iri-0.7.jar" sourcepath="M2_REPO/com/hp/hpl/jena/iri/0.7/iri-0.7-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/com/hp/hpl/jena/iri/0.7/iri-0.7-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/jena/2.6.2/jena-2.6.2.jar" sourcepath="M2_REPO/com/hp/hpl/jena/jena/2.6.2/jena-2.6.2-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/com/hp/hpl/jena/jena/2.6.2/jena-2.6.2-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
   <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/jenatest/2.6.0/jenatest-2.6.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty/6.1.10/jetty-6.1.10.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty-util/6.1.10/jetty-util-6.1.10.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/joseki/joseki/3.4.0/joseki-3.4.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty/6.1.10/jetty-6.1.10.jar" sourcepath="M2_REPO/org/mortbay/jetty/jetty/6.1.10/jetty-6.1.10-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/jetty-util/6.1.10/jetty-util-6.1.10.jar" sourcepath="M2_REPO/org/mortbay/jetty/jetty-util/6.1.10/jetty-util-6.1.10-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/joseki/joseki/3.4.1-RC-1/joseki-3.4.1-RC-1.jar" sourcepath="M2_REPO/org/joseki/joseki/3.4.1-RC-1/joseki-3.4.1-RC-1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/json/json/20090211/json-20090211.jar"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit/4.5/junit-4.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.5/junit-4.5.jar" sourcepath="M2_REPO/junit/junit/4.5/junit-4.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.13/log4j-1.2.13.jar" sourcepath="M2_REPO/log4j/log4j/1.2.13/log4j-1.2.13-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/2.3.1/lucene-core-2.3.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/restlet/org.restlet/1.1.4/org.restlet-1.1.4.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.10/servlet-api-2.5-6.1.10.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-jcl/1.5.6/slf4j-jcl-1.5.6.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.5.6/slf4j-log4j12-1.5.6.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/lucene/lucene-core/2.3.1/lucene-core-2.3.1.jar" sourcepath="M2_REPO/org/apache/lucene/lucene-core/2.3.1/lucene-core-2.3.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/org/apache/lucene/lucene-core/2.3.1/lucene-core-2.3.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/restlet/org.restlet/1.1.6/org.restlet-1.1.6.jar" sourcepath="M2_REPO/org/restlet/org.restlet/1.1.6/org.restlet-1.1.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.10/servlet-api-2.5-6.1.10.jar" sourcepath="M2_REPO/org/mortbay/jetty/servlet-api-2.5/6.1.10/servlet-api-2.5-6.1.10-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-jcl/1.5.6/slf4j-jcl-1.5.6.jar" sourcepath="M2_REPO/org/slf4j/slf4j-jcl/1.5.6/slf4j-jcl-1.5.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-log4j12/1.5.6/slf4j-log4j12-1.5.6.jar" sourcepath="M2_REPO/org/slf4j/slf4j-log4j12/1.5.6/slf4j-log4j12-1.5.6-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar" sourcepath="M2_REPO/org/springframework/spring-core/2.5.6/spring-core-2.5.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/stax/stax-api/1.0.1/stax-api-1.0.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/tdb/0.8.1/tdb-0.8.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/codehaus/woodstox/wstx-asl/3.2.9/wstx-asl-3.2.9.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/hp/hpl/jena/tdb/0.8.3-RC-1/tdb-0.8.3-RC-1.jar" sourcepath="M2_REPO/com/hp/hpl/jena/tdb/0.8.3-RC-1/tdb-0.8.3-RC-1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/gavin/.m2/repository/com/hp/hpl/jena/tdb/0.8.3-RC-1/tdb-0.8.3-RC-1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/codehaus/woodstox/wstx-asl/3.2.9/wstx-asl-3.2.9.jar" sourcepath="M2_REPO/org/codehaus/woodstox/wstx-asl/3.2.9/wstx-asl-3.2.9-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/xerces/xercesImpl/2.7.1/xercesImpl-2.7.1.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 </classpath>
