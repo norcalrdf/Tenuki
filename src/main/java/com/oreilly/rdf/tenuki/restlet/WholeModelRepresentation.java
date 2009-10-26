@@ -18,14 +18,10 @@ package com.oreilly.rdf.tenuki.restlet;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.restlet.data.MediaType;
-import org.restlet.data.Tag;
 import org.restlet.resource.OutputRepresentation;
 
 import com.hp.hpl.jena.rdf.model.Model;

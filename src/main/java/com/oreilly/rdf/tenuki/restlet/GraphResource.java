@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.restlet.Context;
 import org.restlet.data.MediaType;
 import org.restlet.data.Request;
@@ -37,6 +39,8 @@ import com.oreilly.rdf.tenuki.Utils;
 
 public class GraphResource extends JenaModelResource {
 
+	private Log log = LogFactory.getLog(GraphResource.class);
+
 	private String graphName;
 
 	public GraphResource(Context content, Request request, Response responce) {
@@ -52,6 +56,11 @@ public class GraphResource extends JenaModelResource {
 
 	@Override
 	public boolean allowPost() {
+		return true;
+	}
+
+	@Override
+	public boolean allowPut() {
 		return true;
 	}
 
@@ -99,9 +108,20 @@ public class GraphResource extends JenaModelResource {
 		}
 		Tag currentTag = Utils.calculateTag(bo.toByteArray());
 		if (getRequest().getConditions().getMatch().contains(currentTag)) {
+			log.debug("Matching ETag");
 			updateModel(entity);
+			getResponse().setStatus(Status.SUCCESS_OK);
+		} else {
+			if (getRequest().getConditions().getMatch().size() == 0) {
+				log.debug("No ETag");
+				updateModel(entity);
+				getResponse().setStatus(Status.SUCCESS_OK);
+			} else {
+				log.debug("Failed to match ETag");
+				getResponse()
+						.setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED);
+			}
 		}
-		getResponse().setStatus(Status.SUCCESS_OK);
 	}
 
 	@Override
