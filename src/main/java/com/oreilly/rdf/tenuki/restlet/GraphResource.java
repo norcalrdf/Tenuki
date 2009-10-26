@@ -106,14 +106,15 @@ public class GraphResource extends JenaModelResource {
 		} finally {
 			releaseLocks();
 		}
-		Tag currentTag = Utils.calculateTag(bo.toByteArray());
-		if (getRequest().getConditions().getMatch().contains(currentTag)) {
-			log.debug("Matching ETag");
+
+		if (getRequest().getConditions().getMatch().size() == 0) {
+			log.debug("No ETag");
 			updateModel(entity);
 			getResponse().setStatus(Status.SUCCESS_OK);
 		} else {
-			if (getRequest().getConditions().getMatch().size() == 0) {
-				log.debug("No ETag");
+			Tag currentTag = Utils.calculateTag(bo.toByteArray());
+			if (getRequest().getConditions().getMatch().contains(currentTag)) {
+				log.debug("Matching ETag");
 				updateModel(entity);
 				getResponse().setStatus(Status.SUCCESS_OK);
 			} else {
@@ -122,6 +123,7 @@ public class GraphResource extends JenaModelResource {
 						.setStatus(Status.CLIENT_ERROR_PRECONDITION_FAILED);
 			}
 		}
+
 	}
 
 	@Override
