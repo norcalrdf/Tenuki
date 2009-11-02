@@ -1,2 +1,4 @@
 syntax: glob
 target
+syntax:regexp
+^testing_tdb/
