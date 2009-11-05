@@ -112,7 +112,7 @@
 		<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
 			<artifactId>tdb</artifactId>
-			<version>0.8.3-RC-2</version>
+			<version>0.8.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
