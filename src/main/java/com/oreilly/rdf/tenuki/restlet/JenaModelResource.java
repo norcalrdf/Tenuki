@@ -52,7 +52,7 @@ public abstract class JenaModelResource extends Resource {
 		return getDataset().getLock();
 	}
 
-	private Dataset getDataset() {
+	protected Dataset getDataset() {
 		String location = getContext().getParameters().getFirstValue(TDB_LOCATION_PARAM);
 		Dataset set = TDBFactory.createDataset(location);
 		return set;

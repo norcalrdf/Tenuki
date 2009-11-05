@@ -29,6 +29,7 @@ public class RDFModelApplication extends Application {
 		router.attach("/changes", ChangesetResource.class);
 		router.attach("/graphs/", GraphsResource.class);
 		router.attach("/graphs/{graphName}", GraphResource.class);
+		router.attach("/related/{graphName}", RelatedGraphs.class);
 		return router;
 	}
 }
