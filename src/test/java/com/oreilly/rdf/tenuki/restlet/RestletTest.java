@@ -29,7 +29,7 @@ public abstract class RestletTest {
 	public static void before() throws Exception {
 		Restlet restlet = new RDFModelApplication();
 		Context context = new Context();
-		context.getParameters().add("tdb.location", "testing_tdb");
+		context.getParameters().add("tdb-bdb.location", "testing_tdb-bdb");
 		server = new Server(Protocol.HTTP, 8182, restlet);
 		server.setContext(context);
 		server.start();
