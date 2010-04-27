@@ -60,7 +60,7 @@
 ## Initialize TDB-SDB.
 
 [] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
-[] ja:loadClass "tdbplus.bdb.InitBDB" .
+[] ja:loadClass "com.tails.tdb.bdb.InitBDB" .
 
 tdb:DatasetTDB rdfs:subClassOf ja:RDFDataset .
 tdb:DatasetTDB_BDB rdfs:subClassOf tdb:DatasetTDB .
