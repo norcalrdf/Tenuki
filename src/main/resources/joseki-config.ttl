@@ -57,7 +57,7 @@
 ## ----------------
 ## Complete Product Database model
 
-## Initialize TDB-SDB.
+## Initialize TDB-BDB.
 
 [] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
 [] ja:loadClass "com.tails.tdb.bdb.InitBDB" .
