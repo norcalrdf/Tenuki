@@ -17,7 +17,6 @@ import org.springframework.core.io.ClassPathResource;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.sparql.core.DatasetImpl;
-import com.hp.hpl.jena.tdb.TDBFactory;
 import com.hp.hpl.jena.tdb.store.DatasetGraphTDB;
 import com.talis.tdb.bdb.BDBinstance;
 import com.talis.tdb.bdb.SetupBDB;
