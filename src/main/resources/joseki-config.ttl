@@ -10,7 +10,6 @@
 
 @prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .        
 
-
 ## --------------------------------------------------------------
 ## About this configuration                                      
 
@@ -60,9 +59,10 @@
 ## Initialize TDB-BDB.
 
 [] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
-[] ja:loadClass "com.tails.tdb.bdb.InitBDB" .
+#[] ja:loadClass "com.tails.tdb.bdb.InitBDB" .
 
 tdb:DatasetTDB rdfs:subClassOf ja:RDFDataset .
+tdb:DatasetTDB_BDB rdfs:subClassOf ja:RDFDataset .
 tdb:DatasetTDB_BDB rdfs:subClassOf tdb:DatasetTDB .
 
 <#products> rdf:type      tdb:DatasetTDB_BDB ;
