@@ -1,4 +1,4 @@
-package com.oreilly.com.rdf.tenuki.jaxrs;
+package com.oreilly.com.rdf.tenuki.jaxrs.io;
 
 import java.io.IOException;
 import java.io.OutputStream;

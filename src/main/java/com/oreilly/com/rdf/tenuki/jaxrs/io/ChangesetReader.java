@@ -1,4 +1,4 @@
-package com.oreilly.com.rdf.tenuki.jaxrs;
+package com.oreilly.com.rdf.tenuki.jaxrs.io;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,27 +12,26 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.oreilly.rdf.tenuki.Changeset;
+import com.oreilly.rdf.tenuki.InputStreamChangeset;
 
 @Provider
-@Consumes("application/rdf+xml,text/turtle,text/plain,text/rdf+n3")
-public class ModelReader implements MessageBodyReader<Model> {
+@Consumes("application/vnd.talis.changeset+xml")
+public class ChangesetReader implements MessageBodyReader<Changeset> {
 
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		//TODO: Figure out what the heck to do here.
+		// TODO: Do something useful here?
 		return true;
 	}
 
 	@Override
-	public Model readFrom(Class<Model> type, Type genericType,
+	public Changeset readFrom(Class<Changeset> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
-		Model model = ModelFactory.createDefaultModel();
-		return model.read(entityStream, "");
+		return new InputStreamChangeset(entityStream);
 	}
 
 }
