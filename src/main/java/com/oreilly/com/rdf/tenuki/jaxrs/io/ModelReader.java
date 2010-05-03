@@ -22,8 +22,7 @@ public class ModelReader implements MessageBodyReader<Model> {
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		//TODO: Figure out what the heck to do here.
-		return true;
+		return Model.class.isAssignableFrom(type);
 	}
 
 	@Override

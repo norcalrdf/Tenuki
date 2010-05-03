@@ -27,7 +27,7 @@ public class ModelWriter implements MessageBodyWriter<Model> {
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return true;
+		return Model.class.isAssignableFrom(type);
 	}
 
 	@Override
