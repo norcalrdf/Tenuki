@@ -167,7 +167,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-core</artifactId>
+			<artifactId>jersey-server</artifactId>
 			<version>1.1.5.1</version>
 		</dependency>
 	</dependencies>
