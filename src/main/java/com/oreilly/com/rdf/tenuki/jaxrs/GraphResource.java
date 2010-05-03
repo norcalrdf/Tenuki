@@ -9,21 +9,18 @@ import javax.ws.rs.Produces;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.sparql.core.DatasetImpl;
-import com.hp.hpl.jena.tdb.store.DatasetGraphTDB;
-import com.talis.tdb.bdb.BDBinstance;
-import com.talis.tdb.bdb.SetupBDB;
 
 @Path("/graphs/")
 public class GraphResource {
 
 	private Dataset dataset;
 
+	public void setDataset(Dataset dataset) {
+		this.dataset = dataset;
+	}
+
 	public GraphResource() {
-		String location = "tdb_bdb";
-		BDBinstance bdb = new BDBinstance(location);
-		DatasetGraphTDB dsg = SetupBDB.buildDataset(bdb);
-		this.dataset = new DatasetImpl(dsg);
+		
 	}
 
 	@Path("{graphUri}")
