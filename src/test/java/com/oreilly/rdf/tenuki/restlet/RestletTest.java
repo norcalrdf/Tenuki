@@ -16,7 +16,10 @@ import org.restlet.data.Protocol;
 import org.springframework.core.io.ClassPathResource;
 
 import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.sparql.core.DatasetImpl;
+import com.hp.hpl.jena.tdb.store.DatasetGraphTDB;
+import com.talis.tdb.bdb.BDBinstance;
+import com.talis.tdb.bdb.SetupBDB;
 
 public abstract class RestletTest {
 
@@ -29,7 +32,7 @@ public abstract class RestletTest {
 	public static void before() throws Exception {
 		Restlet restlet = new RDFModelApplication();
 		Context context = new Context();
-		context.getParameters().add("tdb.location", "testing_tdb");
+		context.getParameters().add("tdb-bdb.location", "testing_tdb-bdb");
 		server = new Server(Protocol.HTTP, 8182, restlet);
 		server.setContext(context);
 		server.start();
@@ -48,7 +51,9 @@ public abstract class RestletTest {
 
 	@After
 	public void tearDown() {
-		Dataset tdb = TDBFactory.createDataset("testing_tdb");
+		BDBinstance bdb = new BDBinstance("testing_tdb-bdb");
+		DatasetGraphTDB dsg = SetupBDB.buildDataset(bdb);
+		Dataset tdb = new DatasetImpl(dsg);
 		List<String> list = new ArrayList<String>();
 		for (Iterator<String> iterator = tdb.listNames(); iterator.hasNext();) {
 			list.add(iterator.next());

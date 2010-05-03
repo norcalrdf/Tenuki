@@ -10,7 +10,7 @@
         <servlet-name>RestletServlet</servlet-name>
         <servlet-class>com.noelios.restlet.ext.servlet.ServerServlet</servlet-class>
         <init-param>
-            <param-name>tdb.location</param-name>
+            <param-name>tdb-bdb.location</param-name>
             <param-value>${tdb.location}</param-value>
         </init-param>
     </servlet>

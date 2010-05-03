@@ -10,7 +10,6 @@
 
 @prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .        
 
-
 ## --------------------------------------------------------------
 ## About this configuration                                      
 
@@ -57,15 +56,18 @@
 ## ----------------
 ## Complete Product Database model
 
-## Initialize TDB.
+## Initialize TDB-BDB.
 
 [] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
-tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
+#[] ja:loadClass "com.tails.tdb.bdb.InitBDB" .
 
-## ---- A whole dadaset managed by TDB
-<#products> rdf:type      tdb:DatasetTDB ;
+tdb:DatasetTDB rdfs:subClassOf ja:RDFDataset .
+tdb:DatasetTDB_BDB rdfs:subClassOf ja:RDFDataset .
+tdb:DatasetTDB_BDB rdfs:subClassOf tdb:DatasetTDB .
+
+<#products> rdf:type      tdb:DatasetTDB_BDB ;
     tdb:location "${tdb.location}" ;
-    .                                    
+    .
 
 
 ## --------------------------------------------------------------
@@ -92,7 +94,7 @@ joseki:ProcessorSPARQL_FixedDS
     # This processor does not accept queries with FROM/FROM NAMED
     joseki:allowExplicitDataset       "false"^^xsd:boolean ;
     joseki:allowWebLoading            "false"^^xsd:boolean ;
-    joseki:lockingPolicy              joseki:lockingPolicyMRSW ;
+    joseki:lockingPolicy              joseki:lockingPolicyNone ;
     .
 
 joseki:ProcessorSPARQLUpdate

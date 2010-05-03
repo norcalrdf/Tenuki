@@ -21,7 +21,6 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceRequiredException;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.oreilly.rdf.tenuki.InputStreamChangeset;
 
 public class RelatedGraphs extends JenaModelResource {
 	private Log log = LogFactory.getLog(RelatedGraphs.class);

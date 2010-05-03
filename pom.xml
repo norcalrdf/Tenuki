@@ -3,7 +3,7 @@
 	<groupId>com.oreilly.rdf</groupId>
 	<artifactId>tenuki</artifactId>
 	<packaging>war</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2-BDB-SNAPSHOT</version>
 	<name>Tenuki Webapp</name>
 	<repositories>
 		<repository>
@@ -140,6 +140,11 @@
 			<version>2.5.6</version>
 			<type>jar</type>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.hp.hpl.jena</groupId>
+			<artifactId>tdb-bdb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<issueManagement>

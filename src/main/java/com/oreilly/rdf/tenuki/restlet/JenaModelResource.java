@@ -25,49 +25,53 @@ import org.restlet.resource.Resource;
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.shared.Lock;
-import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.sparql.core.DatasetImpl;
+import com.hp.hpl.jena.tdb.store.DatasetGraphTDB;
+import com.talis.tdb.bdb.BDBinstance;
+import com.talis.tdb.bdb.SetupBDB;
 
 public abstract class JenaModelResource extends Resource {
 
-
-	private static final String TDB_LOCATION_PARAM = "tdb.location";
+	private static final String TDB_LOCATION_PARAM = "tdb-bdb.location";
 
 	public JenaModelResource(Context content, Request request, Response responce) {
 		super(content, request, responce);
 	}
-	
+
 	protected void readLock() {
-		getDataset().getLock().enterCriticalSection(Lock.READ);
+		// getDataset().getLock().enterCriticalSection(Lock.READ);
 	}
-	
+
 	protected void writeLock() {
-		getDataset().getLock().enterCriticalSection(Lock.WRITE);
+		// getDataset().getLock().enterCriticalSection(Lock.WRITE);
 	}
-	
+
 	protected void releaseLocks() {
-		getDataset().getLock().leaveCriticalSection();
+		// getDataset().getLock().leaveCriticalSection();
 	}
-	
+
 	protected Lock getDatasetLock() {
 		return getDataset().getLock();
 	}
 
 	protected Dataset getDataset() {
-		String location = getContext().getParameters().getFirstValue(TDB_LOCATION_PARAM);
-		Dataset set = TDBFactory.createDataset(location);
-		return set;
+		String location = getContext().getParameters().getFirstValue(
+				TDB_LOCATION_PARAM);
+		BDBinstance bdb = new BDBinstance(location);
+		DatasetGraphTDB dsg = SetupBDB.buildDataset(bdb);
+		return new DatasetImpl(dsg);
 	}
-	
+
 	public Model getDefaultModel() {
 		Dataset set = getDataset();
 		return set.getDefaultModel();
 	}
-	
+
 	public Model getModel(String modelName) {
 		return getDataset().getNamedModel(modelName);
 	}
-	
+
 	public Iterator<String> modelNames() {
 		return getDataset().listNames();
 	}
-  }
+}
