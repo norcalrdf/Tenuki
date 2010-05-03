@@ -16,22 +16,23 @@ import com.talis.tdb.bdb.SetupBDB;
 
 @Path("/graphs/")
 public class GraphResource {
-	
+
 	private Dataset dataset;
 
 	public GraphResource() {
 		String location = "tdb_bdb";
 		BDBinstance bdb = new BDBinstance(location);
 		DatasetGraphTDB dsg = SetupBDB.buildDataset(bdb);
-		this.dataset = new DatasetImpl(dsg);	}
-	
+		this.dataset = new DatasetImpl(dsg);
+	}
+
 	@Path("{graphUri}")
 	@Produces("application/rdf+xml")
 	@GET
 	public Model getGraph(@PathParam("graphUri") String graphUri) {
 		return dataset.getNamedModel(graphUri);
 	}
-	
+
 	@Path("{graphUri}")
 	@Consumes("application/rdf+xml")
 	@PUT
