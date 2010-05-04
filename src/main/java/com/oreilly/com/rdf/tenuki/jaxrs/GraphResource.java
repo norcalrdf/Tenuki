@@ -8,9 +8,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.oreilly.rdf.tenuki.Changeset;
+import com.oreilly.rdf.tenuki.ChangesetHandler;
 
 @Path("/graphs/")
 public class GraphResource {
@@ -33,7 +38,7 @@ public class GraphResource {
 		}
 		return urilist.toString();
 	}
-	
+
 	@Path("{graphUri}")
 	@Produces("application/rdf+xml")
 	@GET
@@ -44,9 +49,26 @@ public class GraphResource {
 	@Path("{graphUri}")
 	@Consumes("application/rdf+xml")
 	@PUT
-	public void setGraph(@PathParam("graphUri") String graphUri, Model model) {
+	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
 		Model dsModel = dataset.getNamedModel(graphUri);
 		dsModel.add(model);
+		return Response.noContent().build();
+	}
+
+	@Path("{graphUri}")
+	@Consumes("application/vnd.talis.changeset+xml")
+	@PATCH
+	public Response applyChangesetToGraph(
+			@PathParam("graphUri") String graphUri, Changeset changeset) {
+		if (changeset.getSubjectOfChange().toString().equals(graphUri)) {
+			Model dsModel = dataset.getNamedModel(graphUri);
+			ChangesetHandler handler = new ChangesetHandler(dsModel);
+			handler.applyChangeset(changeset);
+			return Response.ok(dsModel,
+					MediaType.valueOf("application/rdf+xml")).build();
+		} else {
+			return Response.serverError().build();
+		}
 	}
 
 }
