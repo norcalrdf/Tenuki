@@ -22,8 +22,7 @@ public class ChangesetReader implements MessageBodyReader<Changeset> {
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		// TODO: Do something useful here?
-		return true;
+		return Changeset.class.isAssignableFrom(type);
 	}
 
 	@Override
