@@ -38,16 +38,22 @@ public class GraphResource {
 		}
 		return urilist.toString();
 	}
+	
+	@Produces("application/rdf+xml")
+	@GET
+	public Model getGraphByQueryParam(@QueryParam("graph") String graphUri) {
+		return dataset.getNamedModel(graphUri);
+	}
 
 	@Path("{graphUri}")
-	@Produces("application/rdf+xml")
+	@Produces("application/rdf+xml, text/turtle, text/rdf+n3, text/plain")
 	@GET
 	public Model getGraph(@PathParam("graphUri") String graphUri) {
 		return dataset.getNamedModel(graphUri);
 	}
 
 	@Path("{graphUri}")
-	@Consumes("application/rdf+xml")
+	@Consumes("application/rdf+xml, text/turtle, text/rdf+n3, text/plain")
 	@PUT
 	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
 		Model dsModel = dataset.getNamedModel(graphUri);
