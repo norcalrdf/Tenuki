@@ -1,10 +1,5 @@
 package com.oreilly.rdf.tenuki.api;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.ContextLoaderListener;
 
 import com.sun.jersey.spi.spring.container.servlet.SpringServlet;
