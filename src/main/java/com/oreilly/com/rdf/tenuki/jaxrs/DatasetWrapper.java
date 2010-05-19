@@ -24,6 +24,7 @@ public class DatasetWrapper {
 	
 	
 	public void destroy() {
+		this.dataset.close();
 		this.bdb.close();
 	}
 }
