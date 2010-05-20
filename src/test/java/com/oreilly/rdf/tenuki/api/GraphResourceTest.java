@@ -34,4 +34,18 @@ public class GraphResourceTest extends APITest {
 		Assert.assertEquals(200, resp2.getStatus());
 	}
 
+	@Test
+	public void testPatch() throws Exception {
+		ClassPathResource changeMeCPR = new ClassPathResource("changeme.xml");
+		ClassPathResource changesetCPR = new ClassPathResource("changeset.xml");
+		WebResource webResource = resource();
+		ClientResponse resp = webResource.path("graphs/changes").type(
+				"application/rdf+xml").put(ClientResponse.class,
+				changeMeCPR.getFile());
+		Assert.assertEquals(204, resp.getStatus());
+		ClientResponse resp2 = resource().path("graphs/changes").method(
+				"PATCH", ClientResponse.class, changesetCPR.getFile());
+		Assert.assertEquals(200, resp2.getStatus());
+	}
+
 }
