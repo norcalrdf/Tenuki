@@ -52,6 +52,11 @@
 	    <ver.joseki>3.4.1</ver.joseki>
   	</properties>
 	<dependencies>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.0.1</version>
+      </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

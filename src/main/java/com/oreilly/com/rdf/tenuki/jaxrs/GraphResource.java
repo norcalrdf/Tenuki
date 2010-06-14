@@ -66,7 +66,8 @@ public class GraphResource {
 	@PATCH
 	public Response applyChangesetToGraph(
 			@PathParam("graphUri") String graphUri, Changeset changeset) {
-		if (changeset.getSubjectOfChange().toString().equals(graphUri)) {
+	    String subject = changeset.getSubjectOfChange().toString();
+		if ("changes".equals(graphUri) || changeset.getSubjectOfChange().toString().equals(graphUri)) {
 			Model dsModel = dataset.getNamedModel(graphUri);
 			ChangesetHandler handler = new ChangesetHandler(dsModel);
 			handler.applyChangeset(changeset);
