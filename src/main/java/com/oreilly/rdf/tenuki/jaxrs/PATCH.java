@@ -1,4 +1,4 @@
-package com.oreilly.com.rdf.tenuki.jaxrs;
+package com.oreilly.rdf.tenuki.jaxrs;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
