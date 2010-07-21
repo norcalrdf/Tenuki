@@ -10,18 +10,24 @@
 	  <property name="username" value="${jdbc.username}"/>
 	  <property name="password" value="${jdbc.password}"/>
   </bean>
-
-
-
+  
+  <bean id="dataset" class="com.hp.hpl.jena.sdb.SDBFactory" factory-method="connectDataset">
+  	<constructor-arg>
+  		<bean factory-bean="dataSource" factory-method="getConnection" scope="request"/>
+  	</constructor-arg>
+  	<constructor-arg>
+  		<bean class="com.hp.hpl.jena.sdb.StoreDesc">
+  			<constructor-arg value="${sdb.layoutName}"/>
+  			<constructor-arg value="${sdb.dbTypeName}"/>
+  		</bean>
+  	</constructor-arg>
+  </bean>
+    
   <bean id="graphResource" class="com.oreilly.rdf.tenuki.jaxrs.GraphResource">
     <property name="dataset">
+    	<ref bean="dataset"/>
     </property>
   </bean>
-
-    
-      
-  
-  
 
   <!-- more bean definitions go here -->
 
