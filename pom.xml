@@ -298,6 +298,22 @@
 				</filters>
 			</build>
 		</profile>
+		<profile>
+			<id>ec2</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>ec2</value>
+				</property>
+			</activation>
+			<build>
+				<filters>
+					<filter>
+						${basedir}/src/main/filters/ec2.properties
+					</filter>
+				</filters>
+			</build>
+		</profile>
 	</profiles>
 
 </project>
