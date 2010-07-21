@@ -14,26 +14,6 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-
-	<servlet>
-		<servlet-name>RestletServlet</servlet-name>
-		<servlet-class>com.noelios.restlet.ext.servlet.ServerServlet</servlet-class>
-		<init-param>
-			<param-name>tdb-bdb.location</param-name>
-			<param-value>${tdb.location}</param-value>
-		</init-param>
-	</servlet>
-
-	<servlet>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>com.oreilly.com.rdf.tenuki.jaxrs.TenukiApplication</param-value>
-			
-		</init-param>
-	</servlet>
-
 	<servlet>
 		<servlet-name>SPARQL service processor</servlet-name>
 		<servlet-class>org.joseki.http.Servlet</servlet-class>
