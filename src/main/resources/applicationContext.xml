@@ -4,17 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
   
-  <bean id="datasetWrapper" class="com.oreilly.com.rdf.tenuki.jaxrs.DatasetWrapper"
-    destroy-method="destroy">
-    <constructor-arg value="${tdb.location}" />
-  </bean>
+
 
 
   <bean id="graphResource" class="com.oreilly.com.rdf.tenuki.jaxrs.GraphResource">
     <property name="dataset">
-       <bean 
-       factory-bean="datasetWrapper"
-       factory-method="getDataset" />
     </property>
   </bean>
 

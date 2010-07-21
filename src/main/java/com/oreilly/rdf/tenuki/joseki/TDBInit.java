@@ -6,7 +6,6 @@ import org.joseki.ServerInitialization;
 
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.tdb.TDB;
-import com.talis.tdb.bdb.InitBDB;
 
 public class TDBInit implements ServerInitialization {
 	private Log log = LogFactory.getLog(TDBInit.class);
@@ -15,7 +14,7 @@ public class TDBInit implements ServerInitialization {
 	@Override
 	public void init(Resource service, Resource implementation) {
 		log.info("Setting TDB unionDefaultGraph");
-		InitBDB.init();
+		//InitBDB.init();
 		TDB.getContext().set(TDB.symUnionDefaultGraph, true);
 	}
 
