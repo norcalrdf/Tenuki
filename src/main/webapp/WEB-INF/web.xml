@@ -1,41 +1,47 @@
 <?xml version="1.0"?>
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
-    <context-param>
-        <param-name>org.restlet.application</param-name>
-        <param-value>com.oreilly.rdf.tenuki.restlet.RDFModelApplication</param-value>
-    </context-param>
-    
-    <servlet>
-        <servlet-name>RestletServlet</servlet-name>
-        <servlet-class>com.noelios.restlet.ext.servlet.ServerServlet</servlet-class>
-        <init-param>
-            <param-name>tdb-bdb.location</param-name>
-            <param-value>${tdb.location}</param-value>
-        </init-param>
-    </servlet>
-    
-    <servlet>
-        <servlet-name>SPARQL service processor</servlet-name>
-        <servlet-class>org.joseki.http.Servlet</servlet-class>
-        <!-- Configuration file -->
-        <init-param>               
-            <param-name>org.joseki.rdfserver.config</param-name>
-            <param-value>joseki-config.ttl</param-value>        
-        </init-param>
-        <load-on-startup>1</load-on-startup>        
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>SPARQL service processor</servlet-name>
-        <url-pattern>/sparql</url-pattern>                   
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SPARQL service processor</servlet-name>
-        <url-pattern>/sparql/*</url-pattern>                 
-    </servlet-mapping>                                         
-    <servlet-mapping>
-        <servlet-name>RestletServlet</servlet-name> 
-        <url-pattern>/*</url-pattern> 
-    </servlet-mapping>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>SPARQL service processor</servlet-name>
+		<servlet-class>org.joseki.http.Servlet</servlet-class>
+		<!-- Configuration file -->
+		<init-param>
+			<param-name>org.joseki.rdfserver.config</param-name>
+			<param-value>joseki-config.ttl</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>Jersey Spring Web Application</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+		<init-param>
+           <param-name>com.sun.jersey.config.property.packages</param-name>
+           <param-value>com.oreilly.rdf.tenuki.jaxrs</param-value>
+       </init-param>
+		
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SPARQL service processor</servlet-name>
+		<url-pattern>/sparql</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SPARQL service processor</servlet-name>
+		<url-pattern>/sparql/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Jersey Spring Web Application</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
 </web-app>

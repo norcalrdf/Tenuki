@@ -8,7 +8,7 @@
 @prefix joseki: <http://joseki.org/2005/06/configuration#> .
 @prefix ja:     <http://jena.hpl.hp.com/2005/11/Assembler#> .
 
-@prefix tdb:     <http://jena.hpl.hp.com/2008/tdb#> .        
+@prefix sdb:     <http://jena.hpl.hp.com/2007/sdb#> .
 
 ## --------------------------------------------------------------
 ## About this configuration                                      
@@ -21,8 +21,8 @@
 <#server>  rdf:type joseki:Server ;
     joseki:initialization
         [ module:implementation 
-            [ module:className <java:com.oreilly.rdf.tenuki.joseki.TDBInit> ;
-              rdfs:label "TDB Init" ; ]
+            [ module:className <java:com.oreilly.rdf.tenuki.joseki.SDBInit> ;
+              rdfs:label "SDB Init" ; ]
         ] ;
     .
 
@@ -56,17 +56,23 @@
 ## ----------------
 ## Complete Product Database model
 
-## Initialize TDB-BDB.
+[] ja:loadClass "com.hp.hpl.jena.sdb.SDB" .
 
-[] ja:loadClass "com.hp.hpl.jena.tdb.TDB" .
-#[] ja:loadClass "com.tails.tdb.bdb.InitBDB" .
+sdb:DatasetStore rdfs:subClassOf ja:RDFDataset .
 
-tdb:DatasetTDB rdfs:subClassOf ja:RDFDataset .
-tdb:DatasetTDB_BDB rdfs:subClassOf ja:RDFDataset .
-tdb:DatasetTDB_BDB rdfs:subClassOf tdb:DatasetTDB .
+<#products> rdf:type sdb:DatasetStore ;
+    sdb:store <#store> .
 
-<#products> rdf:type      tdb:DatasetTDB_BDB ;
-    tdb:location "${tdb.location}" ;
+<#store> rdf:type sdb:Store ;
+    sdb:layout         "${sdb.layoutName}" ;
+    sdb:connection     <#conn> ;
+.
+<#conn> rdf:type sdb:SDBConnection ;
+    sdb:sdbType        "${sdb.dbTypeName}" ;
+    sdb:sdbUser		   "${jdbc.username}";
+   	sdb:sdbPassword	   "${jdbc.password}";
+    sdb:jdbcURL        "${jdbc.url}" ;
+    sdb:driver         "${jdbc.driverClassName}" ;
     .
 
 
