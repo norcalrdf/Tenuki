@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -66,6 +67,18 @@ public class GraphResource {
 	@PATCH
 	public Response applyChangesetToGraph(
 			@PathParam("graphUri") String graphUri, Changeset changeset) {
+		return applyChangeset(graphUri, changeset);
+	}
+	
+	@Path("{graphUri}/patch")
+	@Consumes("application/vnd.talis.changeset+xml")
+	@POST
+	public Response applyChangesetToGraphPost(
+			@PathParam("graphUri") String graphUri, Changeset changeset) {
+		return applyChangeset(graphUri, changeset);
+	}
+	
+	private Response applyChangeset(String graphUri, Changeset changeset) {
 	    String subject = changeset.getSubjectOfChange().toString();
 		if ("changes".equals(graphUri) || changeset.getSubjectOfChange().toString().equals(graphUri)) {
 			Model dsModel = dataset.getNamedModel(graphUri);
@@ -76,6 +89,8 @@ public class GraphResource {
 		} else {
 			return Response.serverError().build();
 		}
+
 	}
+
 
 }

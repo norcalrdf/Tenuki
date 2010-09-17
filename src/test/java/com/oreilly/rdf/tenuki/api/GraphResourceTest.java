@@ -44,10 +44,10 @@ public class GraphResourceTest extends APITest {
 		ClassPathResource changeMeCPR = new ClassPathResource("changeme.xml");
 		ClassPathResource changesetCPR = new ClassPathResource("changeset.xml");
 		WebResource webResource = resource();
-		ClientResponse resp =
-            webResource.path("graphs/changes").type("application/rdf+xml").put(ClientResponse.class,
-                                                                               changeMeCPR.getFile());
-        Assert.assertEquals(204, resp.getStatus());
+		ClientResponse resp = webResource.path("graphs/changes").type(
+				"application/rdf+xml").put(ClientResponse.class,
+				changeMeCPR.getFile());
+		Assert.assertEquals(204, resp.getStatus());
 
 		WebResource res = webResource.path("graphs/changes");
 		URI uri = res.getURI();
@@ -59,6 +59,23 @@ public class GraphResourceTest extends APITest {
 		StatusLine sl = resp2.getStatusLine();
 		System.out.println(sl.getReasonPhrase());
 		Assert.assertEquals(200, sl.getStatusCode());
+	}
+
+	@Test
+	public void testPatchWithPOST() throws Exception {
+		ClassPathResource changeMeCPR = new ClassPathResource("changeme.xml");
+		ClassPathResource changesetCPR = new ClassPathResource("changeset.xml");
+		WebResource webResource = resource();
+		ClientResponse resp = webResource.path("graphs/changes").type(
+				"application/rdf+xml").put(ClientResponse.class,
+				changeMeCPR.getFile());
+		Assert.assertEquals(204, resp.getStatus());
+
+		ClientResponse resp2 = webResource.path("graphs/changes/patch").type(
+				"application/vnd.talis.changeset+xml").post(
+				ClientResponse.class, changesetCPR.getFile());
+
+		Assert.assertEquals(200, resp2.getStatus());
 	}
 
 }
