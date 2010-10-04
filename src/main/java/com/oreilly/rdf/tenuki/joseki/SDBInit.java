@@ -5,17 +5,16 @@ import org.apache.commons.logging.LogFactory;
 import org.joseki.ServerInitialization;
 
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.tdb.TDB;
+import com.hp.hpl.jena.sdb.SDB;
 
-public class TDBInit implements ServerInitialization {
-	private Log log = LogFactory.getLog(TDBInit.class);
+public class SDBInit implements ServerInitialization{
+	private Log log = LogFactory.getLog(SDBInit.class);
 
-	
 	@Override
 	public void init(Resource service, Resource implementation) {
-		log.info("Setting TDB unionDefaultGraph");
-		//InitBDB.init();
-		TDB.getContext().set(TDB.symUnionDefaultGraph, true);
+		log.info("Setting SDB unionDefaultGraph");
+		SDB.getContext().set(SDB.unionDefaultGraph, true);		
 	}
+	
 
 }

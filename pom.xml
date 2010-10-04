@@ -336,6 +336,22 @@
 			</build>
 		</profile>
 		<profile>
+			<id>stage</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>stage</value>
+				</property>
+			</activation>
+			<build>
+				<filters>
+					<filter>
+						${basedir}/src/main/filters/stage.properties
+					</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
 			<id>goban</id>
 			<activation>
 				<property>
