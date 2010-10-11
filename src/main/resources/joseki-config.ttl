@@ -70,7 +70,6 @@ sdb:DatasetStore rdfs:subClassOf ja:RDFDataset .
 <#conn> rdf:type sdb:SDBConnection ;
     sdb:sdbType        "${sdb.dbTypeName}" ;
     sdb:sdbUser		   "${jdbc.username}";
-   	sdb:sdbPassword	   "${jdbc.password}";
     sdb:jdbcURL        "${jdbc.url}" ;
     sdb:driver         "${jdbc.driverClassName}" ;
     .
