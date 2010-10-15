@@ -50,7 +50,6 @@ public class ModelWriter implements MessageBodyWriter<Model> {
 			lang = "N-TRIPLE";
 		}
 		model.write(entityStream, lang);
-		model.close();
 	}
 
 }
