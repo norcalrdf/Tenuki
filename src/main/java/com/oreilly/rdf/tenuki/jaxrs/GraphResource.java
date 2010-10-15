@@ -3,6 +3,7 @@ package com.oreilly.rdf.tenuki.jaxrs;
 import java.util.Iterator;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -59,6 +60,14 @@ public class GraphResource {
 	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
 		Model dsModel = dataset.getNamedModel(graphUri);
 		dsModel.add(model);
+		return Response.noContent().build();
+	}
+	
+	@Path("{graphUri}")
+	@DELETE
+	public Response deleteGraph(@PathParam("graphUri") String graphUri) {
+		Model dsModel = dataset.getNamedModel(graphUri);
+		dsModel.removeAll();
 		return Response.noContent().build();
 	}
 
