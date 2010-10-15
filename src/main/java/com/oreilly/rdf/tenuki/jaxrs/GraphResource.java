@@ -60,6 +60,7 @@ public class GraphResource {
 	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
 		Model dsModel = dataset.getNamedModel(graphUri);
 		dsModel.add(model);
+		dsModel.close();
 		return Response.noContent().build();
 	}
 	
