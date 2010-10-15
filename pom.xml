@@ -48,8 +48,8 @@
     <properties>
 	    <ver.jena>2.6.3</ver.jena>
 	    <ver.arq>2.8.5</ver.arq>
-	    <ver.tdb>0.8.7</ver.tdb>
-	    <ver.joseki>3.4.2-RC-4</ver.joseki>
+	    <ver.sdb>1.3.2</ver.sdb>
+	    <ver.joseki>3.4.2</ver.joseki>
   	</properties>
 	<dependencies>
 
@@ -78,13 +78,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
-			<artifactId>tdb</artifactId>
-			<version>${ver.tdb}</version>
-			<type>jar</type>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.hp.hpl.jena</groupId>
 			<artifactId>arq</artifactId>
 			<version>${ver.arq}</version>
 			<type>jar</type>
@@ -95,6 +88,14 @@
 			<artifactId>joseki</artifactId>
 			<version>${ver.joseki}</version>
 			<type>jar</type>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.hp.hpl.jena</groupId>
+			<artifactId>sdb</artifactId>
+			<version>${ver.sdb}</version>
+			<type>jar</type>
+			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
 		<dependency>
@@ -219,14 +220,6 @@
 			<version>1.2</version>
 			<type>jar</type>
 			<scope>test</scope>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.hp.hpl.jena</groupId>
-			<artifactId>sdb</artifactId>
-			<version>1.3.2-RC-5</version>
-			<type>jar</type>
-			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
 		<dependency>
