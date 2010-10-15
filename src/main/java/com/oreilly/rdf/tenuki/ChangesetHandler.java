@@ -33,6 +33,7 @@ public class ChangesetHandler {
 			model.begin();
 			model.remove(changeset.toRemove());
 			model.add(changeset.toAdd());
+			model.commit();
 		} catch (RuntimeException e) {
 			try {
 			model.abort();
@@ -41,6 +42,5 @@ public class ChangesetHandler {
 			}
 			throw e;
 		}
-		model.commit();
 	}
 }
