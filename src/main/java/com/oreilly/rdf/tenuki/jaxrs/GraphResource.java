@@ -90,7 +90,7 @@ public class GraphResource {
 	
 	private Response applyChangeset(String graphUri, Changeset changeset) {
 	    String subject = changeset.getSubjectOfChange().toString();
-		if ("changes".equals(graphUri) || changeset.getSubjectOfChange().toString().equals(graphUri)) {
+		if ("changes".equals(graphUri) || subject.equals(graphUri)) {
 			Model dsModel = dataset.getNamedModel(graphUri);
 			ChangesetHandler handler = new ChangesetHandler(dsModel);
 			handler.applyChangeset(changeset);
