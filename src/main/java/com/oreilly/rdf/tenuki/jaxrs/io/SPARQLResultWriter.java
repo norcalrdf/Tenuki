@@ -19,7 +19,7 @@ import com.hp.hpl.jena.sparql.resultset.ResultSetFormat;
 import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
 @Provider
-@Produces("application/sparql-results+xml, application/rdf+xml, text/turtle, text/rdf+n3, text/plain")
+@Produces("application/sparql-results+xml, application/sparql-results+json, application/rdf+xml, text/turtle, text/rdf+n3, text/plain, text/csv")
 public class SPARQLResultWriter implements MessageBodyWriter<SPARQLResult> {
 	@Override
 	public long getSize(SPARQLResult t, Class<?> type, Type genericType,
@@ -32,8 +32,6 @@ public class SPARQLResultWriter implements MessageBodyWriter<SPARQLResult> {
 			Annotation[] annotations, MediaType mediaType) {
 		return SPARQLResult.class.isAssignableFrom(type);
 	}
-
-	// "application/sparql-results+xml, application/rdf+xml, text/turtle, text/rdf+n3, text/plain"
 
 	@Override
 	public void writeTo(SPARQLResult result, Class<?> type, Type genericType,
@@ -68,6 +66,12 @@ public class SPARQLResultWriter implements MessageBodyWriter<SPARQLResult> {
 			}
 			if (mediaType.isCompatible(MediaType.valueOf("text/plain"))) {
 				fmt = ResultSetFormat.syntaxText;
+			}
+			if (mediaType.isCompatible(MediaType.valueOf("text/csv"))) {
+				fmt = ResultSetFormat.syntaxCSV;
+			}
+			if (mediaType.isCompatible(MediaType.valueOf("application/sparql-results+json"))) {
+				fmt = ResultSetFormat.syntaxJSON;
 			}
 			ResultSetFormatter.output(entityStream, rs, fmt);
 		}

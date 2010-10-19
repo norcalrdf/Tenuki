@@ -28,13 +28,13 @@ public class SparqlQueryResource {
 	}
 
 	
-	@Produces("application/sparql-results+xml, application/rdf+xml, text/turtle, text/rdf+n3, text/csv,text/plain")
+	@Produces("application/sparql-results+xml, application/sparql-results+json, application/rdf+xml, text/turtle, text/rdf+n3, text/csv,text/plain")
 	@GET
 	public SPARQLResult getQuery(@QueryParam("query") String queryString) {
 		return doQuery(queryString);
 	}
 
-	@Produces("application/sparql-results+xml, application/rdf+xml, text/turtle, text/rdf+n3, text/csv,text/plain")
+	@Produces("application/sparql-results+xml, application/sparql-results+json, application/rdf+xml, text/turtle, text/rdf+n3, text/csv,text/plain")
 	@POST
 	public SPARQLResult postQuery(@QueryParam("query") String queryString) {
 		return doQuery(queryString);
