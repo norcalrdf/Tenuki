@@ -5,10 +5,12 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
+import javax.ws.rs.ext.Provider;
 
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
@@ -16,6 +18,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.resultset.ResultSetFormat;
 import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
+@Provider
+@Produces("application/sparql-results+xml, application/rdf+xml, text/turtle, text/rdf+n3, text/plain")
 public class SPARQLResultWriter implements MessageBodyWriter<SPARQLResult> {
 	@Override
 	public long getSize(SPARQLResult t, Class<?> type, Type genericType,

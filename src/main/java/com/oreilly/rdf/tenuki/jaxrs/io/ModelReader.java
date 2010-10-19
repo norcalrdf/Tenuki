@@ -16,7 +16,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 @Provider
-@Consumes("application/rdf+xml,text/turtle,text/plain,text/rdf+n3")
+@Consumes("application/rdf+xml, text/turtle, text/plain, text/rdf+n3")
 public class ModelReader implements MessageBodyReader<Model> {
 
 	@Override
@@ -30,8 +30,21 @@ public class ModelReader implements MessageBodyReader<Model> {
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
+		String lang = null;
+		if (mediaType.isCompatible(MediaType.valueOf("application/rdf+xml"))) {
+			lang = "RDF/XML";
+		}
+		if (mediaType.isCompatible(MediaType.valueOf("text/turtle"))) {
+			lang = "TTL";
+		}
+		if (mediaType.isCompatible(MediaType.valueOf("text/rdf+n3"))) {
+			lang = "N3";
+		}
+		if (mediaType.isCompatible(MediaType.valueOf("text/plain"))) {
+			lang = "N-TRIPLE";
+		}
 		Model model = ModelFactory.createDefaultModel();
-		return model.read(entityStream, "");
+		return model.read(entityStream, "", lang);
 	}
 
 }
