@@ -2,7 +2,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.oreilly.rdf</groupId>
 	<artifactId>tenuki</artifactId>
-	<packaging>war</packaging>
 	<version>0.4-SNAPSHOT</version>
 	<name>Tenuki Webapp</name>
 	<repositories>
@@ -208,6 +207,13 @@
 			<scope>runtime</scope>
 			<optional>false</optional>
 		</dependency>
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<issueManagement>
 		<url>http://bitbucket.org/gavin/tenuki/issues/</url>
@@ -232,47 +238,7 @@
 		<url>http://oreilly.com/</url>
 	</organization>
 	<build>
-		<finalName>tenuki-${env}-${version}</finalName>
-		<resources>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>
-					${basedir}/src/main/webapp/WEB-INF
-				</directory>
-				<includes>
-					<include>web.xml</include>
-				</includes>
-				<filtering>true</filtering>
-
-			</resource>
-		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.16</version>
-				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					<connectors>
-						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>8080</port>
-						</connector>
-					</connectors>
-					<webXml>${basedir}/target/classes/web.xml</webXml>
-					<webAppConfig>
-						<contextPath>/</contextPath>
-					</webAppConfig>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webXml>${basedir}/target/classes/web.xml</webXml>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -280,6 +246,19 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.oreilly.rdf.tenuki.Tenuki</mainClass>
+							<packageName>com.oreilly.rdf.tenuki</packageName>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
