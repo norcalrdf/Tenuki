@@ -16,41 +16,40 @@ import com.hp.hpl.jena.sdb.StoreDesc;
 
 public abstract class DatasetAccessResource {
 	
-	@Resource(name="jdbc/sdbDataSource", type=DataSource.class)
 	private DataSource dataSource;
-	
-	@Resource(name="jdbc/sdbStoreDesc", type=StoreDesc.class)
 	private StoreDesc storeDesc;
+	private Connection connection;
 	
 	public Dataset getDataset() {
-		InitialContext ctx;
-		try {
-			ctx = new InitialContext();
-			dataSource =  (DataSource) ctx.lookup("jdbc/sdbDataSource");
-			storeDesc =  (StoreDesc) ctx.lookup("jdbc/sdbStoreDesc");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-		try {
-			Connection connection = dataSource.getConnection();
-			return SDBFactory.connectDataset(connection, storeDesc);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+		return SDBFactory.connectDataset(connection, storeDesc);
 	}
 	
     @SuppressWarnings("unused")
 	@PostConstruct
     private void myPostConstructMethod ()
+    
     { 
-        System.err.println("PostConstruct called");
+		try {
+			InitialContext ctx = new InitialContext();
+			dataSource =  (DataSource) ctx.lookup("jdbc/sdbDataSource");
+			storeDesc =  (StoreDesc) ctx.lookup("jdbc/sdbStoreDesc");
+			connection = dataSource.getConnection();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
     }
  
     @SuppressWarnings("unused")
 	@PreDestroy
     private void myPreDestroyMethod ()
     {
-        System.err.println("PreDestroy called");
+    	try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 
 
