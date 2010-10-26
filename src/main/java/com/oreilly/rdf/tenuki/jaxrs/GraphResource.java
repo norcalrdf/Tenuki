@@ -14,25 +14,18 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.oreilly.rdf.tenuki.Changeset;
 import com.oreilly.rdf.tenuki.ChangesetHandler;
 
 @Path("/graphs/")
-public class GraphResource {
-
-	private Dataset dataset;
-
-	public void setDataset(Dataset dataset) {
-		this.dataset = dataset;
-	}
+public class GraphResource extends DatasetAccessResource {
 
 	@Produces("text/uri-list")
 	@GET
 	public String getGraphsAsURIList() {
 		StringBuilder urilist = new StringBuilder();
-		for (Iterator<String> iterator = dataset.listNames(); iterator
+		for (Iterator<String> iterator = getDataset().listNames(); iterator
 				.hasNext();) {
 			String name = iterator.next();
 			urilist.append(name);
@@ -44,22 +37,22 @@ public class GraphResource {
 	@Produces("application/rdf+xml")
 	@GET
 	public Model getGraphByQueryParam(@QueryParam("graph") String graphUri) {
-		return dataset.getNamedModel(graphUri);
+		return getDataset().getNamedModel(graphUri);
 	}
 
 	@Path("{graphUri}")
-	@Produces("application/rdf+xml, text/turtle, text/rdf+n3, text/plain")
+	@Produces({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
 	@GET
 	public Model getGraph(@PathParam("graphUri") String graphUri) {
-		return dataset.getNamedModel(graphUri);
+		return getDataset().getNamedModel(graphUri);
 	}
 
 	@Path("{graphUri}")
-	@Consumes("application/rdf+xml, text/turtle, text/rdf+n3, text/plain")
+	@Consumes({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
 	@PUT
 	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
 		System.err.println("WTF?");
-		Model dsModel = dataset.getNamedModel(graphUri);
+		Model dsModel = getDataset().getNamedModel(graphUri);
 		dsModel.add(model);
 		dsModel.close();
 		return Response.noContent().build();
@@ -68,7 +61,7 @@ public class GraphResource {
 	@Path("{graphUri}")
 	@DELETE
 	public Response deleteGraph(@PathParam("graphUri") String graphUri) {
-		Model dsModel = dataset.getNamedModel(graphUri);
+		Model dsModel = getDataset().getNamedModel(graphUri);
 		dsModel.removeAll();
 		return Response.noContent().build();
 	}
@@ -92,7 +85,7 @@ public class GraphResource {
 	private Response applyChangeset(String graphUri, Changeset changeset) {
 	    String subject = changeset.getSubjectOfChange().toString();
 		if ("changes".equals(graphUri) || subject.equals(graphUri)) {
-			Model dsModel = dataset.getNamedModel(graphUri);
+			Model dsModel = getDataset().getNamedModel(graphUri);
 			ChangesetHandler handler = new ChangesetHandler(dsModel);
 			handler.applyChangeset(changeset);
 			return Response.ok(dsModel,
