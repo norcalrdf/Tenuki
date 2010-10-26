@@ -282,19 +282,19 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.oreilly.rdf.tenuki.Tenuki</mainClass>
-							<packageName>com.oreilly.rdf.tenuki</packageName>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-jar-plugin</artifactId>-->
+<!--				<version>2.3.1</version>-->
+<!--				<configuration>-->
+<!--					<archive>-->
+<!--						<manifest>-->
+<!--							<mainClass>com.oreilly.rdf.tenuki.Tenuki</mainClass>-->
+<!--							<packageName>com.oreilly.rdf.tenuki</packageName>-->
+<!--						</manifest>-->
+<!--					</archive>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 
 			      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -309,6 +309,9 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.oreilly.rdf.tenuki.Tenuki</mainClass>
+                </transformer>
               </transformers>
             </configuration>
           </execution>
