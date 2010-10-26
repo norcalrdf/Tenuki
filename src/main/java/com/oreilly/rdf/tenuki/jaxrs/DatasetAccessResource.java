@@ -35,7 +35,7 @@ public abstract class DatasetAccessResource {
 			storeDesc =  (StoreDesc) ctx.lookup("jdbc/sdbStoreDesc");
 			connection = dataSource.getConnection();
 		} catch (NamingException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -48,7 +48,7 @@ public abstract class DatasetAccessResource {
     	try {
 			connection.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
     }
 
