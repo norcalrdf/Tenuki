@@ -18,9 +18,6 @@ package com.oreilly.rdf.tenuki;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
@@ -33,8 +30,6 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 public class InputStreamChangeset implements Changeset {
-
-	private Log log = LogFactory.getLog(InputStreamChangeset.class);
 	
 	private Model model;
 

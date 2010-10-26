@@ -40,6 +40,8 @@ public class Tenuki {
 				formatter.printHelp("tenuki-server", options);
 				return;
 			}
+			
+			System.err.println("Starting Tenuki...");
 
 			BasicDataSource dataSource = new BasicDataSource();
 			dataSource.setDriverClassName("org.postgresql.Driver");
@@ -52,7 +54,8 @@ public class Tenuki {
 			Integer port = Integer
 					.parseInt(line.getOptionValue("port", "7070"));
 			
-			ServletContainer jaxrsContainer = new ServletContainer(new TenukiApplication());
+			ServletHolder sh = new ServletHolder(ServletContainer.class);
+			sh.setInitParameter("javax.ws.rs.Application", "com.oreilly.rdf.tenuki.jaxrs.TenukiApplication");
 
 			Server server = new Server(port);
 
@@ -65,7 +68,7 @@ public class Tenuki {
 							});
 			
 			webAppContext.setContextPath("/");
-			webAppContext.addServlet(new ServletHolder(jaxrsContainer), "/*");
+			webAppContext.addServlet(sh, "/*");
 									
 			new Resource("jdbc/sdbDataSource", dataSource);
 			new Resource("jdbc/sdbStoreDesc", storeDesc);
