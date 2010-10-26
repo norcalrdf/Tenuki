@@ -14,7 +14,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import com.hp.hpl.jena.sdb.StoreDesc;
-import com.oreilly.rdf.tenuki.jaxrs.TenukiApplication;
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 public class Tenuki {
@@ -53,6 +52,8 @@ public class Tenuki {
 
 			Integer port = Integer
 					.parseInt(line.getOptionValue("port", "7070"));
+			
+			System.err.println("... configuration complete ...");
 			
 			ServletHolder sh = new ServletHolder(ServletContainer.class);
 			sh.setInitParameter("javax.ws.rs.Application", "com.oreilly.rdf.tenuki.jaxrs.TenukiApplication");
