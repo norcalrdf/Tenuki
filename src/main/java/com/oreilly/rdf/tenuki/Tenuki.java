@@ -21,7 +21,7 @@ public class Tenuki {
 
 	/**
 	 * @param args
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) throws Exception {
@@ -33,6 +33,9 @@ public class Tenuki {
 				.addOption(OptionBuilder.withLongOpt("port").withDescription(
 						"use PORT for server").hasArg().withArgName("PORT")
 						.create("p"));
+		options.addOption(OptionBuilder.withLongOpt("password")
+				.withDescription("SQL database password").hasArg().withArgName(
+						"PASSWORD").create());
 		try {
 			CommandLine line = parser.parse(options, args);
 			if (line.hasOption("help")) {
@@ -40,48 +43,58 @@ public class Tenuki {
 				formatter.printHelp("tenuki-server", options);
 				return;
 			}
-			
+
 			System.err.println("Starting Tenuki...");
 			Integer port = 7070;
-			HierarchicalINIConfiguration config = null;
+			String driver = "org.postgresql.Driver";
+			String url = "jdbc:postgresql:sdb";
+			String username = "sdb";
+			String password = null;
 			if (line.getArgList().size() > 0) {
 				String configFilePath = line.getArgs()[0];
-				config = new HierarchicalINIConfiguration(configFilePath);
+				HierarchicalINIConfiguration config = new HierarchicalINIConfiguration(
+						configFilePath);
 				port = config.getInt("server.port", 7070);
+				password = config.getString("datasource.password", password);
+				driver = config.getString("datasource.driver", driver);
+				username = config.getString("datasource.username", username);
+				url = config.getString("datasource.url", url);
 			}
 			
+			port = Integer.parseInt(line
+					.getOptionValue("port", port.toString()));
+			password = line.getOptionValue("password", password);
+
 			BasicDataSource dataSource = new BasicDataSource();
-			dataSource.setDriverClassName("org.postgresql.Driver");
-			dataSource.setUrl("jdbc:postgresql:sdb");
-			dataSource.setUsername("sdb");
-			dataSource.setPassword("sdb");
+			dataSource.setDriverClassName(driver);
+			dataSource.setUrl(url);
+			dataSource.setUsername(username);
+			if (password != null) {
+				dataSource.setPassword(password);
+			}
 
 			StoreDesc storeDesc = new StoreDesc("layout2/index", "postgresql");
 
-			port = Integer
-					.parseInt(line.getOptionValue("port", port.toString()));
-			
 			System.err.println("... configuration complete ...");
-			
+
 			ServletHolder sh = new ServletHolder(ServletContainer.class);
-			sh.setInitParameter("javax.ws.rs.Application", "com.oreilly.rdf.tenuki.jaxrs.TenukiApplication");
+			sh.setInitParameter("javax.ws.rs.Application",
+					"com.oreilly.rdf.tenuki.jaxrs.TenukiApplication");
 
 			Server server = new Server(port);
 
 			WebAppContext webAppContext = new WebAppContext();
-			webAppContext
-					.setConfigurationClasses(new String[] { 
-							"org.eclipse.jetty.plus.webapp.EnvConfiguration",
-							"org.eclipse.jetty.plus.webapp.PlusConfiguration",
-							"org.eclipse.jetty.annotations.AnnotationConfiguration"
-							});
-			
+			webAppContext.setConfigurationClasses(new String[] {
+					"org.eclipse.jetty.plus.webapp.EnvConfiguration",
+					"org.eclipse.jetty.plus.webapp.PlusConfiguration",
+					"org.eclipse.jetty.annotations.AnnotationConfiguration" });
+
 			webAppContext.setContextPath("/");
 			webAppContext.addServlet(sh, "/*");
-									
+
 			new Resource("jdbc/sdbDataSource", dataSource);
 			new Resource("jdbc/sdbStoreDesc", storeDesc);
-						
+
 			server.setHandler(webAppContext);
 			server.start();
 			server.join();
