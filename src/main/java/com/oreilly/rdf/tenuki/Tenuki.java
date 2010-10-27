@@ -9,13 +9,8 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.eclipse.jetty.plus.jndi.Resource;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.webapp.WebAppContext;
 
 import com.hp.hpl.jena.sdb.StoreDesc;
-import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 public class Tenuki {
 
@@ -29,8 +24,7 @@ public class Tenuki {
 
 		Options options = new Options();
 		options.addOption("h", "help", false, "show this message");
-		options
-				.addOption(OptionBuilder.withLongOpt("port").withDescription(
+		options.addOption(OptionBuilder.withLongOpt("port").withDescription(
 						"use PORT for server").hasArg().withArgName("PORT")
 						.create("p"));
 		options.addOption(OptionBuilder.withLongOpt("password")
