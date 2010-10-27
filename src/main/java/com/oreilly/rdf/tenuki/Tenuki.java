@@ -76,28 +76,12 @@ public class Tenuki {
 			StoreDesc storeDesc = new StoreDesc("layout2/index", "postgresql");
 
 			System.err.println("... configuration complete ...");
-
-			ServletHolder sh = new ServletHolder(ServletContainer.class);
-			sh.setInitParameter("javax.ws.rs.Application",
-					"com.oreilly.rdf.tenuki.jaxrs.TenukiApplication");
-
-			Server server = new Server(port);
-
-			WebAppContext webAppContext = new WebAppContext();
-			webAppContext.setConfigurationClasses(new String[] {
-					"org.eclipse.jetty.plus.webapp.EnvConfiguration",
-					"org.eclipse.jetty.plus.webapp.PlusConfiguration",
-					"org.eclipse.jetty.annotations.AnnotationConfiguration" });
-
-			webAppContext.setContextPath("/");
-			webAppContext.addServlet(sh, "/*");
-
-			new Resource("jdbc/sdbDataSource", dataSource);
-			new Resource("jdbc/sdbStoreDesc", storeDesc);
-
-			server.setHandler(webAppContext);
+			
+			TenukiSever server = new TenukiSever();
+			server.setDatasource(dataSource);
+			server.setStoreDesc(storeDesc);
+			server.setPort(port);
 			server.start();
-			server.join();
 
 		} catch (ParseException e) {
 			System.out.println("Unexpected exception:" + e.getMessage());
