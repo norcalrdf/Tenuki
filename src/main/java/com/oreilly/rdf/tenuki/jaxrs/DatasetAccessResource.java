@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.sdb.SDBFactory;
+import com.hp.hpl.jena.sdb.Store;
 import com.hp.hpl.jena.sdb.StoreDesc;
 
 public abstract class DatasetAccessResource {
@@ -21,6 +22,10 @@ public abstract class DatasetAccessResource {
 	
 	public Dataset getDataset() {
 		return SDBFactory.connectDataset(connection, storeDesc);
+	}
+	
+	public Store getStore() {
+		return SDBFactory.connectStore(connection, storeDesc);
 	}
 	
     @SuppressWarnings("unused")
