@@ -49,6 +49,12 @@ public class ModelWriter implements MessageBodyWriter<Model> {
 		if (mediaType.isCompatible(MediaType.valueOf("text/plain"))) {
 			lang = "N-TRIPLE";
 		}
+		if (mediaType.isCompatible(MediaType.valueOf("application/n-triples"))) {
+			lang = "N-TRIPLE";
+		}
+		if (mediaType.isCompatible(MediaType.valueOf("text/n-triples"))) {
+			lang = "N-TRIPLE";
+		}
 		model.write(entityStream, lang);
 	}
 
