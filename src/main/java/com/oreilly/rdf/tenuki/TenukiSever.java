@@ -3,7 +3,12 @@ package com.oreilly.rdf.tenuki;
 import javax.sql.DataSource;
 
 import org.eclipse.jetty.plus.jndi.Resource;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.NCSARequestLog;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
@@ -35,6 +40,7 @@ public class TenukiSever {
 				"com.oreilly.rdf.tenuki.jaxrs.TenukiApplication");
 
 		server = new Server(port);
+		
 
 		WebAppContext webAppContext = new WebAppContext();
 		webAppContext.setConfigurationClasses(new String[] {
@@ -47,8 +53,20 @@ public class TenukiSever {
 
 		new Resource("jdbc/sdbDataSource", dataSource);
 		new Resource("jdbc/sdbStoreDesc", storeDesc);
+		
+		// Setup logging
+		RequestLogHandler rqlh = new RequestLogHandler();
+		
+		NCSARequestLog rqLog = new NCSARequestLog("./logs/tenuki-yyyy_mm_dd.request.log");
+		rqLog.setRetainDays(90);
+		rqLog.setAppend(true);
+		rqLog.setExtended(false);
+		rqLog.setLogTimeZone("GMT");
+		rqlh.setRequestLog(rqLog);
 
-		server.setHandler(webAppContext);
+		HandlerCollection handlers = new HandlerCollection();
+        handlers.setHandlers(new Handler[]{webAppContext,new DefaultHandler(), rqlh});
+        server.setHandler(handlers);
 		server.start();
 	}
 	
