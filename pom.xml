@@ -270,9 +270,9 @@
 	</developers>
 	<scm>
 		<connection>
-			scm:hg:http://bitbucket.org/gavin/tenuki/
+			scm:git:ssh://git@github.com:oreillymedia/Tenuki.git
 		</connection>
-		<url>http://bitbucket.org/gavin/tenuki/</url>
+		<url>https://github.com/oreillymedia/Tenuki</url>
 	</scm>
 	<organization>
 		<name>O'Reilly Media, Inc</name>
