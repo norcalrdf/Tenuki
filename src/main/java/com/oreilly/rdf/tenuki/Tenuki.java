@@ -9,10 +9,13 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.hp.hpl.jena.sdb.StoreDesc;
 
 public class Tenuki {
+	private static Log log = LogFactory.getLog(Tenuki.class);
 
 	/**
 	 * @param args
@@ -37,8 +40,7 @@ public class Tenuki {
 				formatter.printHelp("tenuki-server", options);
 				return;
 			}
-
-			System.err.println("Starting Tenuki...");
+			log.info("Starting Tenuki...");
 			Integer port = 7070;
 			String driver = "org.postgresql.Driver";
 			String url = "jdbc:postgresql:sdb";
@@ -68,14 +70,15 @@ public class Tenuki {
 			}
 
 			StoreDesc storeDesc = new StoreDesc("layout2/index", "postgresql");
-
-			System.err.println("... configuration complete ...");
+			log.info("... configuration complete ...");
 			
 			TenukiSever server = new TenukiSever();
 			server.setDatasource(dataSource);
 			server.setStoreDesc(storeDesc);
 			server.setPort(port);
 			server.start();
+			
+			log.info("... Tenuki Server started.");
 
 		} catch (ParseException e) {
 			System.out.println("Unexpected exception:" + e.getMessage());
