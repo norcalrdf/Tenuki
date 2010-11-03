@@ -21,6 +21,7 @@ public class TenukiSever {
 	private DataSource dataSource;
 	private StoreDesc storeDesc;
 	private Server server;
+	private String logPath;
 	
 	public void setPort(Integer port) {
 		this.port = port;
@@ -33,6 +34,11 @@ public class TenukiSever {
 	public void setStoreDesc(StoreDesc storeDesc) {
 		this.storeDesc = storeDesc;
 	}
+	
+	public void setLogPath(String logPath) {
+		this.logPath = logPath;
+	}
+
 	
 	public void start() throws Exception {
 		ServletHolder sh = new ServletHolder(ServletContainer.class);
@@ -57,7 +63,7 @@ public class TenukiSever {
 		// Setup logging
 		RequestLogHandler rqlh = new RequestLogHandler();
 		
-		NCSARequestLog rqLog = new NCSARequestLog("./logs/tenuki-yyyy_mm_dd.request.log");
+		NCSARequestLog rqLog = new NCSARequestLog(this.logPath + "/tenuki-yyyy_mm_dd.request.log");
 		rqLog.setRetainDays(90);
 		rqLog.setAppend(true);
 		rqLog.setExtended(false);
@@ -73,5 +79,6 @@ public class TenukiSever {
 	public void stop() throws Exception {
 		server.stop();
 	}
+
 
 }

@@ -42,6 +42,9 @@ public class Tenuki {
 			}
 			log.info("Starting Tenuki...");
 			Integer port = 7070;
+			
+			String logPath = "./logs/";
+			
 			String driver = "org.postgresql.Driver";
 			String url = "jdbc:postgresql:sdb";
 			String username = "sdb";
@@ -55,6 +58,7 @@ public class Tenuki {
 				driver = config.getString("datasource.driver", driver);
 				username = config.getString("datasource.username", username);
 				url = config.getString("datasource.url", url);
+				logPath = config.getString("server.logpath", logPath);
 			}
 			
 			port = Integer.parseInt(line
@@ -75,6 +79,7 @@ public class Tenuki {
 			TenukiSever server = new TenukiSever();
 			server.setDatasource(dataSource);
 			server.setStoreDesc(storeDesc);
+			server.setLogPath(logPath);
 			server.setPort(port);
 			server.start();
 			
