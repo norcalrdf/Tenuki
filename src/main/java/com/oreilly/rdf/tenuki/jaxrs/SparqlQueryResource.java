@@ -16,6 +16,7 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.Syntax;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.sdb.SDB;
 import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
 @Path("/sparql")
@@ -49,6 +50,7 @@ public class SparqlQueryResource {
 			throw e;
 		}
 		QueryExecution qexec = QueryExecutionFactory.create(query, dataset);
+		qexec.getContext().set(SDB.unionDefaultGraph, true);
         if ( query.isSelectType() )
         {
             ResultSet rs = qexec.execSelect() ;
