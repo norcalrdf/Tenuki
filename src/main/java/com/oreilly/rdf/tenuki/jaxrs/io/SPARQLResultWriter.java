@@ -45,15 +45,22 @@ public class SPARQLResultWriter implements MessageBodyWriter<SPARQLResult> {
 			if (mediaType
 					.isCompatible(MediaType.valueOf("application/rdf+xml"))) {
 				lang = "RDF/XML";
+				httpHeaders.putSingle("Content-Type", "application/rdf+xml");
 			}
-			if (mediaType.isCompatible(MediaType.valueOf("text/turtle"))) {
+			else if (mediaType.isCompatible(MediaType.valueOf("text/turtle"))) {
 				lang = "TTL";
+				httpHeaders.putSingle("Content-Type", "text/turtle");
 			}
-			if (mediaType.isCompatible(MediaType.valueOf("text/rdf+n3"))) {
+			else if (mediaType.isCompatible(MediaType.valueOf("text/rdf+n3"))) {
 				lang = "N3";
+				httpHeaders.putSingle("Content-Type", "text/rdf+n3");
 			}
-			if (mediaType.isCompatible(MediaType.valueOf("text/plain"))) {
+			else if (mediaType.isCompatible(MediaType.valueOf("text/plain"))) {
 				lang = "N-TRIPLE";
+				httpHeaders.putSingle("Content-Type", "text/plain");
+			} else {
+				lang = "RDF/XML";
+				httpHeaders.putSingle("Content-Type", "application/rdf+xml");
 			}
 			model.write(entityStream, lang);
 		}
