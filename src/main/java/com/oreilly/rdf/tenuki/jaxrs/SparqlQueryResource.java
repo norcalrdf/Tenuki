@@ -7,7 +7,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryException;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -20,14 +19,7 @@ import com.hp.hpl.jena.sdb.SDB;
 import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
 @Path("/sparql")
-public class SparqlQueryResource {
-	
-	private Dataset dataset;
-
-	public void setDataset(Dataset dataset) {
-		this.dataset = dataset;
-	}
-
+public class SparqlQueryResource extends DatasetAccessResource {
 	
 	@Produces("application/sparql-results+xml, application/sparql-results+json, application/rdf+xml, text/turtle, text/rdf+n3, text/csv,text/plain")
 	@GET
@@ -49,7 +41,7 @@ public class SparqlQueryResource {
 		} catch (QueryException e) {
 			throw e;
 		}
-		QueryExecution qexec = QueryExecutionFactory.create(query, dataset);
+		QueryExecution qexec = QueryExecutionFactory.create(query, this.getDataset());
 		qexec.getContext().set(SDB.unionDefaultGraph, true);
         if ( query.isSelectType() )
         {
