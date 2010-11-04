@@ -270,10 +270,10 @@
 	</developers>
 	<scm>
 		<connection>
-			scm:git:git@github.com:oreillymedia/Tenuki.git
+			scm:git:ssh://git@github.com/oreillymedia/Tenuki.git
 		</connection>
-		<developerConnection>scm:git:git@github.com:oreillymedia/Tenuki.git</developerConnection>
-		<url>scm:git:git@github.com:oreillymedia/Tenuki.git</url>
+		<developerConnection>scm:git:ssh://git@github.com/oreillymedia/Tenuki.git</developerConnection>
+		<url>scm:git:ssh://git@github.com/oreillymedia/Tenuki.git</url>
 	</scm>
 	<organization>
 		<name>O'Reilly Media, Inc</name>
