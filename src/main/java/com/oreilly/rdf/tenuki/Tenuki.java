@@ -49,15 +49,17 @@ public class Tenuki {
 			String url = "jdbc:postgresql:sdb";
 			String username = "sdb";
 			String password = null;
+			Integer maxConnections = 8;
 			if (line.getArgList().size() > 0) {
 				String configFilePath = line.getArgs()[0];
 				HierarchicalINIConfiguration config = new HierarchicalINIConfiguration(
 						configFilePath);
-				port = config.getInt("server.port", 7070);
+				port = config.getInt("server.port", port);
 				password = config.getString("datasource.password", password);
 				driver = config.getString("datasource.driver", driver);
 				username = config.getString("datasource.username", username);
 				url = config.getString("datasource.url", url);
+				maxConnections = config.getInt("datasource.maxconnections", maxConnections);
 				logPath = config.getString("server.logpath", logPath);
 			}
 			
@@ -72,8 +74,8 @@ public class Tenuki {
 			dataSource.setValidationQuery("SELECT 1 AS test");
 			dataSource.setTestOnBorrow(true);
 			dataSource.setTestOnReturn(true);
-			dataSource.setMaxActive(30);
-			dataSource.setMaxIdle(dataSource.getMaxActive() / 2);
+			dataSource.setMaxActive(maxConnections);
+			dataSource.setMaxIdle(maxConnections);
 			if (password != null) {
 				dataSource.setPassword(password);
 			}
