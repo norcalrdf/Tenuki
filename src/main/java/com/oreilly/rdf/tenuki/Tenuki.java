@@ -69,6 +69,11 @@ public class Tenuki {
 			dataSource.setDriverClassName(driver);
 			dataSource.setUrl(url);
 			dataSource.setUsername(username);
+			dataSource.setValidationQuery("SELECT 1 AS test");
+			dataSource.setTestOnBorrow(true);
+			dataSource.setTestOnReturn(true);
+			dataSource.setMaxActive(30);
+			dataSource.setMaxIdle(dataSource.getMaxActive() / 2);
 			if (password != null) {
 				dataSource.setPassword(password);
 			}
