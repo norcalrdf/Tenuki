@@ -46,9 +46,8 @@
     </distributionManagement>
     <properties>
 	    <ver.jena>2.6.3</ver.jena>
-	    <ver.arq>2.8.6-SNAPSHOT</ver.arq>
-	    <ver.sdb>1.3.3-SNAPSHOT</ver.sdb>
-	    <ver.joseki>3.4.2</ver.joseki>
+	    <ver.arq>2.8.6-RC-1</ver.arq>
+	    <ver.sdb>1.4.0-SNAPSHOT</ver.sdb>
   	</properties>
 	<dependencies>
 
