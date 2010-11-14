@@ -1,5 +1,7 @@
 package com.oreilly.rdf.tenuki;
 
+import java.sql.Connection;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -12,6 +14,8 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.hp.hpl.jena.sdb.SDBFactory;
+import com.hp.hpl.jena.sdb.Store;
 import com.hp.hpl.jena.sdb.StoreDesc;
 
 public class Tenuki {
@@ -33,6 +37,7 @@ public class Tenuki {
 		options.addOption(OptionBuilder.withLongOpt("password")
 				.withDescription("SQL database password").hasArg().withArgName(
 						"PASSWORD").create());
+		options.addOption("c", "create", false, "Create a new Datastore if one does not exist");
 		try {
 			CommandLine line = parser.parse(options, args);
 			if (line.hasOption("help")) {
@@ -66,6 +71,7 @@ public class Tenuki {
 			port = Integer.parseInt(line
 					.getOptionValue("port", port.toString()));
 			password = line.getOptionValue("password", password);
+			boolean create = line.hasOption("create");
 
 			BasicDataSource dataSource = new BasicDataSource();
 			dataSource.setDriverClassName(driver);
@@ -82,6 +88,17 @@ public class Tenuki {
 
 			StoreDesc storeDesc = new StoreDesc("layout2/index", "postgresql");
 			log.info("... configuration complete ...");
+			
+			if (create) {
+				Connection connection = dataSource.getConnection();
+				Store store = SDBFactory.connectStore(connection, storeDesc);
+				try {
+					store.getSize();
+				} catch (Exception e) {
+					store.getTableFormatter().create();
+				}
+				connection.close();
+			}
 			
 			TenukiSever server = new TenukiSever();
 			server.setDatasource(dataSource);
