@@ -6,6 +6,7 @@ import junit.framework.Assert;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -13,8 +14,9 @@ import com.oreilly.http.HttpPatchSender;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+@Ignore
 public class GraphResourceTest extends APITest {
-
+	
 	@Test
 	public void testPut() throws Exception {
 		ClassPathResource sampleGraphCPResource = new ClassPathResource(
@@ -25,7 +27,7 @@ public class GraphResourceTest extends APITest {
 				sampleGraphCPResource.getFile());
 		Assert.assertEquals(204, resp.getStatus());
 	}
-
+	
 	@Test
 	public void testGetRepresentation() throws Exception {
 		ClassPathResource parentCPR = new ClassPathResource("parent.xml");
@@ -60,7 +62,7 @@ public class GraphResourceTest extends APITest {
 		System.out.println(sl.getReasonPhrase());
 		Assert.assertEquals(200, sl.getStatusCode());
 	}
-
+	
 	@Test
 	public void testPatchWithPOST() throws Exception {
 		ClassPathResource changeMeCPR = new ClassPathResource("changeme.xml");
