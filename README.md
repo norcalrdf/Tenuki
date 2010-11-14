@@ -14,7 +14,6 @@ SDB has not yet had a snapshot release that contains bug fixes needed for Tenuki
 
 	mvn package
 
-
 ## Running Tenuki
 
 ### Startup Tenuki with default configuration

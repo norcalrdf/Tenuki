@@ -34,7 +34,7 @@ public class GraphResource extends DatasetAccessResource {
 		return urilist.toString();
 	}
 	
-	@Produces("application/rdf+xml")
+	@Produces({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
 	@GET
 	public Model getGraphByQueryParam(@QueryParam("graph") String graphUri) {
 		return getDataset().getNamedModel(graphUri);
