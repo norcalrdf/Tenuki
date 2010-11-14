@@ -51,7 +51,6 @@ public class GraphResource extends DatasetAccessResource {
 	@Consumes({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
 	@PUT
 	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
-		System.err.println("WTF?");
 		Model dsModel = getDataset().getNamedModel(graphUri);
 		dsModel.add(model);
 		dsModel.close();
