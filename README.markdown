@@ -16,8 +16,10 @@ SDB has not yet had a snapshot release that contains bug fixes needed for Tenuki
 
 ## Running Tenuki
 
-### Startup Tenuki with default configuration
+1.	Create PostgreSQL user named `sdb` with password `changemeplease`
+2.	Create PostgreSQL database with name `sdb_example`
+3.	Run:
+	java -jar tenuki-0.4.jar --create example.ini
+4.	Visit [http://localhost:6060/] with your browser
 
-	java -jar tenuki-0.4.jar
 
-Will start a Tenuki server running at http://localhost:6060/ using a PostgreSQL database on localhost named `sdb`.
