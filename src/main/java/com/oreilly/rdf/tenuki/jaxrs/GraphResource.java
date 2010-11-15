@@ -50,18 +50,67 @@ public class GraphResource extends DatasetAccessResource {
 	@Path("{graphUri}")
 	@Consumes({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
 	@PUT
-	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
+	public Response updateGraph(@PathParam("graphUri") String graphUri, Model model) {
 		Model dsModel = getDataset().getNamedModel(graphUri);
-		dsModel.add(model);
-		dsModel.close();
+		try {
+			if (dsModel.supportsTransactions()) {
+				dsModel.begin();
+			}
+			dsModel.add(model);
+			dsModel.close();
+			if (dsModel.supportsTransactions()) {
+				dsModel.commit();
+			}
+		} catch (RuntimeException e) {
+			if (dsModel.supportsTransactions()) {
+				dsModel.abort();
+			}
+		}
 		return Response.noContent().build();
 	}
+	
+	@Path("{graphUri}")
+	@Consumes({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
+	@POST
+	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
+		Model dsModel = getDataset().getNamedModel(graphUri);
+		try {
+			if (dsModel.supportsTransactions()) {
+				dsModel.begin();
+			}
+			dsModel.removeAll();
+			dsModel.add(model);
+			dsModel.close();
+			if (dsModel.supportsTransactions()) {
+				dsModel.commit();
+			}
+		} catch (RuntimeException e) {
+			if (dsModel.supportsTransactions()) {
+				dsModel.abort();
+			}
+		}
+		return Response.noContent().build();
+	}
+
 	
 	@Path("{graphUri}")
 	@DELETE
 	public Response deleteGraph(@PathParam("graphUri") String graphUri) {
 		Model dsModel = getDataset().getNamedModel(graphUri);
-		dsModel.removeAll();
+		try {
+			if (dsModel.supportsTransactions()) {
+				dsModel.begin();
+			}
+			dsModel.removeAll();
+			dsModel.close();
+			if (dsModel.supportsTransactions()) {
+				dsModel.commit();
+			}
+		} catch (RuntimeException e) {
+			if (dsModel.supportsTransactions()) {
+				dsModel.abort();
+			}
+		}
 		return Response.noContent().build();
 	}
 

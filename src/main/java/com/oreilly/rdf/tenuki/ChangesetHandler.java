@@ -30,12 +30,18 @@ public class ChangesetHandler {
 	
 	public void applyChangeset(Changeset changeset) {
 		try {
-			model.begin();
+			if (model.supportsTransactions()) {
+				model.begin();
+			}
 			model.remove(changeset.toRemove());
 			model.add(changeset.toAdd());
-			model.commit();
+			if (model.supportsTransactions()) {
+				model.commit();
+			}
 		} catch (RuntimeException e) {
-			model.abort();
+			if (model.supportsTransactions()) {
+				model.abort();
+			}
 		}
 	}
 }
