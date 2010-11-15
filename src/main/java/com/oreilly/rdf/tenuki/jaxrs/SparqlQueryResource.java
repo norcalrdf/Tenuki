@@ -1,6 +1,7 @@
 package com.oreilly.rdf.tenuki.jaxrs;
 
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -29,7 +30,7 @@ public class SparqlQueryResource extends DatasetAccessResource {
 
 	@Produces("application/sparql-results+xml, application/sparql-results+json, application/rdf+xml, text/turtle, text/rdf+n3, text/csv,text/plain")
 	@POST
-	public SPARQLResult postQuery(@QueryParam("query") String queryString) {
+	public SPARQLResult postQuery(@FormParam("query") String queryString) {
 		return doQuery(queryString);
 	}
 
