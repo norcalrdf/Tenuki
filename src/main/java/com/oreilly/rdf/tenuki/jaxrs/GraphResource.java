@@ -121,15 +121,7 @@ public class GraphResource extends DatasetAccessResource {
 			@PathParam("graphUri") String graphUri, Changeset changeset) {
 		return applyChangeset(graphUri, changeset);
 	}
-	
-	@Path("{graphUri}/patch")
-	@Consumes("application/vnd.talis.changeset+xml")
-	@POST
-	public Response applyChangesetToGraphPost(
-			@PathParam("graphUri") String graphUri, Changeset changeset) {
-		return applyChangeset(graphUri, changeset);
-	}
-	
+		
 	private Response applyChangeset(String graphUri, Changeset changeset) {
 	    String subject = changeset.getSubjectOfChange().toString();
 		if ("changes".equals(graphUri) || subject.equals(graphUri)) {
