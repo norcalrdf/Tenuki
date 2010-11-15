@@ -70,15 +70,19 @@ public class SPARQLResultWriter implements MessageBodyWriter<SPARQLResult> {
 			if (mediaType.isCompatible(MediaType
 					.valueOf("application/sparql-results+xml"))) {
 				fmt = ResultSetFormat.syntaxXML;
+				httpHeaders.putSingle("Content-Type", "application/sparql-results+xml");
 			}
 			if (mediaType.isCompatible(MediaType.valueOf("text/plain"))) {
 				fmt = ResultSetFormat.syntaxText;
+				httpHeaders.putSingle("Content-Type", "text/plain");
 			}
 			if (mediaType.isCompatible(MediaType.valueOf("text/csv"))) {
 				fmt = ResultSetFormat.syntaxCSV;
+				httpHeaders.putSingle("Content-Type", "text/csv");
 			}
 			if (mediaType.isCompatible(MediaType.valueOf("application/sparql-results+json"))) {
 				fmt = ResultSetFormat.syntaxJSON;
+				httpHeaders.putSingle("Content-Type", "application/sparql-results+json");
 			}
 			ResultSetFormatter.output(entityStream, rs, fmt);
 		}
