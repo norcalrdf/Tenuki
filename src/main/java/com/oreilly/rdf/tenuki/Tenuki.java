@@ -66,7 +66,7 @@ public class Tenuki {
 				password = config.getString("datasource.password", password);
 				driver = config.getString("datasource.driver", driver);
 				dbType = config.getString("datasource.dbtype", dbType);
-				dbType = config.getString("datasource.dbtype", sdbLayout);
+				sdbLayout = config.getString("datasource.dbtype", sdbLayout);
 				username = config.getString("datasource.username", username);
 				url = config.getString("datasource.url", url);
 				maxConnections = config.getInt("datasource.maxconnections", maxConnections);
