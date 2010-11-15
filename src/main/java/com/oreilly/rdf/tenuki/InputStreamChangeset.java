@@ -38,12 +38,10 @@ public class InputStreamChangeset implements Changeset {
 		model.read(inputStream, "");
 	}
 
-	@Override
 	public Statement[] toAdd() {
 		Property addition = model.createProperty(CHANGESET_NS,"addition");
 		return reifiedStatements(addition);
 	}
-	@Override
 	public Statement[] toRemove() {
 		Property removal = model.createProperty(CHANGESET_NS,"removal");
 		return reifiedStatements(removal);
@@ -71,7 +69,6 @@ public class InputStreamChangeset implements Changeset {
 		return statementsToAdd.toArray(new Statement[statementsToAdd.size()]);
 	}
 
-	@Override
 	public Resource getSubjectOfChange() {
 		Property prop = model.getProperty(CHANGESET_NS, "subjectOfChange");
 		NodeIterator iter = model.listObjectsOfProperty(prop);
