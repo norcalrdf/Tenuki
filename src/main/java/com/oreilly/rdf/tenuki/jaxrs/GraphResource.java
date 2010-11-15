@@ -49,7 +49,7 @@ public class GraphResource extends DatasetAccessResource {
 
 	@Path("{graphUri}")
 	@Consumes({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
-	@PUT
+	@POST
 	public Response updateGraph(@PathParam("graphUri") String graphUri, Model model) {
 		Model dsModel = getDataset().getNamedModel(graphUri);
 		try {
@@ -71,7 +71,7 @@ public class GraphResource extends DatasetAccessResource {
 	
 	@Path("{graphUri}")
 	@Consumes({"application/rdf+xml", "text/turtle", "text/rdf+n3", "text/plain"})
-	@POST
+	@PUT
 	public Response setGraph(@PathParam("graphUri") String graphUri, Model model) {
 		Model dsModel = getDataset().getNamedModel(graphUri);
 		try {
