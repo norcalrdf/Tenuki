@@ -55,6 +55,9 @@ public class Tenuki {
 			String username = "sdb";
 			String password = null;
 			Integer maxConnections = 8;
+			String sdbLayout = "layout2/index";
+			String dbType = "postgresql";
+			
 			if (line.getArgList().size() > 0) {
 				String configFilePath = line.getArgs()[0];
 				HierarchicalINIConfiguration config = new HierarchicalINIConfiguration(
@@ -62,6 +65,8 @@ public class Tenuki {
 				port = config.getInt("server.port", port);
 				password = config.getString("datasource.password", password);
 				driver = config.getString("datasource.driver", driver);
+				dbType = config.getString("datasource.dbtype", dbType);
+				dbType = config.getString("datasource.dbtype", sdbLayout);
 				username = config.getString("datasource.username", username);
 				url = config.getString("datasource.url", url);
 				maxConnections = config.getInt("datasource.maxconnections", maxConnections);
@@ -73,20 +78,10 @@ public class Tenuki {
 			password = line.getOptionValue("password", password);
 			boolean create = line.hasOption("create");
 
-			BasicDataSource dataSource = new BasicDataSource();
-			dataSource.setDriverClassName(driver);
-			dataSource.setUrl(url);
-			dataSource.setUsername(username);
-			dataSource.setValidationQuery("SELECT 1 AS test");
-			dataSource.setTestOnBorrow(true);
-			dataSource.setTestOnReturn(true);
-			dataSource.setMaxActive(maxConnections);
-			dataSource.setMaxIdle(maxConnections);
-			if (password != null) {
-				dataSource.setPassword(password);
-			}
+			BasicDataSource dataSource = configureDataSource(driver, url,
+					username, password, maxConnections);
 
-			StoreDesc storeDesc = new StoreDesc("layout2/index", "postgresql");
+			StoreDesc storeDesc = new StoreDesc(sdbLayout, dbType);
 			log.info("... configuration complete ...");
 			
 			if (create) {
@@ -113,5 +108,22 @@ public class Tenuki {
 			System.out.println("Unexpected exception:" + e.getMessage());
 		}
 
+	}
+
+	private static BasicDataSource configureDataSource(String driver,
+			String url, String username, String password, Integer maxConnections) {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(driver);
+		dataSource.setUrl(url);
+		dataSource.setUsername(username);
+		dataSource.setValidationQuery("SELECT 1 AS test");
+		dataSource.setTestOnBorrow(true);
+		dataSource.setTestOnReturn(true);
+		dataSource.setMaxActive(maxConnections);
+		dataSource.setMaxIdle(maxConnections);
+		if (password != null) {
+			dataSource.setPassword(password);
+		}
+		return dataSource;
 	}
 }
