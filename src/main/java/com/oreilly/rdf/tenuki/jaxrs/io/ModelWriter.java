@@ -13,6 +13,7 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.sun.jersey.api.NotFoundException;
 
 @Provider
 @Produces("application/rdf+xml,text/turtle,text/plain,text/rdf+n3")
@@ -55,7 +56,12 @@ public class ModelWriter implements MessageBodyWriter<Model> {
 		if (mediaType.isCompatible(MediaType.valueOf("text/n-triples"))) {
 			lang = "N-TRIPLE";
 		}
-		model.write(entityStream, lang);
+		
+		if (model.isEmpty()) {
+			throw new NotFoundException();
+		} else {
+			model.write(entityStream, lang);
+		}
 	}
 
 }
