@@ -2,6 +2,45 @@
 
 A [SPARQL 1.1 Uniform HTTP Protocol for Managing RDF Graphs](http://www.w3.org/TR/sparql11-http-rdf-update/) server.
 
+## Usage
+
+### Graph listing
+
+	> GET /graphs HTTP/1.1
+	> Host: localhost:6060
+	> Accept: text/uri-list
+	> 
+	< HTTP/1.1 200 OK
+	< Content-Type: text/uri-list
+	example
+
+### Graph Manipulation 
+
+#### GET
+
+	> GET /graphs/example HTTP/1.1
+	> Host: localhost:6060
+	> Accept: text/turtle, text/plain, text/rdf+n3, application/rdf+xml
+	> 
+	< HTTP/1.1 200 OK
+	< Content-Type: text/turtle
+	< 
+	<http://example/s>
+	      <http://example/p> <http://example/o2> , <http://example/o> .
+
+Or using indirect (query param)
+
+	> GET /graphs?graph=example HTTP/1.1
+	> Host: localhost:6060
+	> Accept: text/turtle, text/plain, text/rdf+n3, application/rdf+xml
+	> 
+	< HTTP/1.1 200 OK
+	< Content-Type: text/turtle
+	< 
+	<http://example/s>
+	      <http://example/p> <http://example/o2> , <http://example/o> .
+
+
 ## Building Tenuki
 
 Tenuki requires [Apache Maven 2.x](http://maven.apache.org/) to build.
