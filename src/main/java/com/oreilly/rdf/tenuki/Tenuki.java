@@ -66,7 +66,7 @@ public class Tenuki {
 				password = config.getString("datasource.password", password);
 				driver = config.getString("datasource.driver", driver);
 				dbType = config.getString("datasource.dbtype", dbType);
-				sdbLayout = config.getString("datasource.dbtype", sdbLayout);
+				sdbLayout = config.getString("datasource.layout", sdbLayout);
 				username = config.getString("datasource.username", username);
 				url = config.getString("datasource.url", url);
 				maxConnections = config.getInt("datasource.maxconnections", maxConnections);
@@ -116,7 +116,7 @@ public class Tenuki {
 		dataSource.setDriverClassName(driver);
 		dataSource.setUrl(url);
 		dataSource.setUsername(username);
-		dataSource.setValidationQuery("SELECT 1 AS test");
+		dataSource.setValidationQuery("SELECT COUNT(*) FROM prefixes");
 		dataSource.setTestOnBorrow(true);
 		dataSource.setTestOnReturn(true);
 		dataSource.setMaxActive(maxConnections);

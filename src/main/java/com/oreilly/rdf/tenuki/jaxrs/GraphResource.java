@@ -65,7 +65,7 @@ public class GraphResource extends DatasetAccessResource {
 			if (dsModel.supportsTransactions()) {
 				dsModel.abort();
 			}
-		}
+		} 
 		return Response.noContent().build();
 	}
 	
