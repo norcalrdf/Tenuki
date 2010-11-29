@@ -7,6 +7,7 @@ import javax.ws.rs.core.Application;
 
 import com.oreilly.jaxrs.velocity.VelocityViewProcessor;
 import com.oreilly.rdf.tenuki.jaxrs.io.ChangesetReader;
+import com.oreilly.rdf.tenuki.jaxrs.io.DatasetWriter;
 import com.oreilly.rdf.tenuki.jaxrs.io.ModelReader;
 import com.oreilly.rdf.tenuki.jaxrs.io.ModelWriter;
 import com.oreilly.rdf.tenuki.jaxrs.io.SPARQLResultWriter;
@@ -18,6 +19,7 @@ public class TenukiApplication extends Application {
 		HashSet<Class<?>> set = new HashSet<Class<?>>();
 		set.add(SparqlQueryResource.class);
 		set.add(GraphResource.class);
+		set.add(BulkLoadResource.class);
 		return set;
 	}
 
@@ -27,6 +29,7 @@ public class TenukiApplication extends Application {
 		ModelWriter modelWriter = new ModelWriter();
 		ChangesetReader csReader = new ChangesetReader();
 		SPARQLResultWriter sparqlWriter = new SPARQLResultWriter();
+		DatasetWriter datasetWriter = new DatasetWriter();
 		UIResource ui = new UIResource();
 		VelocityViewProcessor vvp = new VelocityViewProcessor();
 		HashSet<Object> set = new HashSet<Object>();
@@ -34,6 +37,7 @@ public class TenukiApplication extends Application {
 		set.add(modelWriter);
 		set.add(csReader);
 		set.add(sparqlWriter);
+		set.add(datasetWriter);
 		set.add(ui);
 		set.add(vvp);
 		return set;
