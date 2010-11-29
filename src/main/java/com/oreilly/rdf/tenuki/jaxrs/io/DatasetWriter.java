@@ -14,7 +14,6 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
 import org.openjena.atlas.lib.Sink;
-import org.openjena.riot.out.NQuadsWriter;
 import org.openjena.riot.out.SinkQuadOutput;
 
 import com.hp.hpl.jena.graph.Graph;
@@ -53,6 +52,9 @@ public class DatasetWriter implements MessageBodyWriter<DatasetGraph> {
         {
         	Node graphNode = graphs.next();
         	Graph graph = dsg.getGraph(graphNode);
+        	sink.flush();
+        	String graphComment = "# Graph: " + graphNode.toString() + "\n";
+        	entityStream.write(graphComment.getBytes());
         	ExtendedIterator<Triple> triples = graph.find(Node.ANY, Node.ANY, Node.ANY);
         	for (; triples.hasNext() ; ) {
         		Triple triple = triples.next();
