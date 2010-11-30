@@ -43,16 +43,11 @@ public class ChangesetHandler {
 			Statement[] toAdd = changeset.toAdd();
 			if (log.isDebugEnabled()) {
 				StringBuilder str = new StringBuilder();
-				str.append("Adding: \n");
-				for (int i = 0; i < toAdd.length; i++) {
-					Statement statement = toAdd[i];
-					str.append(statement);
-				}
-				str.append("Removing: \n");
-				for (int i = 0; i < toRemove.length; i++) {
-					Statement statement = toRemove[i];
-					str.append(statement);
-				}
+				str.append("Adding: ");
+				str.append(toAdd.length);
+				str.append(" ");
+				str.append("Removing: ");
+				str.append(toRemove.length);
 				log.debug(str);
 			}
 			model.remove(toRemove);
