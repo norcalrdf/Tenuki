@@ -55,7 +55,7 @@ public class Tenuki {
 			String username = "sdb";
 			String password = null;
 			Integer maxConnections = 8;
-			String sdbLayout = "layout2/index";
+			String sdbLayout = "layout2/hash";
 			String dbType = "postgresql";
 			
 			if (line.getArgList().size() > 0) {
@@ -116,7 +116,7 @@ public class Tenuki {
 		dataSource.setDriverClassName(driver);
 		dataSource.setUrl(url);
 		dataSource.setUsername(username);
-		dataSource.setValidationQuery("SELECT COUNT(*) FROM prefixes");
+		dataSource.setValidationQuery("SELECT 1 AS test");
 		dataSource.setTestOnBorrow(true);
 		dataSource.setTestOnReturn(true);
 		dataSource.setMaxActive(maxConnections);
