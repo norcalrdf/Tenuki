@@ -59,11 +59,10 @@ public class BulkLoadResource extends DatasetAccessResource {
 				LangNQuads parser = RiotReader.createParserNQuads(r.getInputStream(), sink);
 				parser.parse();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
+				throw new RuntimeException(e);
+			} finally {
+				sink.close();
 			}
-			sink.close();
 			return Response.noContent().build();
 	}
 	
