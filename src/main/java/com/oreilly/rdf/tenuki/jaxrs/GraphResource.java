@@ -128,8 +128,9 @@ public class GraphResource extends DatasetAccessResource {
 			Model dsModel = getDataset().getNamedModel(graphUri);
 			ChangesetHandler handler = new ChangesetHandler(dsModel);
 			handler.applyChangeset(changeset);
-			return Response.ok(dsModel,
-					MediaType.valueOf("application/rdf+xml")).build();
+			return Response.noContent().build();
+//			return Response.ok(dsModel,
+//					MediaType.valueOf("application/rdf+xml")).build();
 		} else {
 			return Response.serverError().build();
 		}

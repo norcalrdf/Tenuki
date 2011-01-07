@@ -15,10 +15,16 @@
  */
 package com.oreilly.rdf.tenuki;
 
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Statement;
 
 public class ChangesetHandler {
-	
+	private static Log log = LogFactory.getLog(ChangesetHandler.class);
+
 	private Model model;
 
 	/**
@@ -33,8 +39,19 @@ public class ChangesetHandler {
 			if (model.supportsTransactions()) {
 				model.begin();
 			}
-			model.remove(changeset.toRemove());
-			model.add(changeset.toAdd());
+			Statement[] toRemove = changeset.toRemove();
+			Statement[] toAdd = changeset.toAdd();
+			if (log.isDebugEnabled()) {
+				StringBuilder str = new StringBuilder();
+				str.append("Adding: ");
+				str.append(toAdd.length);
+				str.append(" ");
+				str.append("Removing: ");
+				str.append(toRemove.length);
+				log.debug(str);
+			}
+			model.remove(toRemove);
+			model.add(toAdd);
 			if (model.supportsTransactions()) {
 				model.commit();
 			}
