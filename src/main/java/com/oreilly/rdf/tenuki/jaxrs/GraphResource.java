@@ -11,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -129,8 +128,6 @@ public class GraphResource extends DatasetAccessResource {
 			ChangesetHandler handler = new ChangesetHandler(dsModel);
 			handler.applyChangeset(changeset);
 			return Response.noContent().build();
-//			return Response.ok(dsModel,
-//					MediaType.valueOf("application/rdf+xml")).build();
 		} else {
 			return Response.serverError().build();
 		}
