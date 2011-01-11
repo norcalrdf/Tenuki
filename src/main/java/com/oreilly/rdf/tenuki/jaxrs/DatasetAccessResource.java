@@ -45,8 +45,8 @@ public abstract class DatasetAccessResource {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		dataset = SDBFactory.connectDataset(connection, storeDesc);
 		store = SDBFactory.connectStore(connection, storeDesc);
+		dataset = SDBFactory.connectDataset(store);
 	}
 
 	@SuppressWarnings("unused")
