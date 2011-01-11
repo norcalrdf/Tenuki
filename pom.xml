@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.oreilly.rdf</groupId>
 	<artifactId>tenuki</artifactId>
-	<version>0.4</version>
+	<version>0.4.1-SNAPSHOT</version>
 	<name>Tenuki Webapp</name>
 	<repositories>
 		<repository>
