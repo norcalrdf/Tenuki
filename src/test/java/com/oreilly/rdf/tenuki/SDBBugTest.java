@@ -3,6 +3,7 @@ package com.oreilly.rdf.tenuki;
 import java.sql.Connection;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.hp.hpl.jena.query.Dataset;
@@ -18,7 +19,7 @@ import com.hp.hpl.jena.sdb.Store;
 import com.hp.hpl.jena.sdb.StoreDesc;
 import com.hp.hpl.jena.sparql.resultset.SPARQLResult;
 
-
+@Ignore
 public class SDBBugTest {
 	
 	@Test
