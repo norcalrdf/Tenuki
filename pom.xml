@@ -46,7 +46,7 @@
     </distributionManagement>
     <properties>
 	    <ver.jena>2.6.3</ver.jena>
-	    <ver.sdb>1.3.3</ver.sdb>
+	    <ver.sdb>1.4.0-SNAPSHOT</ver.sdb>
 	    <ver.arq>2.8.6</ver.arq>
   	</properties>
 	<dependencies>
