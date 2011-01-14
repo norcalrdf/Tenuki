@@ -52,12 +52,12 @@ public class TenukiSever {
 		webAppContext.setConfigurationClasses(new String[] {
 				"org.eclipse.jetty.plus.webapp.EnvConfiguration",
 				"org.eclipse.jetty.plus.webapp.PlusConfiguration",
-				"org.eclipse.jetty.annotations.AnnotationConfiguration" }); // must be these lines in this order
+				"org.eclipse.jetty.annotations.AnnotationConfiguration" });
 
 		webAppContext.setContextPath("/");
 		webAppContext.addServlet(sh, "/*");
 
-		new Resource("jdbc/sdbDataSource", dataSource); // can't be a constant, if shared
+		new Resource("jdbc/sdbDataSource", dataSource);
 		new Resource("jdbc/sdbStoreDesc", storeDesc);
 		
 		// Setup logging
