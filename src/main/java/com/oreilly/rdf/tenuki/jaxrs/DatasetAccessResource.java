@@ -57,7 +57,7 @@ public abstract class DatasetAccessResource {
 			store.close();
 		} finally {
 			try {
-				connection.close();
+				connection.close(); // without this, the connection is not garbage collected
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
