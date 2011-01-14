@@ -46,7 +46,11 @@
     </distributionManagement>
     <properties>
 	    <ver.jena>2.6.3</ver.jena>
-	    <ver.sdb>1.3.3</ver.sdb>
+        <!-- sdb jar with these patches to trunk:
+             https://issues.apache.org/jira/browse/JENA-28
+             https://issues.apache.org/jira/browse/JENA-27
+        -->
+	    <ver.sdb>1.3.3.patch-011411</ver.sdb>
 	    <ver.arq>2.8.6</ver.arq>
   	</properties>
 	<dependencies>
