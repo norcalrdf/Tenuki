@@ -2,6 +2,14 @@
 
 A [SPARQL 1.1 Uniform HTTP Protocol for Managing RDF Graphs](http://www.w3.org/TR/sparql11-http-rdf-update/) server.
 
+## Running Tenuki
+
+1.	Create PostgreSQL user named `sdb` with password `changemeplease`
+2.	Create PostgreSQL database with name `sdb_example`
+3.	Run:
+	java -jar tenuki-0.4.jar --create example.ini
+4.	Visit [http://localhost:6060/] with your browser
+
 ## Usage
 
 ### Graph listing
@@ -53,12 +61,5 @@ If SDB has not yet had a snapshot release that contains bug fixes needed for Ten
 
 	mvn package
 
-## Running Tenuki
-
-1.	Create PostgreSQL user named `sdb` with password `changemeplease`
-2.	Create PostgreSQL database with name `sdb_example`
-3.	Run:
-	java -jar tenuki-0.4.jar --create example.ini
-4.	Visit [http://localhost:6060/] with your browser
 
 
