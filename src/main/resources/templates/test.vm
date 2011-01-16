@@ -1,1 +1,11 @@
-Yo, this is Tenuki!
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Tenuki</title>
+		<link type="text/css" rel="stylesheet" media="screen" href="/static/css/base.css">
+	</head>
+	<body>
+		<h1>Tenuki</h1>
+	</body>
+</html>

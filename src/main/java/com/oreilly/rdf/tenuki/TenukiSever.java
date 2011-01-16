@@ -1,5 +1,7 @@
 package com.oreilly.rdf.tenuki;
 
+import java.net.URL;
+
 import javax.sql.DataSource;
 
 import org.eclipse.jetty.plus.jndi.Resource;
@@ -9,6 +11,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
@@ -44,6 +47,9 @@ public class TenukiSever {
 		ServletHolder sh = new ServletHolder(ServletContainer.class);
 		sh.setInitParameter("javax.ws.rs.Application",
 				"com.oreilly.rdf.tenuki.jaxrs.TenukiApplication");
+		
+		ServletHolder ds = new ServletHolder(DefaultServlet.class);
+		URL staticDir = TenukiSever.class.getClassLoader().getResource("public/");
 
 		server = new Server(port);
 		
@@ -55,6 +61,8 @@ public class TenukiSever {
 				"org.eclipse.jetty.annotations.AnnotationConfiguration" });
 
 		webAppContext.setContextPath("/");
+		webAppContext.setResourceBase(staticDir.toExternalForm());
+		webAppContext.addServlet(ds, "/static/*");
 		webAppContext.addServlet(sh, "/*");
 
 		new Resource("jdbc/sdbDataSource", dataSource);
