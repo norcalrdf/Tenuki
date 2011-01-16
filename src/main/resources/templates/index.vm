@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Tenuki</title>
+		<link href='http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic' rel='stylesheet' type='text/css'>
+		<link type="text/css" rel="stylesheet" media="screen" href="/static/css/base.css">
+		<link type="text/css" rel="stylesheet" media="screen" href="/static/css/tenuki.css">
+	</head>
+	<body>
+		<header>
+			<h1>Tenuki Server</h1>
+		</header>
+	</body>
+</html>

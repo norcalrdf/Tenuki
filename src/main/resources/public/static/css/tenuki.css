@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  padding: 0 1em 2em 8.5em;
+}
+
+body > header { 
+  padding-top: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Nobile', arial, serif; }
