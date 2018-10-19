@@ -1,3 +1,7 @@
+# DEPRECATED
+
+If you need a [SPARQL 1.1 Uniform HTTP Protocol for Managing RDF Graphs](http://www.w3.org/TR/sparql11-http-rdf-update/) server use [https://jena.apache.org/documentation/fuseki2/](https://jena.apache.org/documentation/fuseki2/)
+
 # Tenuki
 
 A [SPARQL 1.1 Uniform HTTP Protocol for Managing RDF Graphs](http://www.w3.org/TR/sparql11-http-rdf-update/) server.
